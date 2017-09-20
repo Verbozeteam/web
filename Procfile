@@ -1,0 +1,1 @@
+web: gunicorn verboze.wsgi --log-file -
