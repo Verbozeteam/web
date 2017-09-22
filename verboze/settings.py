@@ -30,9 +30,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 if os.environ.get('ON_HEROKU', False):
     DEBUG = False
     ALLOWED_HOSTS = ['verboze.herokuapp.com', 'www.verboze.com']
+    # Redirect all non HTTPS requests to HTTPS
+    SECURE_SSL_REDIRECT = True
 else:
     DEBUG = True
     ALLOWED_HOSTS = []
+
 
 
 
