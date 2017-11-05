@@ -1,0 +1,11 @@
+{% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Verboze Dashboard</title>
+</head>
+<body>
+	<div id="react-app"></div>
+	{% render_bundle 'dashboard' %}
+</body>
+</html>

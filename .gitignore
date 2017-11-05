@@ -102,3 +102,6 @@ ENV/
 
 # secret env variables
 secrets.sh
+
+# node modules
+node_modules/

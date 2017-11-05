@@ -34,10 +34,7 @@ if os.environ.get('ON_HEROKU', False):
     SECURE_SSL_REDIRECT = True
 else:
     DEBUG = True
-    ALLOWED_HOSTS = []
-
-
-
+    ALLOWED_HOSTS = ['local.com', 'www.local.com', 'dashboard.local.com']
 
 
 # Application definition
@@ -50,7 +47,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # verboze apps
     'public_website',
+    'api',
+    'dashboard',
+
+    # packages
+    'webpack_loader',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +65,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'verboze.urls'
@@ -97,6 +100,18 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     }
+}
+
+
+# Channel layer definitions
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+        "ROUTING": "verboze.routing.channel_routing",
+    },
 }
 
 
@@ -140,5 +155,13 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'frontend'),
+)
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json')
+    }
+}
