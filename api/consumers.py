@@ -67,7 +67,7 @@ def ws_receive(message, token):
 			# forward message to hotel's hub
 			hotel_hub = token_object.content_object.hubs.first()
 			hotel_hub.send_message(message_json)
-		else:
+		elif isinstance(token_object.content_object, Room):
 			# message from guest room
 			# adding sender information to message, ("[room_number]" in this case)
 			message_dict["__room_name"] = token_object.content_object.name
