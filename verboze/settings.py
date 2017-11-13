@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import dj_database_url
 
 DB_NAME = os.environ.get('DB_NAME', '')
 DB_USER = os.environ.get('DB_USER', '')
@@ -96,14 +97,7 @@ AUTH_USER_MODEL = 'api.User'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASS,
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+    'default': dj_database_url.config(default="postgres://{}:{}@localhost/{}".format(DB_USER, DB_PASS, DB_NAME), conn_max_age=500)
 }
 
 
