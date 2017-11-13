@@ -51,16 +51,16 @@ $ source secrets.sh
 $ python manage.py migrate
 ```
 #### Setting up react and webpack
-Make sure you have `node` installed, open a terminal tab and navigate to root directory that has `package.json` and run:
+Make sure you have `node` and `npm` installed, open a terminal tab and navigate to root directory that has `package.json` and run:
 ```sh
-$ node install
+$ npm install
 ```
 This will install the the node modules we need for react and webpack, since they alot, we do not push them to the repo.
 Now whenever we edit react js files, you have to build in order for webpack to create a bundle and that will be loaded to django through the webpack-loader that was installed from the `requirements.txt`:
 ```sh
-$ node run build
+$ npm run build
 ```
-> **Note:** Whenever the you run the above command above, delete the old bundled files, otherwise it will keep creating new files, we never use the old ones again. I will incorporate something to automate this process soon.
+> **Note:** I added these bundles and `webpack-stats.json` to gitignore and deleted them from repo, since we can generate then locally. Whenever you run the command above, delete the old bundled files, otherwise it will keep creating new files, we never use the old ones again. I will incorporate something to automate this process soon.
 
 #### Setting up redis
 Install redis and enable auto start

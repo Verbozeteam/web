@@ -105,3 +105,9 @@ secrets.sh
 
 # node modules
 node_modules/
+
+# webpack bundles
+frontend/bundles/
+
+# webpack stats
+webpack-stats.json

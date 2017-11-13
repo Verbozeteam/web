@@ -1,3 +1,11 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from .models import User
+from api.models import *
 
-# Register your models here.
+admin.site.register(User, UserAdmin)
+admin.site.register(Guest)
+admin.site.register(Room)
+admin.site.register(Hotel)
+admin.site.register(Hub)
+admin.site.register(Token)

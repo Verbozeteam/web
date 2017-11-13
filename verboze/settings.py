@@ -88,6 +88,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'verboze.wsgi.application'
 
 
+# Extends django's AbstractUser, allows for easy extending in future
+AUTH_USER_MODEL = 'api.User'
+
+
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
