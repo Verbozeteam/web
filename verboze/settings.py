@@ -32,7 +32,7 @@ if os.environ.get('ON_HEROKU', False):
     DEBUG = False
     ALLOWED_HOSTS = ['verboze.herokuapp.com', 'www.verboze.com']
     # Redirect all non HTTPS requests to HTTPS
-    SECURE_SSL_REDIRECT = True
+    #SECURE_SSL_REDIRECT = True
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['local.com', 'www.local.com', 'dashboard.local.com', 'localhost']
