@@ -111,3 +111,5 @@ frontend/bundles/
 
 # webpack stats
 webpack-stats.json
+webpack-dev-stats.json
+webpack-prod-stats.json
