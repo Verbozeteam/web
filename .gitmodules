@@ -1,0 +1,3 @@
+[submodule "frontend/js/react-components"]
+	path = frontend/js/react-components
+	url = https://github.com/Verbozeteam/react-components
