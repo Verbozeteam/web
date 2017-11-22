@@ -1,11 +1,20 @@
-import React, { Component } from 'react';
+// @flow
 
+import * as React from 'react';
 
-export class DashboardApp extends Component {
+import * as styles from '../../css/dashboard/main.css';
+
+type PropsType = {};
+
+type StateType = {};
+
+export class DashboardApp extends React.Component<PropsType, StateType> {
 
 	render() {
 		return (
-			<h3>DASHBOARD - Hello World!</h3>
+			<div className={styles.best_class}>
+				<h3>DASHBOARD - Hello World!</h3>
+			</div>
 		)
 
 	}

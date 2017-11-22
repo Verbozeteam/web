@@ -60,10 +60,15 @@ Now whenever we edit react js files, you have to build in order for webpack to c
 ```sh
 $ npm run build
 ```
-> **Note:** This will run in watch mode, which means anytime you save the file, it will automatically delete old bundles and create new ones.
 In production we have a slightly different config, we run the following command:
 ```sh
 $ npm run build-production
+```
+> **Note:** We use [Flow](https://flow.org/) (should have been installed through the `package.json`), we use it to add static type checking for the front end code we write. It helps minimize errors and helps with the understanding and expectation of code. Make sure to set it up with your text [editor](https://flow.org/en/docs/editors/).
+
+You can run the following command to see if there are any errors:
+```sh
+$ npm run flow
 ```
 
 #### Setting up redis
@@ -217,7 +222,7 @@ http {
 
         location /static/public_website/ {
 
-	        # replace with your path
+            # replace with your path
             root /Users/ymusleh/Documents/verboze/web/public_website/;
 
             autoindex on;
@@ -254,7 +259,7 @@ http {
         }
 
         location /static/bundles/ {
-	        # replace with your path
+            # replace with your path
             alias /Users/ymusleh/Documents/verboze/web/frontend/bundles/;
 
             autoindex on;
