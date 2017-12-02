@@ -5,8 +5,8 @@ module.exports = {
 	context: __dirname,
 
 	entry: {
-		public_website: "./frontend/js/public_website",
-		dashboard: "./frontend/js/dashboard",
+		public_website: "./frontend/js/PublicWebsite",
+		dashboard: "./frontend/js/Dashboard",
 	},
 
 	output: {
