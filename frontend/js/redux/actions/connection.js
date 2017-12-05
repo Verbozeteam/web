@@ -1,7 +1,9 @@
 /* @flow */
 
+import * as APITypes from '../../api-utils/APITypes';
+
 export const SET_CONNECTION_STATE = 'SET_CONNECTION_STATE';
-export const SET_CONFIG = 'SET_CONFIG';
+export const SET_ROOMS = 'SET_ROOMS';
 
 /* set WebSocket connection state */
 export function setConnectionState(connection_state: number) {
@@ -12,9 +14,9 @@ export function setConnectionState(connection_state: number) {
 };
 
 /* sets config */
-export function setConfig(config: Object) {
+export function setRooms(rooms: Array<APITypes.Room>) {
   return {
-    type: SET_CONFIG,
-    config
+    type: SET_ROOMS,
+    rooms,
   };
 };

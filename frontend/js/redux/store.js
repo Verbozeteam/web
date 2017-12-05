@@ -6,21 +6,19 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 const ConnectionReducer = require('./reducers/connection');
-const ThingsReducer = require('./reducers/things');
 
 export const STORE = createStore(combineReducers({
-  connection: ConnectionReducer,
-  things: ThingsReducer,
+    connection: ConnectionReducer,
 }));
 
 export function AppWrapper(ChildView: any) {
-  return class extends React.Component<any, any> {
-    render() {
-      return (
-        <Provider store={STORE}>
-          <ChildView />
-        </Provider>
-      );
+    return class extends React.Component<any, any> {
+        render() {
+            return (
+                <Provider store={STORE}>
+                    <ChildView />
+                </Provider>
+            );
+        }
     }
-  }
 };

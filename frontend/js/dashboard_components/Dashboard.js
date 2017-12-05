@@ -1,40 +1,51 @@
-// @flow
+/* @flow */
 
 import * as React from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 import * as styles from '../../css/dashboard/main.css';
 
+import { connect } from 'react-redux';
 import { STORE, AppWrapper } from "../redux/store";
+import * as connectionActions from '../redux/actions/connection';
+
+import * as APITypes from '../api-utils/APITypes';
+import { APICaller } from '../api-utils/API';
+
+function mapStateToProps(state) {
+    return {
+        rooms: state.connection.rooms,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+    	setRooms: (r: Array<APITypes.Room>) => dispatch(connectionActions.setRooms(r)),
+    };
+}
 
 type PropsType = {
+	...any,
 };
 
 type StateType = {
+	...any,
 };
 
-class Dashboard extends React.Component<PropsType, StateType> {
+class DashboardBase extends React.Component<PropsType, StateType> {
+    componentWillMount() {
+        /** Fetch the rooms */
+		APICaller.getRooms(
+			((rooms: Array<APITypes.Room>) => {
+	            this.props.setRooms(rooms);
+			}).bind(this),
+			((err: APITypes.ErrorType) => {
+				console.log("ERROR ", err);
+			}).bind(this)
+		);
+    }
 
-	constructor(props: PropsType){
-		super(props);
-		this.state = {
-			rooms: []
-		};
-	}
-
-	componentDidMount() {
-		axios.get("/api/lists/")
-		  .then(res => {
-		  	console.log("Got the following response:");
-			const todoLists = res.data
-			console.log(todoLists);
-			// this.setState({
-			// 	todoLists: todoLists
-			// });
-			this.setState(prevState => ({
-        		rooms: prevState.rooms + 1,
-      		}));
-		  });
-	}
+    componentWillUnmount() {
+    }
 
 	render() {
 		return (
@@ -44,7 +55,8 @@ class Dashboard extends React.Component<PropsType, StateType> {
 		);
 	}
 };
-
-module.exports = {
-	Dashboard: AppWrapper(Dashboard)
+DashboardBase.contextTypes = {
+    store: PropTypes.object
 };
+
+export const Dashboard = AppWrapper(connect(mapStateToProps, mapDispatchToProps) (DashboardBase));
