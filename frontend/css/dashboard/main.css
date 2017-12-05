@@ -1,13 +1,21 @@
-html {
-    margin: 0;
-    padding: 0;
-}
 
 body {
     margin: 0;
     padding: 0;
+    flex: 1;
+    flex-direction: column;
+    display: flex;
 }
 
-.best_class {
-	background-color: blue;
+.main_container {
+    width: 600px;
+    height: 600px;
+	background-color: red;
+    flex-direction: row;
+    display: flex;
+}
+
+.div {
+    display: flex;
+    flex: 1;
 }

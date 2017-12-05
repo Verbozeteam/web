@@ -53,8 +53,9 @@ class DashboardBase extends React.Component<PropsType, StateType> {
 
 
 		return (
-			<div className={styles.best_class}>
-				<h3>DASHBOARD - Hello World!</h3>
+			<div className={styles.main_container}>
+				<div className={styles.div}>DASHBOARD - Hello World!</div>
+				<div className={styles.div}>DASHBOARD - Hello World!</div>
 			</div>
 		);
 	}
