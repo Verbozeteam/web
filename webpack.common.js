@@ -5,13 +5,18 @@ module.exports = {
 	context: __dirname,
 
 	entry: {
+		dashboard: [
+			'webpack-dev-server/client?http://localhost:3000',
+			'webpack/hot/only-dev-server',
+			"./frontend/js/DashboardApp",
+		],
 		public_website: "./frontend/js/PublicWebsiteApp",
-		dashboard: "./frontend/js/DashboardApp",
 	},
 
 	output: {
 		path: path.resolve("./frontend/bundles/"),
 		filename: "[name]-[hash].js",
+		publicPath: "http://localhost:3000/frontend/bundles/",
 	},
 
 	plugins: [],
@@ -22,6 +27,14 @@ module.exports = {
 				test: /\.js?/,
 				exclude: /node_modules/,
 				loader: "babel-loader",
+				query: {
+					presets: ["react", "es2015", "stage-2"]
+				}
+			},
+			{
+				test: /\.js?/,
+				exclude: /node_modules/,
+				loader: "react-hot-loader",
 				query: {
 					presets: ["react", "es2015", "stage-2"]
 				}

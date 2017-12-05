@@ -11,6 +11,8 @@ import * as connectionActions from '../redux/actions/connection';
 import * as APITypes from '../api-utils/APITypes';
 import { APICaller } from '../api-utils/API';
 
+import { Shitponent } from './Shitponent';
+
 function mapStateToProps(state) {
     return {
         rooms: state.connection.rooms,
@@ -48,9 +50,14 @@ class DashboardBase extends React.Component<PropsType, StateType> {
     }
 
 	render() {
+		const { rooms } = this.props;
+
+
+
 		return (
 			<div className={styles.best_class}>
 				<h3>DASHBOARD - Hello World!</h3>
+				<Shitponent />
 			</div>
 		);
 	}
