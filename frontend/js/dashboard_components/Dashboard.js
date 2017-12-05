@@ -4,13 +4,15 @@ import * as React from 'react';
 import axios from 'axios';
 import * as styles from '../../css/dashboard/main.css';
 
-type PropsType = {};
+import { STORE, AppWrapper } from "../redux/store";
 
-type StateType = {
-	// rooms: (have to come up with room type)
+type PropsType = {
 };
 
-export class Dashboard extends React.Component<PropsType, StateType> {
+type StateType = {
+};
+
+class Dashboard extends React.Component<PropsType, StateType> {
 
 	constructor(props: PropsType){
 		super(props);
@@ -39,7 +41,10 @@ export class Dashboard extends React.Component<PropsType, StateType> {
 			<div className={styles.best_class}>
 				<h3>DASHBOARD - Hello World!</h3>
 			</div>
-		)
-
+		);
 	}
-}
+};
+
+module.exports = {
+	Dashboard: AppWrapper(Dashboard)
+};
