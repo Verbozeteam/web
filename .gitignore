@@ -113,3 +113,6 @@ frontend/bundles/
 webpack-stats.json
 webpack-dev-stats.json
 webpack-prod-stats.json
+
+# dump.rdb
+dump.rdb
