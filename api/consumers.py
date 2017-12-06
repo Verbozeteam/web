@@ -37,7 +37,7 @@ def ws_receive(message, token):
 		if isinstance(token_object.content_object, Hub):
 			# message from hub
 			# check room name list
-			__room_names = message_dict.get("__room_names")
+			__room_names = message_dict.get("__room_names", None)
 			if __room_names:
 				# forward to hotel dashboard
 				dashboard_message_json = {}
@@ -61,7 +61,7 @@ def ws_receive(message, token):
 
 		elif isinstance(token_object.content_object, Hotel):
 			# message from hotel dashboard
-			# adding sender information to message, ("[name_of_hotel] dashboard" in this case)
+			# adding sender information to message, ("[__room_name] dashboard" in this case)
 			message_dict["__room_name"] = token_object.content_object.name + " dashboard"
 			message_json["text"] = json.dumps(message_dict)
 			# forward message to hotel's hub
@@ -69,7 +69,7 @@ def ws_receive(message, token):
 			hotel_hub.send_message(message_json)
 		elif isinstance(token_object.content_object, Room):
 			# message from guest room
-			# adding sender information to message, ("[room_number]" in this case)
+			# adding sender information to message, ("[__room_name]" in this case)
 			message_dict["__room_name"] = token_object.content_object.name
 			message_json["text"] = json.dumps(message_dict)
 			hotel_hub = token_object.content_object.hotel.hubs.first()
