@@ -3,18 +3,32 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import { connect as ReduxConnect } from 'react-redux';
+import * as UIStateActions from '../redux/actions/uistate';
+
 import * as APITypes from '../api-utils/APITypes';
+
+function mapStateToProps(state) {
+    return {};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setCurrentRoom: (rid: string) => dispatch(UIStateActions.setCurrentRoom(rid)),
+    };
+}
 
 type PropsType = {
     room: APITypes.Room,
+    ...any,
 };
 
 type StateType = {
 };
 
-class RoomView extends React.Component<PropsType, StateType> {
+class RoomCardBase extends React.Component<PropsType, StateType> {
     onClick() {
-
+        this.props.setCurrentRoom(this.props.room.id);
     }
 
     render() {
@@ -35,7 +49,7 @@ class RoomView extends React.Component<PropsType, StateType> {
         );
     }
 };
-RoomView.contextTypes = {
+RoomCardBase.contextTypes = {
     store: PropTypes.object
 };
 
@@ -89,4 +103,6 @@ const styles = {
     },
 };
 
-export { RoomView };
+
+
+export const RoomCard = ReduxConnect(mapStateToProps, mapDispatchToProps) (RoomCardBase);

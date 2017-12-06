@@ -6,9 +6,11 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 const ConnectionReducer = require('./reducers/connection');
+const UIStateReducer = require('./reducers/uistate');
 
 export const STORE = createStore(combineReducers({
     connection: ConnectionReducer,
+    uistate: UIStateReducer,
 }));
 
 export function AppWrapper(ChildView: any) {

@@ -4,13 +4,13 @@ import { SET_CONNECTION_STATE, SET_ROOMS } from '../actions/connection';
 import * as APITypes from '../../api-utils/APITypes';
 
 type StateType = {
-    connection_state: 0 | 1 | 2,
+    connectionState: 0 | 1 | 2,
     rooms: Array<APITypes.Room>,
 };
 
 const defaultState: StateType = {
     /* 0 - not connected, 1 - connecting, 2 - connected */
-    connection_state: 0,
+    connectionState: 0,
     rooms: [],
 };
 
@@ -20,7 +20,7 @@ module.exports = (state: StateType = defaultState, action: Object) => {
     switch(action.type) {
         /* set WebSocket connection state */
         case SET_CONNECTION_STATE:
-            new_state.connection_state = action.connection_state;
+            new_state.connectionState = action.connectionState;
             break;
 
         /* sets config */

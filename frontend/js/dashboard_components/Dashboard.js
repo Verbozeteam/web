@@ -2,26 +2,30 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import * as css_styles from '../../css/dashboard/main.css';
 
-import { connect } from 'react-redux';
+import { connect as ReduxConnect } from 'react-redux';
 import { STORE, AppWrapper } from "../redux/store";
 import * as connectionActions from '../redux/actions/connection';
 
 import * as APITypes from '../api-utils/APITypes';
+import * as ConnectionTypes from '../api-utils/ConnectionTypes';
 import { APICaller } from '../api-utils/API';
+import { WebSocketCommunication } from '../api-utils/WebSocketCommunication';
 
-import { RoomView } from './RoomView';
+import { RoomCard } from './RoomCard';
+import { RoomFullView } from './RoomFullView';
 
 function mapStateToProps(state) {
     return {
         rooms: state.connection.rooms,
+        selectedRoomId: state.uistate.selectedRoomId,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
     	setRooms: (r: Array<APITypes.Room>) => dispatch(connectionActions.setRooms(r)),
+	    setConnectionState: (cs: number) => dispatch(connectionActions.setConnectionState(cs)),
     };
 }
 
@@ -35,48 +39,110 @@ type StateType = {
 
 class DashboardBase extends React.Component<PropsType, StateType> {
 	_columns_per_row: number = 4;
+	_ws_url: string = 'ws://www.verboze.com/stream/';
+	_ws_token: string = '9d1a4c0f23b344b79e98e377add50821'; /** @TODO: FETCH FROM VERBOZE! */
 
     componentWillMount() {
+	    /* bind websocket callbacks */
+	    WebSocketCommunication.setOnConnected(this.onConnected.bind(this));
+	    WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
+	    WebSocketCommunication.setOnMessage(this.onMessage.bind(this));
+
         /** Fetch the rooms */
 		APICaller.getRooms(
 			((rooms: Array<APITypes.Room>) => {
-	            this.props.setRooms(rooms);
+	            this.props.setRooms(rooms.concat(rooms).concat(rooms).concat(rooms).concat(rooms).concat(rooms).concat(rooms).concat(rooms).concat(rooms));
 			}).bind(this),
 			((err: APITypes.ErrorType) => {
 				console.log("ERROR ", err);
 			}).bind(this)
 		);
+
+		this.connect();
     }
 
     componentWillUnmount() {
     }
 
-	render() {
-		const { rooms } = this.props;
+	/* websocket connect */
+	connect() : any {
+		const { setConnectionState } = this.props;
 
-		var rows = [];
-		var room_views = [];
-		for (var i = 0; i < rooms.length; i++) {
-			room_views.push(
-				<RoomView
-					key={'room-view-'+i}
-					room={rooms[i]}
-					/>
-			);
+		WebSocketCommunication.connect(this._ws_url + this._ws_token + '/');
+		setConnectionState(1);
+	}
 
-			if (room_views.length == this._columns_per_row || i == rooms.length - 1) {
-				rows.push(
-					<div
-						key={'rooms-row-'+rows.length}
-						style={styles.roomsRow}>
-						{room_views}
-					</div>
-				);
-				room_views = [];
-			}
+	/* websocket callback on connect event */
+	onConnected() : any {
+		const { setConnectionState } = this.props;
+		setConnectionState(2);
+
+		WebSocketCommunication.sendMessage({
+			code: 0
+		});
+	}
+
+	/* websocket callback on disconnect event */
+	onDisconnected() : any {
+		const { setConnectionState, setConfig } = this.props;
+		setConnectionState(0);
+		setConfig(null);
+	}
+
+	/* websocket callback on message event */
+	onMessage(data: ConnectionTypes.WebSocketDataType) : any {
+		const { setConfig, setThingsStates } = this.props;
+
+		/* set config if provided */
+		if ('config' in data) {
+			console.log("got config: ", data.config);
+			setConfig(data.config);
+			delete data['config'];
 		}
 
-		console.log(rows);
+		/* set things states if provided */
+		if (Object.keys(data).length > 0) {
+			setThingsStates(data);
+		}
+	}
+
+	render() {
+		const { rooms, selectedRoomId } = this.props;
+
+		var content = null;
+		if (selectedRoomId && selectedRoomId != "") {
+			var selectedRoom = null;
+			for (var i = 0; i < rooms.length; i++)
+				if (rooms[i].id == selectedRoomId)
+					selectedRoom = rooms[i];
+			content = (
+				<RoomFullView
+					room={selectedRoom}/>
+			);
+		} else {
+			var rows = [];
+			var room_views = [];
+			for (var i = 0; i < rooms.length; i++) {
+				room_views.push(
+					<RoomCard
+						key={'room-view-'+i}
+						room={rooms[i]}
+						/>
+				);
+
+				if (room_views.length == this._columns_per_row || i == rooms.length - 1) {
+					rows.push(
+						<div
+							key={'rooms-row-'+rows.length}
+							style={styles.roomsRow}>
+							{room_views}
+						</div>
+					);
+					room_views = [];
+				}
+			}
+			content = rows;
+		}
 
 		return (
 			<div style={styles.mainContainer}>
@@ -86,7 +152,7 @@ class DashboardBase extends React.Component<PropsType, StateType> {
 					<div style={styles.fakeSidebar}>
 					</div>
 					<div style={styles.fakeContentContainer}>
-						{rows}
+						{content}
 					</div>
 				</div>
 			</div>
@@ -109,6 +175,7 @@ const styles = {
 	    display: 'flex',
 	    flex: 1,
 	    flexDirection: 'row',
+	    maxHeight: 250,
 	},
 	fakeTopBar: {
 	    height: 60,
@@ -131,4 +198,4 @@ const styles = {
 	},
 }
 
-export const Dashboard = AppWrapper(connect(mapStateToProps, mapDispatchToProps) (DashboardBase));
+export const Dashboard = AppWrapper(ReduxConnect(mapStateToProps, mapDispatchToProps) (DashboardBase));
