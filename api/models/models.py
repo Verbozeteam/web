@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 
+from .user_models import GuestUser, HotelUser, HubUser
+
 import uuid
 from channels import Group
 
@@ -12,11 +14,26 @@ from channels import Group
 # but we’ll be able to customize it in the future if the need arises.
 # It would be much more difficult to do so mid-project after initial migrations.
 class User(AbstractUser):
-    pass
+	def __str__(self):
+		if hasattr(self, 'guest_user'):
+			return "[GUEST USER] {}".format(self.username)
+		elif hasattr(self, 'hotel_user'):
+			return "[HOTEL USER] {}".format(self.username)
+		elif hasattr(self, 'hub_user'):
+			return "[HUB USER] {}".format(self.username)
+		else:
+			return self.username
 
 
 # Hotel Guest
 class Guest(models.Model):
+	guest_user = models.ForeignKey(
+		GuestUser,
+		on_delete=models.CASCADE,
+		related_name='guest',
+		null=True,
+		default=None
+	)
 	hotel = models.ForeignKey(
 		'Hotel',
 		on_delete=models.CASCADE,
@@ -55,6 +72,10 @@ class Room(models.Model):
 		related_name='rooms',
 		related_query_name='room',
 	)
+	identifier = models.CharField(max_length=32, default="")
+
+	class Meta:
+		unique_together = ('hotel', 'identifier',)
 
 	def __str__(self):
 		return "Room {} Floor {} at {}".format(
@@ -75,6 +96,13 @@ class Room(models.Model):
 # Hotel where guest is staying in
 # This will be used for hotel dashboard as well
 class Hotel(models.Model):
+	hotel_user = models.ForeignKey(
+		HotelUser,
+		on_delete=models.CASCADE,
+		related_name='hotel',
+		null=True,
+		default=None
+	)
 	tokens = GenericRelation('Token', related_query_name='hotels')
 	name = models.CharField(max_length=128)
 
@@ -92,6 +120,13 @@ class Hotel(models.Model):
 
 # Hub central unit in hotel
 class Hub(models.Model):
+	hub_user = models.ForeignKey(
+		HubUser,
+		on_delete=models.CASCADE,
+		related_name='hub',
+		null=True,
+		default=None
+	)
 	tokens = GenericRelation('Token', related_query_name='hubs')
 	hotel = models.ForeignKey(
 		'Hotel',

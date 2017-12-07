@@ -10,7 +10,4 @@ module.exports = WebpackMerge(common, {
 		new BundleTracker({filename: "./webpack-dev-stats.json"}),
 		new CleanWebpackPlugin(['frontend/bundles/*.*'], {watch: true}),
  	]
-
-
-
 });

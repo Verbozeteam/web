@@ -1,6 +1,10 @@
 from api.models import Token, Room, Hotel, Hub
+from api.permissions import IsHotelUser
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import exceptions
 from api.serializers import TokenSerializer, RoomSerializer, HotelSerializer, HubSerializer
+from api.authentication import ExpiringTokenAuthentication
 
 
 class TokenViewSet(viewsets.ReadOnlyModelViewSet):
@@ -15,8 +19,23 @@ class RoomViewSet(viewsets.ReadOnlyModelViewSet):
     #
     # API endpoint that allows Rooms to be viewed
     #
+    authentication_classes = (ExpiringTokenAuthentication,)
+    permission_classes = (IsAuthenticated, IsHotelUser,)
+
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+
+    def get_queryset(self):
+        hotel_user = self.request.user.hotel_user
+        print ("HOTEL USER", hotel_user)
+        hotel = Hotel.objects.get(hotel_user=hotel_user)
+
+        # return all rooms in hotel that user belongs to
+        return Room.objects.filter(hotel=hotel)
+
+
+        # return Room.objects.filter(hotel=hotel_user.hotel)
+
 
 
 class HotelViewSet(viewsets.ReadOnlyModelViewSet):

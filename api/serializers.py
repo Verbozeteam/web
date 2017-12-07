@@ -57,7 +57,6 @@ class HotelSerializer(serializers.ModelSerializer):
     # Serializer for Hotel Model
     #
     id = serializers.ReadOnlyField()
-    tokens = TokenDataSerializer(many=True)
 
     class Meta:
         model = Hotel
@@ -69,12 +68,11 @@ class RoomSerializer(serializers.ModelSerializer):
     # Serializer for Room Model
     #
     id = serializers.ReadOnlyField()
-    hotel = HotelSerializer()
     tokens = TokenDataSerializer(many=True)
 
     class Meta:
         model = Room
-        fields = '__all__'
+        fields = ('id', 'name', 'floor', 'tokens',)
 
 
 class HubSerializer(serializers.ModelSerializer):
@@ -83,7 +81,6 @@ class HubSerializer(serializers.ModelSerializer):
     #
     id = serializers.ReadOnlyField()
     hotel = HotelSerializer()
-    tokens = TokenDataSerializer(many=True)
 
     class Meta:
         model = Hub

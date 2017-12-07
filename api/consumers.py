@@ -37,40 +37,39 @@ def ws_receive(message, token):
 		if isinstance(token_object.content_object, Hub):
 			# message from hub
 			# check room name list
-			__room_names = message_dict.get("__room_names")
-			if __room_names:
-				# forward to hotel dashboard
-				dashboard_message_json = {}
-				dashboard_message_json["text"] = message_text
-				hotel_dashboard = token_object.content_object.hotel
-				hotel_dashboard.send_message(dashboard_message_json)
+			__reply_target = message_dict.get("__reply_target", None)
+			if __reply_target:
+				#
+				del message_dict["__reply_target"]
+				if __reply_target == "dashboard":
+					target_hotel_dashboard = token_object.content_object.hotel
+					ws_target_objects = [target_hotel_dashboard]
+				else:
+					target_room = Room.objects.get(identifier=__reply_target, hotel=token_object.content_object.hotel)
+					ws_target_objects = [target_room]
+			else:
+				# no reply target means send to everyone (hotel dashboard and rooms)
+				hotel_dashboard = [token_object.content_object.hotel]
+				hotel_rooms = list(Room.objects.get(hotel=token_object.content_object.hotel))
+				ws_target_objects = hotel_dashboard + hotel_rooms
 
-				# remove room names from message before sending to room
-				del message_dict["__room_names"]
-				message_json["text"] = json.dumps(message_dict)
-
-				# check validity of room name before forwarding to guest room
-				for room_name in __room_names:
-					try:
-						room = Room.objects.get(name=room_name, hotel=token_object.content_object.hotel)
-						room.send_message(message_json)
-					except Room.DoesNotExist:
-						# invalid room name provided, don't do anything
-						pass
+			message_json["text"] = json.dumps(message_dict)
+			for ws_target in ws_target_objects:
+				ws_target.send_message(message_json)
 
 
 		elif isinstance(token_object.content_object, Hotel):
 			# message from hotel dashboard
-			# adding sender information to message, ("[name_of_hotel] dashboard" in this case)
-			message_dict["__room_name"] = token_object.content_object.name + " dashboard"
+			message_dict["__room_id"] = token_object.content_object.identifier
+			message_dict["__reply_target"] = "dashboard"
 			message_json["text"] = json.dumps(message_dict)
 			# forward message to hotel's hub
 			hotel_hub = token_object.content_object.hubs.first()
 			hotel_hub.send_message(message_json)
 		elif isinstance(token_object.content_object, Room):
-			# message from guest room
-			# adding sender information to message, ("[room_number]" in this case)
-			message_dict["__room_name"] = token_object.content_object.name
+			# message from guest phone
+			message_dict["__room_id"] = token_object.content_object.identifier
+			message_dict["__reply_target"] = token_object.content_object.identifier
 			message_json["text"] = json.dumps(message_dict)
 			hotel_hub = token_object.content_object.hotel.hubs.first()
 			# forward message to guest room's hotel's hub
