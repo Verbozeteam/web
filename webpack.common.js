@@ -37,7 +37,44 @@ module.exports = {
 					modules: true,
 					localIdentNames: '[name]__[local]__[hash:base64:5]'
 				}
-			}
+			},
+		    {
+				test: /\.(jpg|png|svg)$/,
+		        loaders: [
+		            {
+		            	loader: 'file-loader',
+		            	options: {
+		            		name: '[hash].[ext]',
+		            		hash: 'sha512',
+		            		digest: 'hex',
+		            		publicPath: '../static/bundles/'
+		            	}
+		        	},
+		            {
+		            	loader: 'image-webpack-loader',
+				        options: {
+							gifsicle: {
+								interlaced: false,
+							},
+							optipng: {
+								optimizationLevel: 7,
+							},
+							pngquant: {
+								quality: '65-90',
+								speed: 4
+							},
+							mozjpeg: {
+								progressive: true,
+								quality: 65
+							},
+							// Specifying webp here will create a WEBP version of your JPG/PNG images
+							webp: {
+								quality: 75
+							}
+						}
+					}
+		        ],
+		    }
 		]
 	},
 
