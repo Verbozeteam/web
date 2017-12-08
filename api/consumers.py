@@ -50,7 +50,7 @@ def ws_receive(message, token):
 			else:
 				# no reply target means send to everyone (hotel dashboard and rooms)
 				hotel_dashboard = [token_object.content_object.hotel]
-				hotel_rooms = list(Room.objects.get(hotel=token_object.content_object.hotel))
+				hotel_rooms = [Room.objects.get(hotel=token_object.content_object.hotel)]
 				ws_target_objects = hotel_dashboard + hotel_rooms
 
 			message_json["text"] = json.dumps(message_dict)
@@ -60,7 +60,6 @@ def ws_receive(message, token):
 
 		elif isinstance(token_object.content_object, Hotel):
 			# message from hotel dashboard
-			message_dict["__room_id"] = token_object.content_object.identifier
 			message_dict["__reply_target"] = "dashboard"
 			message_json["text"] = json.dumps(message_dict)
 			# forward message to hotel's hub
