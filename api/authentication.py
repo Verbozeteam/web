@@ -6,7 +6,6 @@ from rest_framework import exceptions
 
 class ExpiringTokenAuthentication(TokenAuthentication):
     def authenticate_credentials(self, key):
-        print ('SELF MODEL TOKEN AUTHORIZATION', AuthToken)
         try:
             auth_token = AuthToken.objects.get(key=key)
         except AuthToken.DoesNotExist:

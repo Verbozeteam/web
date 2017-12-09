@@ -21,5 +21,4 @@ class ObtainExpiringAuthToken(ObtainAuthToken):
                 auth_token.save()
 
             return JsonResponse({'token': auth_token.key})
-        print (serializer.errors)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
