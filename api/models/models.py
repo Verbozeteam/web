@@ -25,42 +25,6 @@ class User(AbstractUser):
 			return self.username
 
 
-# Hotel Guest
-class Guest(models.Model):
-	guest_user = models.ForeignKey(
-		GuestUser,
-		on_delete=models.CASCADE,
-		related_name='guest',
-		null=True,
-		default=None
-	)
-	hotel = models.ForeignKey(
-		'Hotel',
-		on_delete=models.CASCADE,
-		related_name='guests',
-		related_query_name='guest',
-		null=True,
-		default=None
-	)
-	room = models.ForeignKey(
-		'Room',
-		on_delete=models.CASCADE,
-		related_name='guests',
-		related_query_name='guest',
-		null=True,
-		default=None
-	)
-	first_name = models.CharField(max_length=128, default="")
-	last_name = models.CharField(max_length=128, default="")
-
-	def __str__(self):
-		return "{} {} at {}".format(
-			self.first_name,
-			self.last_name,
-			self.room
-		)
-
-
 # Hotel room
 class Room(models.Model):
 	tokens = GenericRelation('Token', related_query_name='rooms')
@@ -96,13 +60,6 @@ class Room(models.Model):
 # Hotel where guest is staying in
 # This will be used for hotel dashboard as well
 class Hotel(models.Model):
-	hotel_user = models.ForeignKey(
-		HotelUser,
-		on_delete=models.CASCADE,
-		related_name='hotel',
-		null=True,
-		default=None
-	)
 	tokens = GenericRelation('Token', related_query_name='hotels')
 	name = models.CharField(max_length=128)
 
@@ -120,13 +77,6 @@ class Hotel(models.Model):
 
 # Hub central unit in hotel
 class Hub(models.Model):
-	hub_user = models.ForeignKey(
-		HubUser,
-		on_delete=models.CASCADE,
-		related_name='hub',
-		null=True,
-		default=None
-	)
 	tokens = GenericRelation('Token', related_query_name='hubs')
 	hotel = models.ForeignKey(
 		'Hotel',

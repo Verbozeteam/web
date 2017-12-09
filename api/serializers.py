@@ -68,11 +68,11 @@ class RoomSerializer(serializers.ModelSerializer):
     # Serializer for Room Model
     #
     id = serializers.ReadOnlyField()
-    tokens = TokenDataSerializer(many=True)
+    # tokens = TokenDataSerializer(many=True)
 
     class Meta:
         model = Room
-        fields = ('id', 'name', 'floor', 'tokens',)
+        fields = ('id', 'name', 'floor', 'identifier',)
 
 
 class HubSerializer(serializers.ModelSerializer):

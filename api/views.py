@@ -18,6 +18,8 @@ class TokenViewSet(viewsets.ReadOnlyModelViewSet):
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
     #
     # API endpoint that allows Rooms to be viewed
+    # Request must be coming from Hotel User
+    # Only rooms that belong to User's Hotel will be returned
     #
     authentication_classes = (ExpiringTokenAuthentication,)
     permission_classes = (IsAuthenticated, IsHotelUser,)
@@ -27,15 +29,8 @@ class RoomViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         hotel_user = self.request.user.hotel_user
-        print ("HOTEL USER", hotel_user)
-        hotel = Hotel.objects.get(hotel_user=hotel_user)
-
         # return all rooms in hotel that user belongs to
-        return Room.objects.filter(hotel=hotel)
-
-
-        # return Room.objects.filter(hotel=hotel_user.hotel)
-
+        return Room.objects.filter(hotel=hotel_user.hotel)
 
 
 class HotelViewSet(viewsets.ReadOnlyModelViewSet):
