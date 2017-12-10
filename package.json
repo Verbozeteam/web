@@ -8,7 +8,7 @@
     "npm": "5.5.1"
   },
   "scripts": {
-    "build": "webpack --config webpack.dev.js --progress --colors --watch",
+    "build": "webpack --config webpack.dev.js --progress --colors",
     "build-production": "webpack --config webpack.prod.js --progress --colors",
     "heroku-postbuild": "npm run build-production",
     "flow": "flow"
@@ -40,8 +40,11 @@
     "react-redux": "^5.0.6",
     "reconnecting-websocket": "^3.2.2",
     "redux": "^3.7.2",
+    "semantic-ui": "^2.2.13",
+    "semantic-ui-react": "^0.77.0",
     "style-loader": "^0.19.0",
     "uglifyjs-webpack-plugin": "^1.0.1",
+    "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
     "webpack-bundle-tracker": "^0.2.0",
     "webpack-merge": "^4.1.1"
