@@ -1,13 +1,18 @@
 from api.models import Token, Hub, Hotel, Room
+from django.db.models import Q
 from channels import Group
 
 from django.core.exceptions import ValidationError
 
 import json
+from django.utils import timezone
 
 def get_valid_token(token):
+	# delete old tokens
+	Token.objects.filter(~Q(expiry=None), expiry__lt=timezone.now()).delete()
+
 	try:
-		token_object = Token.objects.get(id=token, expired=False)
+		token_object = Token.objects.get(id=token)
 	except (Token.DoesNotExist, ValidationError):
 		return None
 	return token_object
@@ -19,7 +24,10 @@ def ws_connect(message, token):
 		# valid token, accept connection
 		message.reply_channel.send({"accept": True})
 		# add reply_channel to Hub/Hotel/Room group
-		group = token_object.content_object.websocket_group
+		if token_object.content_object:
+			group = token_object.content_object.websocket_group
+		else:
+			group = "temp-token-"+str(token_object.id)
 		Group(group).add(message.reply_channel)
 	else:
 		# invalid connection, reject token
@@ -74,6 +82,9 @@ def ws_receive(message, token):
 			hotel_hub = token_object.content_object.hotel.hubs.first()
 			# forward message to guest room's hotel's hub
 			hotel_hub.send_message(message_json)
+		else:
+			# temporary token, do simple to the creator's front-end
+			Group("temp-token-"+str(token_object.id)).send({"text": message_text})
 	else:
 		# invalid token or not text data found, reject connection
 		message.reply_channel.send({"accept": False})

@@ -99,18 +99,17 @@ class Hub(models.Model):
 
 # Token we will use to determine who is sending data
 # through websockets, and establish a connection with them
+#
 class Token(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True)
-	expired = models.BooleanField(default=False)
+	expiry = models.DateTimeField(blank=True, null=True)
 
 	# Mandatory fields for generic relation
 	# ContentType and GenericForeignKey allows Token to have a ForeignKey to
 	# any of our models, in this case ForeignKey to either Hub/Guest/Dashboard
-	content_type = models.ForeignKey(ContentType)
-	object_id = models.PositiveIntegerField() # Hub/Hotel/Room object id
+	content_type = models.ForeignKey(ContentType, blank=True, null=True)
+	object_id = models.PositiveIntegerField(blank=True, null=True) # Hub/Hotel/Room object id
 	content_object = GenericForeignKey('content_type', 'object_id') # Hub/Hotel/Room object
 
 	def __str__(self):
-		if self.expired:
-			return "[EXPIRED] Token for {}".format(self.content_object)
-		return "[VALID] Token for {}".format(self.content_object)
+		return "Token id={}".format(self.id)
