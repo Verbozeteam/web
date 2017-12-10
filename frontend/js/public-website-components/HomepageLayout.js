@@ -46,8 +46,7 @@ type StateType = {
 
 
 export default class HomepageLayout extends Component<PropsType, StateType> {
-    // _nan = require('../../assets/images/nan.png');
-    _nan = require('../../assets/images/close.png');
+    _nan = require('../../assets/images/nan.png');
     _white_image = require('../../assets/images/white-image.png')
 
     state = {}
@@ -96,7 +95,6 @@ export default class HomepageLayout extends Component<PropsType, StateType> {
                                     rounded
                                     size='large'
                                     src={ this._white_image }
-                                    src='/assets/images/wireframe/white-image.png'
                                 />
                             </Grid.Column>
                         </Grid.Row>

@@ -50,10 +50,6 @@ module.exports = {
 		            		publicPath: '../static/bundles/'
 		            	}
 		        	},
-		        	{
-						// test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-						loader: 'url-loader?limit=100000'
-					},
 		            {
 		            	loader: 'image-webpack-loader',
 				        options: {
