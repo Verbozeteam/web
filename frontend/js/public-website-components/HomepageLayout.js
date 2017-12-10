@@ -15,6 +15,8 @@ import {
     Visibility,
 } from 'semantic-ui-react'
 
+import { RoomDemoComponent } from './RoomDemoComponent';
+
 const FixedMenu = () => (
     <Menu fixed='top' size='large'>
         <Container>
@@ -68,49 +70,9 @@ export default class HomepageLayout extends Component<PropsType, StateType> {
                     <Segment
                         inverted
                         textAlign='center'
-                        style={{ minHeight: 700, padding: '1em 0em' }}
-                        vertical
-                    >
-                        <Container>
-                            <Menu inverted pointing secondary size='large'>
-                                <Menu.Item as='a' active>Home</Menu.Item>
-                                <Menu.Item as='a'>Work</Menu.Item>
-                                <Menu.Item as='a'>Company</Menu.Item>
-                                <Menu.Item as='a'>Careers</Menu.Item>
-                                <Menu.Item position='right'>
-                                    <Button as='a' inverted>Log in</Button>
-                                    <Button as='a' inverted style={{ marginLeft: '0.5em' }}>Sign Up</Button>
-                                </Menu.Item>
-                            </Menu>
-                        </Container>
-
-                        <Container text>
-                            <Header
-                                as='h1'
-                                content='Imagine-a-Company'
-                                inverted
-                                style={{ fontSize: '4em', fontWeight: 'normal', marginBottom: 0, marginTop: '3em' }}
-                            />
-                            <Header
-                                as='h2'
-                                content='Do whatever you want when you want to.'
-                                inverted
-                                style={{ fontSize: '1.7em', fontWeight: 'normal' }}
-                            />
-                            <Button primary size='huge'>
-                                Get Started
-                                <Icon name='right arrow' />
-                            </Button>
-
-
-
-
-
-
-
-
-
-                        </Container>
+                        style={{ minHeight: 700, padding: 0 }}
+                        vertical>
+                        <RoomDemoComponent />
                     </Segment>
                 </Visibility>
 
@@ -134,6 +96,7 @@ export default class HomepageLayout extends Component<PropsType, StateType> {
                                     rounded
                                     size='large'
                                     src={ this._white_image }
+                                    src='/assets/images/wireframe/white-image.png'
                                 />
                             </Grid.Column>
                         </Grid.Row>
