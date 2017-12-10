@@ -7,6 +7,9 @@ import { connect as ReduxConnect } from 'react-redux';
 import * as UIStateActions from '../redux/actions/uistate';
 
 import * as APITypes from '../api-utils/APITypes';
+import * as ConnectionTypes from '../api-utils/ConnectionTypes';
+
+import { RoomView } from './RoomView';
 
 function mapStateToProps(state) {
     return {};
@@ -26,7 +29,7 @@ type PropsType = {
 type StateType = {
 };
 
-class RoomFullViewBase extends React.Component<PropsType, StateType> {
+class RoomWindowBase extends React.Component<PropsType, StateType> {
     _close_button = require('../../assets/images/close.png');
 
     onClose() {
@@ -46,12 +49,13 @@ class RoomFullViewBase extends React.Component<PropsType, StateType> {
                     </div>
                 </div>
                 <div style={styles.innerContainer}>
+                    <RoomView room={room} isSummary={false}/>
                 </div>
             </div>
         );
     }
 };
-RoomFullViewBase.contextTypes = {
+RoomWindowBase.contextTypes = {
     store: PropTypes.object
 };
 
@@ -63,24 +67,26 @@ const styles = {
         margin: 20,
     },
     header: {
-        height: 60,
+        height: 40,
         fontSize: 30,
+        borderRadius: 20,
+        backgroundColor: '#eeeeee',
+        padding: 10,
     },
     cancelButtonContainer: {
         float: 'right',
         height: 60,
         width: 60,
-        padding: 2,
         resize: 'fit',
-        backgroundColor: 'black',
     },
     innerContainer: {
         display: 'flex',
         flex: 1,
         flexDirection: 'column',
+        padding: 20,
     },
 };
 
 
 
-export const RoomFullView = ReduxConnect(mapStateToProps, mapDispatchToProps) (RoomFullViewBase);
+export const RoomWindow = ReduxConnect(mapStateToProps, mapDispatchToProps) (RoomWindowBase);

@@ -8,6 +8,8 @@ import * as UIStateActions from '../redux/actions/uistate';
 
 import * as APITypes from '../api-utils/APITypes';
 
+import { RoomView } from './RoomView';
+
 function mapStateToProps(state) {
     return {};
 }
@@ -39,6 +41,7 @@ class RoomCardBase extends React.Component<PropsType, StateType> {
                 <div style={styles.roomCard}
                     onClick={this.onClick.bind(this)}>
                     <div style={styles.roomCardContent}>
+                        <RoomView room={room} isSummary={true}/>
                     </div>
                     <div style={styles.roomCardTitle}>
                         <div style={styles.roomCardSeparator}></div>
@@ -80,6 +83,7 @@ const styles = {
         borderBottomRightRadius: 0,
 
         backgroundColor: 'rgba(250, 250, 250, 255)',
+        padding: 10,
     },
     roomCardTitle: {
         display: 'flex',

@@ -60,6 +60,7 @@ def ws_receive(message, token):
 
 		elif isinstance(token_object.content_object, Hotel):
 			# message from hotel dashboard
+			# message_dict["__room_id"] = token_object.content_object.identifier
 			message_dict["__reply_target"] = "dashboard"
 			message_json["text"] = json.dumps(message_dict)
 			# forward message to hotel's hub

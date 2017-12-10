@@ -13,7 +13,7 @@ import { APICaller } from '../api-utils/API';
 import { WebSocketCommunication } from '../api-utils/WebSocketCommunication';
 
 import { RoomCard } from './RoomCard';
-import { RoomFullView } from './RoomFullView';
+import { RoomWindow } from './RoomWindow';
 
 function mapStateToProps(state) {
     return {
@@ -26,6 +26,8 @@ function mapDispatchToProps(dispatch) {
     return {
     	setRooms: (r: Array<APITypes.Room>) => dispatch(connectionActions.setRooms(r)),
 	    setConnectionState: (cs: number) => dispatch(connectionActions.setConnectionState(cs)),
+	    setConfig: (r: string, c: ConnectionTypes.ConfigType) => dispatch(connectionActions.setRoomConfig(r, c)),
+	    setThingsStates: (r: string, s: Object) => dispatch(connectionActions.setRoomThingsStates(r, s)),
     };
 }
 
@@ -38,9 +40,8 @@ type StateType = {
 };
 
 class DashboardBase extends React.Component<PropsType, StateType> {
-	_columns_per_row: number = 4;
-	_ws_url: string = 'ws://www.verboze.com/stream/';
-	_ws_token: string = '9d1a4c0f23b344b79e98e377add50821'; /** @TODO: FETCH FROM VERBOZE! */
+	_ws_url: string = 'ws://localhost:8000/stream/';
+	_ws_token: string = '152a40fc01f047fcb5d14e540d030675'; /** @TODO: FETCH FROM VERBOZE! */
 
     componentWillMount() {
 	    /* bind websocket callbacks */
@@ -51,7 +52,7 @@ class DashboardBase extends React.Component<PropsType, StateType> {
         /** Fetch the rooms */
 		APICaller.getRooms(
 			((rooms: Array<APITypes.Room>) => {
-	            this.props.setRooms(rooms.concat(rooms).concat(rooms).concat(rooms).concat(rooms).concat(rooms).concat(rooms).concat(rooms).concat(rooms));
+	            this.props.setRooms(rooms);
 			}).bind(this),
 			((err: APITypes.ErrorType) => {
 				console.log("ERROR ", err);
@@ -78,7 +79,8 @@ class DashboardBase extends React.Component<PropsType, StateType> {
 		setConnectionState(2);
 
 		WebSocketCommunication.sendMessage({
-			code: 0
+			code: 0,
+			__room_id: "1",
 		});
 	}
 
@@ -86,7 +88,7 @@ class DashboardBase extends React.Component<PropsType, StateType> {
 	onDisconnected() : any {
 		const { setConnectionState, setConfig } = this.props;
 		setConnectionState(0);
-		setConfig(null);
+		setConfig("1", null);
 	}
 
 	/* websocket callback on message event */
@@ -96,13 +98,13 @@ class DashboardBase extends React.Component<PropsType, StateType> {
 		/* set config if provided */
 		if ('config' in data) {
 			console.log("got config: ", data.config);
-			setConfig(data.config);
+			setConfig("1", data.config);
 			delete data['config'];
 		}
 
 		/* set things states if provided */
 		if (Object.keys(data).length > 0) {
-			setThingsStates(data);
+			setThingsStates("1", data);
 		}
 	}
 
@@ -116,10 +118,11 @@ class DashboardBase extends React.Component<PropsType, StateType> {
 				if (rooms[i].id == selectedRoomId)
 					selectedRoom = rooms[i];
 			content = (
-				<RoomFullView
+				<RoomWindow
 					room={selectedRoom}/>
 			);
 		} else {
+			var columns_per_row = 4;
 			var rows = [];
 			var room_views = [];
 			for (var i = 0; i < rooms.length; i++) {
@@ -130,7 +133,7 @@ class DashboardBase extends React.Component<PropsType, StateType> {
 						/>
 				);
 
-				if (room_views.length == this._columns_per_row || i == rooms.length - 1) {
+				if (room_views.length == columns_per_row || i == rooms.length - 1) {
 					rows.push(
 						<div
 							key={'rooms-row-'+rows.length}
@@ -155,6 +158,8 @@ class DashboardBase extends React.Component<PropsType, StateType> {
 						{content}
 					</div>
 				</div>
+				<div style={styles.fakeBottomBar}>
+				</div>
 			</div>
 		);
 	}
@@ -175,7 +180,8 @@ const styles = {
 	    display: 'flex',
 	    flex: 1,
 	    flexDirection: 'row',
-	    maxHeight: 250,
+	    maxHeight: 260,
+	    minHeight: 230,
 	},
 	fakeTopBar: {
 	    height: 60,
@@ -195,7 +201,12 @@ const styles = {
 	    flex: 1,
 	    display: 'flex',
 	    flexDirection: 'column',
+	    overflowY: 'scroll',
+	    overflowX: 'hidden',
 	},
+	fakeBottomBar: {
+	    height: 20,
+	}
 }
 
 export const Dashboard = AppWrapper(ReduxConnect(mapStateToProps, mapDispatchToProps) (DashboardBase));

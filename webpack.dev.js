@@ -8,6 +8,6 @@ var common = require('./webpack.common.js');
 module.exports = WebpackMerge(common, {
 	plugins: [
 		new BundleTracker({filename: "./webpack-dev-stats.json"}),
-		new CleanWebpackPlugin(['frontend/bundles/*.*'], {watch: true}),
+		new CleanWebpackPlugin(['frontend/bundles/*.*'], {watch: false}),
  	]
 });
