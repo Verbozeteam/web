@@ -12,6 +12,10 @@ class APICallerClass {
         success: (any) => any,
         failure?: (APITypes.ErrorType) => any) {
 
+        if (params.headers === undefined)
+            params.headers = {};
+        params.headers['authorization'] = 'token 019aec3abeda611018a0c09e1f07e5d0ec04544b';
+
         axios({
             method: requestMethod,
             url: endpoint,

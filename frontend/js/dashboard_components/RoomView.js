@@ -70,12 +70,12 @@ class RoomViewBase extends React.Component<PropsType, StateType> {
                 case 'light_switches':
                     panel_contents = (
                         <div style={{
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'row',
-        overflow: 'hidden',
-        height: 150,
-        maxWidth: 400,}}>
+                            display: 'flex',
+                            flex: 1,
+                            flexDirection: 'row',
+                            overflow: 'hidden',
+                            height: 150,
+                            maxWidth: 400,}}>
                             {panel.things.map(t => (
                                 <LightSwitch
                                     key={"thing-"+t.id}
