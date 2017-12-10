@@ -3,6 +3,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import { RoomDemoControls } from './RoomDemoControls';
+
 type PropsType = {
 };
 
@@ -11,10 +13,10 @@ type StateType = {
 
 class RoomDemoComponentBase extends React.Component<PropsType, StateType> {
     render() {
-        const { room } = this.props;
-
         return (
             <div style={styles.roomContainer}>
+
+                <RoomDemoControls />
             </div>
         );
     }
@@ -29,6 +31,7 @@ const styles = {
 
         display: 'flex',
         flexDirection: 'column',
+        backgroundColor: 'black',
     },
 };
 

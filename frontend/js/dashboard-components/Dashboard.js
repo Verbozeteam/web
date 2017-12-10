@@ -41,7 +41,7 @@ type StateType = {
 
 class DashboardBase extends React.Component<PropsType, StateType> {
 	_ws_url: string = 'ws://localhost:8000/stream/';
-	_ws_token: string = '152a40fc01f047fcb5d14e540d030675'; /** @TODO: FETCH FROM VERBOZE! */
+	_ws_token: string = '345413a3c8ae4647ae0d7c8ac264ac49'; /** @TODO: FETCH FROM VERBOZE! */
 
     componentWillMount() {
 	    /* bind websocket callbacks */
