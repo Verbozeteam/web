@@ -1,77 +1,31 @@
 /* @flow */
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
-    Button,
-    Container,
-    Divider,
+    Segment,
     Grid,
     Header,
-    Icon,
+    Button,
+    Container,
     Image,
-    List,
-    Menu,
-    Segment,
-    Visibility,
-} from 'semantic-ui-react'
-
-import { NavBar } from './NavBar';
-import { RoomDemoComponent } from './RoomDemoComponent';
-import { Footer } from './Footer'
+    Divider,
+} from 'semantic-ui-react';
 
 type PropsType = {
-    ...any,
+
 };
 
 type StateType = {
-    ...any,
+
 };
 
-
-export default class HomepageLayout extends Component<PropsType, StateType> {
+export default class Home extends Component<PropsType, StateType> {
     _nan = require('../../assets/images/nan.png');
     _white_image = require('../../assets/images/white-image.png')
 
-    state = {}
-
-    hideFixedMenu = () => this.setState({ visible: false })
-    showFixedMenu = () => this.setState({ visible: true })
-
     render() {
-        const { visible } = this.state
-
         return (
             <div>
-                { visible ? <NavBar /> : null }
-
-                <Visibility
-                    onTopPassed={this.showFixedMenu}
-                    onTopVisible={this.hideFixedMenu}
-                    once={false}
-                >
-                    <Segment
-                        textAlign='center'
-                        style={{ minHeight: 700, padding: 0 }}
-                        vertical>
-
-                        <Container>
-                          <Menu inverted pointing secondary size='large'>
-                            <Menu.Item as='a' active>Home</Menu.Item>
-                            <Menu.Item as='a'>Work</Menu.Item>
-                            <Menu.Item as='a'>Company</Menu.Item>
-                            <Menu.Item as='a'>Careers</Menu.Item>
-                            <Menu.Item position='right'>
-                              <Button as='a' inverted>Log in</Button>
-                              <Button as='a' inverted style={{ marginLeft: '0.5em' }}>Sign Up</Button>
-                            </Menu.Item>
-                          </Menu>
-                        </Container>
-
-                        <RoomDemoComponent />
-
-                    </Segment>
-                </Visibility>
-
                 <Segment style={{ padding: '8em 0em' }} vertical>
                     <Grid container stackable verticalAlign='middle'>
                         <Grid.Row>
@@ -145,8 +99,8 @@ export default class HomepageLayout extends Component<PropsType, StateType> {
                         <Button as='a' size='large'>I'm Still Quite Interested</Button>
                     </Container>
                 </Segment>
-                <Footer/>
             </div>
         )
-    }
-}
+    };
+};
+
