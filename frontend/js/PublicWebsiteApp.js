@@ -7,7 +7,7 @@ import {
   BrowserRouter,
 } from 'react-router-dom';
 
-import App from './public-website-components/App';
+import { App } from './public-website-components/App';
 
 let react_app_element = document.getElementById('react-app');
 

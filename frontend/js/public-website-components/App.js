@@ -17,7 +17,6 @@ import {
 
 import { connect as ReduxConnect } from 'react-redux';
 import { AppWrapper } from "./redux/store";
-import * as connectionActions from './redux/actions/connection';
 
 import NavBar from './NavBar';
 import Home from './Home';
@@ -74,4 +73,6 @@ class App extends Component<PropsType, StateType> {
     }
 }
 
-export const Dashboard = AppWrapper(ReduxConnect(() => {return {}}, () => {return {}}) (App));
+module.exports = {
+    App: AppWrapper(ReduxConnect(() => {return {}}, () => {return {}}) (App))
+}
