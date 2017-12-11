@@ -4,7 +4,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect as ReduxConnect } from 'react-redux';
-import * as UIStateActions from '../redux/actions/uistate';
+import * as UIStateActions from './redux/actions/uistate';
 
 import * as APITypes from '../api-utils/APITypes';
 import * as ConnectionTypes from '../api-utils/ConnectionTypes';

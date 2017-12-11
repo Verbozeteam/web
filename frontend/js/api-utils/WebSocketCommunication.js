@@ -19,7 +19,6 @@ class WebSocketCommunication {
     _onMessage: (data: WebSocketDataType) => null = (data) => null;
 
     constructor() {
-        console.log('WebSocketCommunication constructor()');
         /* create new UUID token to be included in every message that is sent */
         this._token = UUID.v4();
     }

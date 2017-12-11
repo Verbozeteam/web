@@ -7,10 +7,7 @@ import {
   BrowserRouter,
 } from 'react-router-dom';
 
-// import '../semantic/dist/semantic.min.css';
-
 import App from './public-website-components/App';
-
 
 let react_app_element = document.getElementById('react-app');
 

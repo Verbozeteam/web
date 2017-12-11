@@ -3,26 +3,33 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import { RoomGrid } from './tablet-components/RoomGrid';
+
 type PropsType = {
 };
 
 type StateType = {
 };
 
-class RoomTabletBase extends React.Component<PropsType, StateType> {
+class RoomTablet extends React.Component<PropsType, StateType> {
     render() {
         return (
             <div style={styles.tabletContainer}>
+                <div style={styles.bezel}>
+                    <RoomGrid />
+                </div>
             </div>
         );
     }
 };
-RoomTabletBase.contextTypes = {
+RoomTablet.contextTypes = {
     store: PropTypes.object
 };
 
 const styles = {
     tabletContainer: {
+        display: "flex",
+        flexDirection: 'column',
         height: 300,
         width: 500,
         backgroundColor: 'black',
@@ -30,7 +37,16 @@ const styles = {
         position: 'absolute',
         right: 100,
         border: '1px solid white',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    bezel: {
+        width: 460,
+        height: 260,
+        backgroundColor: '#111111',
+        display: "flex",
+        flexDirection: 'column',
     },
 };
 
-export const RoomTablet = RoomTabletBase;
+module.exports = { RoomTablet };

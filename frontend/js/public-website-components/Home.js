@@ -11,12 +11,13 @@ import {
     Divider,
 } from 'semantic-ui-react';
 
-type PropsType = {
+import { connect as ReduxConnect } from 'react-redux';
+import { AppWrapper } from "./redux/store";
 
+type PropsType = {
 };
 
 type StateType = {
-
 };
 
 export default class Home extends Component<PropsType, StateType> {
@@ -103,4 +104,3 @@ export default class Home extends Component<PropsType, StateType> {
         )
     };
 };
-

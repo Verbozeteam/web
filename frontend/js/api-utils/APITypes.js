@@ -9,3 +9,7 @@ export type Room = {
     name: string,
     floor?: string,
 };
+
+export type CreatedToken = {
+    id: string,
+}

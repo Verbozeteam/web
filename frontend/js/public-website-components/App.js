@@ -15,6 +15,10 @@ import {
     Visibility,
 } from 'semantic-ui-react'
 
+import { connect as ReduxConnect } from 'react-redux';
+import { AppWrapper } from "./redux/store";
+import * as connectionActions from './redux/actions/connection';
+
 import NavBar from './NavBar';
 import Home from './Home';
 import { RoomDemoComponent } from './RoomDemoComponent';
@@ -29,7 +33,7 @@ type StateType = {
 };
 
 
-export default class App extends Component<PropsType, StateType> {
+class App extends Component<PropsType, StateType> {
 
     state = {}
 
@@ -69,3 +73,5 @@ export default class App extends Component<PropsType, StateType> {
         )
     }
 }
+
+export const Dashboard = AppWrapper(ReduxConnect(() => {return {}}, () => {return {}}) (App));

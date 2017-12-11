@@ -4,8 +4,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect as ReduxConnect } from 'react-redux';
-import { STORE, AppWrapper } from "../redux/store";
-import * as connectionActions from '../redux/actions/connection';
+import { STORE, AppWrapper } from "./redux/store";
+import * as connectionActions from './redux/actions/connection';
 
 import * as APITypes from '../api-utils/APITypes';
 import * as ConnectionTypes from '../api-utils/ConnectionTypes';

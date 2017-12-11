@@ -31,6 +31,10 @@ class APICallerClass {
     getRooms(success: (Array<APITypes.Room>) => any, failure?: (APITypes.ErrorType) => any) {
         this.__makeRequest('get', '/api/rooms/', {}, success, failure);
     }
+
+    createToken(success: (APITypes.CreatedToken) => any, failure?: (APITypes.ErrorType) => any) {
+        this.__makeRequest('post', '/api/tokens/', {}, success, failure);
+    }
 };
 
 export const APICaller = new APICallerClass();
