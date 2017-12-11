@@ -14,7 +14,7 @@ class APICallerClass {
 
         if (params.headers === undefined)
             params.headers = {};
-        params.headers['authorization'] = 'token 019aec3abeda611018a0c09e1f07e5d0ec04544b';
+        params.headers['authorization'] = 'token 89640ba943f949a7c766defff8b315263a62efae';
 
         axios({
             method: requestMethod,

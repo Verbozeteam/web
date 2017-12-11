@@ -50,7 +50,6 @@ export default class HomepageLayout extends Component<PropsType, StateType> {
                     once={false}
                 >
                     <Segment
-                        inverted
                         textAlign='center'
                         style={{ minHeight: 700, padding: 0 }}
                         vertical>
