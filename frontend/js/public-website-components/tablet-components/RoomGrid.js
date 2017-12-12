@@ -25,19 +25,21 @@ type PropsType = {
 };
 
 type StateType = {
-    currentPanel: number,
+    currentPanel: string,
 };
 
 class RoomGrid extends React.Component<PropsType, StateType> {
     state = {
-        currentPanel: -1,
+        currentPanel: "",
     };
 
     renderPanel(panel: ConnectionTypes.PanelType,
                 left: number,
                 top: number,
                 width: number,
-                height: number) {
+                height: number,
+                layout: string) {
+
         var panelStyle = {
             top,
             left,
@@ -46,7 +48,7 @@ class RoomGrid extends React.Component<PropsType, StateType> {
             ...styles.panel,
         }
         return (
-            <div key={"panel-"+panel.name.en} style={panelStyle}>
+            <div key={"panel-"+panel.name.en} style={panelStyle} onClick={null}>
                 {panel.name.en}
             </div>
         );
@@ -107,7 +109,7 @@ class RoomGrid extends React.Component<PropsType, StateType> {
 
     render() {
         const { currentPanel } = this.state;
-        var renderedPanels = currentPanel === -1 ? this.renderPresentationView() : this.renderDetailView();
+        var renderedPanels = currentPanel === "" ? this.renderPresentationView() : this.renderDetailView();
 
         return (
             <div style={styles.container}>
