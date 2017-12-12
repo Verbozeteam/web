@@ -35,6 +35,7 @@
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.5",
     "image-webpack-loader": "^3.4.2",
+    "qrcode.react": "^0.7.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",

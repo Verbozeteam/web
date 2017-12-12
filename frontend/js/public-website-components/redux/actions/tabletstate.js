@@ -10,10 +10,10 @@ export function setCurrentPanel(panel_index: string) {
     };
 };
 
-export function setCurrentConnectionToken(token: string) {
+export function setCurrentConnectionURL(url: string) {
     return {
         type: SET_CURRENT_CONNECTION_TOKEN,
-        token,
+        url,
     }
 }
 

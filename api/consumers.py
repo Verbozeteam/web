@@ -94,6 +94,9 @@ def ws_disconnect(message, token):
 	token_object = get_valid_token(token)
 	if token_object:
 		# valid token
-		group = token_object.content_object.websocket_group
+		if token_object.content_object:
+			group = token_object.content_object.websocket_group
+		else:
+			group = "temp-token-"+str(token_object.id)
 		# remove reply_channel from group
 		Group(group).discard(message.reply_channel)
