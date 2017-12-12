@@ -1,27 +1,20 @@
 /* @flow */
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
-    Button,
-    Container,
-    Divider,
-    Grid,
-    Header,
-    Icon,
-    Image,
-    List,
-    Menu,
     Segment,
     Visibility,
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
 
+import { withRouter } from 'react-router-dom'
 import { connect as ReduxConnect } from 'react-redux';
 import { AppWrapper } from "./redux/store";
 
+
+
 import NavBar from './NavBar';
-import Home from './Home';
-import { RoomDemoComponent } from './RoomDemoComponent';
-import { Footer } from './Footer'
+import Content from './Content';
+import { Footer } from './Footer';
 
 type PropsType = {
     ...any,
@@ -45,34 +38,28 @@ class App extends Component<PropsType, StateType> {
         return (
             <div>
                 { visible ? <NavBar sticky={true}  /> : null }
-
                 <Visibility
-                    onTopPassed={this.showStickyMenu}
-                    onTopVisible={this.hideStickyMenu}
-                    once={false}
-                >
+                    onBottomPassed={this.showStickyMenu}
+                    onBottomVisible={this.hideStickyMenu}
+                    once={false} >
                     <Segment
                         inverted
                         textAlign='center'
-                        style={{ minHeight: 700, padding: 0 }}
-                        vertical
-                    >
+                        vertical >
 
                         <NavBar sticky={false} />
-
-                        <RoomDemoComponent />
 
                     </Segment>
                 </Visibility>
 
-                <Home />
+                <Content />
 
-                <Footer/>
+                <Footer />
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 module.exports = {
-    App: AppWrapper(ReduxConnect(() => {return {}}, () => {return {}}) (App))
+    App: AppWrapper(withRouter(ReduxConnect(() => {return {}}, () => {return {}}) (App)))
 }

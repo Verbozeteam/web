@@ -11,8 +11,7 @@ import {
     Divider,
 } from 'semantic-ui-react';
 
-import { connect as ReduxConnect } from 'react-redux';
-import { AppWrapper } from "./redux/store";
+import { RoomDemoComponent } from './RoomDemoComponent';
 
 type PropsType = {
 };
@@ -27,6 +26,7 @@ export default class Home extends Component<PropsType, StateType> {
     render() {
         return (
             <div>
+                <RoomDemoComponent />
                 <Segment style={{ padding: '8em 0em' }} vertical>
                     <Grid container stackable verticalAlign='middle'>
                         <Grid.Row>

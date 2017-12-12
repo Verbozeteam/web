@@ -8,7 +8,7 @@ import {
 } from 'semantic-ui-react';
 import {
   Route,
-  Link
+  NavLink
 } from 'react-router-dom';
 
 
@@ -20,16 +20,28 @@ type StateType =  {
 	...any,
 };
 
+/*
+<li><Link to='/'>Home</Link></li>
+<li><Link to='/roster'>Roster</Link></li>
+<li><Link to='/schedule'>Schedule</Link></li>
+*/
+
+/*
+<NavLink
+  to="/faq"
+  activeClassName="selected"
+>FAQs</NavLink>
+*/
+
 export default class NavBar extends Component<PropsType, StateType> {
 	render() {
 		if (this.props.sticky) {
 			return (
 				<Menu fixed='top' size='large'>
 			     	<Container>
-			         	<Menu.Item as='a' active>Home</Menu.Item>
-			         	<Menu.Item as='a'>Work</Menu.Item>
-			         	<Menu.Item as='a'>Company</Menu.Item>
-			         	<Menu.Item as='a'>Careers</Menu.Item>
+						<Menu.Item as={NavLink} exact to='/'>Home</Menu.Item>
+						<Menu.Item as={NavLink} to='/features'>Features</Menu.Item>
+						<Menu.Item as={NavLink} to='/about-us'>About Us</Menu.Item>
 			         	<Menu.Item position='right'>
 							<Button as='a'>Log in</Button>
 							<Button as='a' primary style={{ marginLeft: '0.5em' }}>Sign Up</Button>
@@ -42,10 +54,10 @@ export default class NavBar extends Component<PropsType, StateType> {
 			return (
 				<Container>
 			      	<Menu inverted pointing secondary size='large'>
-			        	<Menu.Item as='a' active>Home</Menu.Item>
-			        	<Menu.Item as='a'>Work</Menu.Item>
-			        	<Menu.Item as='a'>Company</Menu.Item>
-			        	<Menu.Item as='a'>Careers</Menu.Item>
+						<Menu.Item as={NavLink} exact to='/' >Home</Menu.Item>
+						<Menu.Item as={NavLink} to='/features'>Features</Menu.Item>
+			         	<Menu.Item as={NavLink} to='/about-us'>About Us</Menu.Item>
+
 			        	<Menu.Item position='right'>
 			          		<Button as='a' inverted>Log in</Button>
 			          		<Button as='a' inverted style={{ marginLeft: '0.5em' }}>Sign Up</Button>
