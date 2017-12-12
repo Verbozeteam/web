@@ -87,15 +87,11 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
                 config: reduxState.connection.roomConfig,
                 ...reduxState.connection.roomState,
             })
-        } else {
+        } else if ("thing" in data) {
             // we have a command
-            var keys = Object.keys(data);
-            for (var i = 0; i < keys.length; i++) {
-                if (keys[i] !== 'config' && keys[i] !== 'token') {
-                    console.log(keys[i], "===>", data[keys[i]]);
-                    setThingPartialState(keys[i], data[keys[i]]);
-                }
-            }
+            var thing_id = data.thing;
+            delete data.thing;
+            setThingPartialState(thing_id, data);
         }
     }
 
