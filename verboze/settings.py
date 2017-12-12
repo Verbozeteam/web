@@ -35,7 +35,7 @@ if os.environ.get('ON_HEROKU', False):
     #SECURE_SSL_REDIRECT = True
 else:
     DEBUG = True
-    ALLOWED_HOSTS = ['local.com', 'www.local.com', 'dashboard.local.com', 'api.local.com', 'localhost']
+    ALLOWED_HOSTS = ['*']
 
 
 # Application definition

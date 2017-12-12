@@ -11,6 +11,7 @@ import { APICaller } from '../api-utils/API';
 import { WebSocketCommunication } from '../api-utils/WebSocketCommunication';
 
 import * as tabletActions from './redux/actions/tabletstate';
+import * as connectionActions from './redux/actions/connection';
 
 import { RoomDemoControls } from './RoomDemoControls';
 import { RoomState } from './room-state/RoomState';
@@ -22,7 +23,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        setToken: t => dispatch(tabletActions.setCurrentConnectionToken(t)),
+        setConnectionURL: u => dispatch(tabletActions.setCurrentConnectionURL(u)),
+        setThingPartialState: (t, s) => dispatch(connectionActions.setThingPartialState(t, s)),
     };
 }
 
@@ -33,7 +35,8 @@ type StateType = {
     /**
      * 0: display logo and -> Demo button
      * 1: display logo and -> Demo loading
-     * 2:
+     * 2: animating towards faded logo and button
+     * 3: display tablet controls (fades in)
      */
     currentStage: number,
 };
@@ -45,29 +48,78 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
     _logo = require('../../assets/images/verboze.png');
 
+    createWebsocketURL(token: string): string {
+        return "ws://" + location.host + "/stream/" + token + '/';
+    }
+
+    componentWillMount() {
+        /* bind websocket callbacks */
+        WebSocketCommunication.setOnConnected(this.onConnected.bind(this));
+        WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
+        WebSocketCommunication.setOnMessage(this.onMessage.bind(this));
+    }
+
+    componentWillUnmount() {
+        WebSocketCommunication.disconnect();
+    }
+
+    /* websocket callback on connect event */
+    onConnected() : any {
+        this.setState({currentStage: 2});
+        setTimeout((() => this.setState({currentStage: 3})).bind(this), 1000);
+    }
+
+    /* websocket callback on disconnect event */
+    onDisconnected() : any {
+        const { setConfig } = this.props;
+        this.setState({currentStage: 0});
+    }
+
+    /* websocket callback on message event */
+    onMessage(data: ConnectionTypes.WebSocketDataType) : any {
+        const { setThingPartialState } = this.props;
+        const { store } = this.context;
+        const reduxState = store.getState();
+
+        if ("code" in data && data.code === 0) {
+            // phone app sent code 0, reply with config!
+            WebSocketCommunication.sendMessage({
+                config: reduxState.connection.roomConfig,
+                ...reduxState.connection.roomState,
+            })
+        } else if ("thing" in data) {
+            // we have a command
+            var thing_id = data.thing;
+            delete data.thing;
+            setThingPartialState(thing_id, data);
+        }
+    }
+
     startDemo() {
-        const { setToken } = this.props;
+        const { setConnectionURL } = this.props;
 
         if (this.state.currentStage === 0) {
             this.setState({currentStage: 1});
-            APICaller.createToken((token: APITypes.CreatedToken) => {
-                setToken(token);
-                console.log("habbetein")
-            });
+            APICaller.createToken(((token: APITypes.CreatedToken) => {
+                setConnectionURL(this.createWebsocketURL(token.id));
+                WebSocketCommunication.connect(this.createWebsocketURL(token.id));
+            }).bind(this));
         }
     }
 
     renderLogo() {
         const { currentStage } = this.state;
 
-        var loading_status = currentStage === 1 ? {loading: true} : {};
+        var loading_status = currentStage > 0 ? {loading: true} : {};
 
         return (
             <div style={styles.roomContainer}>
-                <img style={styles.logo} src={this._logo} />
-                <Button {...loading_status} primary fade='true' vertical='true' size='massive' onClick={this.startDemo.bind(this)}>
-                    {"Try demo!"}
-                </Button>
+                <div style={currentStage > 1 ? styles.logo_container_faded : styles.logo_container}>
+                    <img style={styles.logo} src={this._logo} />
+                    <Button {...loading_status} primary fade='true' vertical='true' size='massive' onClick={this.startDemo.bind(this)}>
+                        {"Try demo!"}
+                    </Button>
+                </div>
             </div>
         );
     }
@@ -87,8 +139,9 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
         switch (currentStage) {
             case 0:
             case 1:
-                return this.renderLogo();
             case 2:
+                return this.renderLogo();
+            case 3:
                 return this.renderDemo();
         }
     }
@@ -104,9 +157,25 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#111111',
-
+    },
+    logo_container: {
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+
+        marginTop: 0,
+        opacity: 1,
+    },
+    logo_container_faded: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        marginTop: -500,
+        opacity: 0,
+        transition: 'margin-top 1s, opacity 500ms',
     },
     logo: {
         width: 666,

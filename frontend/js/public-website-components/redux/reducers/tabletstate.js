@@ -7,12 +7,12 @@ import {
 
 type StateType = {
     selectedPanel: number,
-    connectionToken: string,
+    connectionURL: string,
 };
 
 const defaultState: StateType = {
     selectedPanel: -1,
-    connectionToken: "",
+    connectionURL: "",
 };
 
 module.exports = (state: StateType = defaultState, action: Object) => {
@@ -24,7 +24,7 @@ module.exports = (state: StateType = defaultState, action: Object) => {
             new_state.selectedPanel = action.panel_index;
             break;
         case SET_CURRENT_CONNECTION_TOKEN:
-            new_state.connectionToken = action.token;
+            new_state.connectionURL = action.url;
             break;
     }
 

@@ -64,6 +64,7 @@ class WebSocketCommunication {
     disconnect() {
         if (this._ws) {
             this._ws.close();
+            this._ws = null;
         }
     }
 
