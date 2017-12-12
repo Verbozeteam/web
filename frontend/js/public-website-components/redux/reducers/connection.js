@@ -23,7 +23,7 @@ const defaultState: StateType = {
     roomConfig: {
         "id": "1",
         "rooms": [{
-            "detail": {"ratio": 4, "side": "right"},
+            "detail": {"ratio": 4, "side": "left"},
             "grid": [{
                 "panels": [{
                     "name": {"en": "Room Lighting"},
