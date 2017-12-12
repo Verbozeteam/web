@@ -20,19 +20,6 @@ type StateType =  {
 	...any,
 };
 
-/*
-<li><Link to='/'>Home</Link></li>
-<li><Link to='/roster'>Roster</Link></li>
-<li><Link to='/schedule'>Schedule</Link></li>
-*/
-
-/*
-<NavLink
-  to="/faq"
-  activeClassName="selected"
->FAQs</NavLink>
-*/
-
 export default class NavBar extends Component<PropsType, StateType> {
 	render() {
 		if (this.props.sticky) {

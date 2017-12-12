@@ -61,6 +61,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
     componentWillUnmount() {
         WebSocketCommunication.disconnect();
+        console.log("UNMOUNTING");
     }
 
     /* websocket callback on connect event */
@@ -156,7 +157,7 @@ const styles = {
 
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#111111',
+        backgroundColor: '#1b1c1d',
     },
     logo_container: {
         display: 'flex',
