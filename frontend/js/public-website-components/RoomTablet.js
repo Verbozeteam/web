@@ -16,7 +16,7 @@ class RoomTablet extends React.Component<PropsType, StateType> {
         return (
             <div style={styles.tabletContainer}>
                 <div style={styles.bezel}>
-                    <RoomGrid />
+                    <RoomGrid width={styles.bezel.width} height={styles.bezel.height} />
                 </div>
             </div>
         );
@@ -28,8 +28,6 @@ RoomTablet.contextTypes = {
 
 const styles = {
     tabletContainer: {
-        display: "flex",
-        flexDirection: 'column',
         height: 300,
         width: 500,
         backgroundColor: 'black',
@@ -41,6 +39,9 @@ const styles = {
         justifyContent: 'center',
     },
     bezel: {
+        top: 20,
+        left: 20,
+        position: 'absolute',
         width: 460,
         height: 260,
         backgroundColor: '#111111',

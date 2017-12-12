@@ -36,7 +36,7 @@ type StateType = {
      * 0: display logo and -> Demo button
      * 1: display logo and -> Demo loading
      * 2: animating towards faded logo and button
-     * 3: display tablet controls (fades in)
+     * 3: display tablet controls
      */
     currentStage: number,
 };
@@ -44,7 +44,9 @@ type StateType = {
 class RoomDemoComponent extends React.Component<PropsType, StateType> {
     state = {
         currentStage: 0,
-    }
+    };
+
+    _isUnmounting = false;
 
     _logo = require('../../assets/images/verboze.png');
 
@@ -53,6 +55,8 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
     }
 
     componentWillMount() {
+        this._isUnmounting = false;
+
         /* bind websocket callbacks */
         WebSocketCommunication.setOnConnected(this.onConnected.bind(this));
         WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
@@ -60,8 +64,8 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
     }
 
     componentWillUnmount() {
+        this._isUnmounting = true;
         WebSocketCommunication.disconnect();
-        console.log("UNMOUNTING");
     }
 
     /* websocket callback on connect event */
@@ -73,7 +77,8 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
     /* websocket callback on disconnect event */
     onDisconnected() : any {
         const { setConfig } = this.props;
-        this.setState({currentStage: 0});
+        if (!this._isUnmounting)
+            this.setState({currentStage: 0});
     }
 
     /* websocket callback on message event */
@@ -87,7 +92,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
             WebSocketCommunication.sendMessage({
                 config: reduxState.connection.roomConfig,
                 ...reduxState.connection.roomState,
-            })
+            });
         } else if ("thing" in data) {
             // we have a command
             var thing_id = data.thing;
@@ -158,6 +163,8 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#1b1c1d',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     logo_container: {
         display: 'flex',

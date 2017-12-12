@@ -43,7 +43,7 @@ class RoomDemoControls extends React.Component<PropsType, StateType> {
 
         if (!this.state.isRendered) {
             style.opacity = 0;
-            style.bottom = 100;
+            style.bottom = -100;
             requestAnimationFrame(this.animate.bind(this));
         }
 
@@ -66,7 +66,7 @@ const styles = {
         position: 'absolute',
         height: 300,
         width: '100%',
-        bottom: -80,
+        bottom: 100,
         opacity: 1,
         transition: 'opacity 500ms, bottom 500ms',
     },
