@@ -7,7 +7,6 @@ import {
 	Button
 } from 'semantic-ui-react';
 import {
-  Route,
   NavLink
 } from 'react-router-dom';
 
@@ -29,10 +28,6 @@ export default class NavBar extends Component<PropsType, StateType> {
 						<Menu.Item as={NavLink} exact to='/'>Home</Menu.Item>
 						<Menu.Item as={NavLink} to='/features'>Features</Menu.Item>
 						<Menu.Item as={NavLink} to='/about-us'>About Us</Menu.Item>
-			         	<Menu.Item position='right'>
-							<Button as='a'>Log in</Button>
-							<Button as='a' primary style={{ marginLeft: '0.5em' }}>Sign Up</Button>
-			         	</Menu.Item>
 			     	</Container>
 		     	</Menu>
 			);
@@ -44,14 +39,8 @@ export default class NavBar extends Component<PropsType, StateType> {
 						<Menu.Item as={NavLink} exact to='/' >Home</Menu.Item>
 						<Menu.Item as={NavLink} to='/features'>Features</Menu.Item>
 			         	<Menu.Item as={NavLink} to='/about-us'>About Us</Menu.Item>
-
-			        	<Menu.Item position='right'>
-			          		<Button as='a' inverted>Log in</Button>
-			          		<Button as='a' inverted style={{ marginLeft: '0.5em' }}>Sign Up</Button>
-			        	</Menu.Item>
 			      	</Menu>
 		    	</Container>
-
 			);
 		};
 	};
