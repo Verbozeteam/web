@@ -7,6 +7,9 @@ import * as ConnectionTypes from '../../api-utils/ConnectionTypes';
 
 import * as connectionActions from '../redux/actions/connection';
 
+import { LightsPanel } from './LightsPanel';
+import { HotelControls } from './HotelControls';
+
 function mapStateToProps(state) {
     return {
         roomConfig: state.connection.roomConfig,
@@ -41,7 +44,36 @@ class RoomGrid extends React.Component<PropsType, StateType> {
             this.setState({currentPanel: panel.name.en});
     }
 
-    renderPanelContents(panel: ConnectionTypes.PanelType) {
+    renderPanelContents(panel: ConnectionTypes.PanelType,
+                left: number,
+                top: number,
+                width: number,
+                height: number,
+                viewType: string) {
+
+        if (panel.things.length === 0)
+            return <div></div>;
+
+        switch (panel.things[0].category) {
+            case "dimmers":
+            case "light_switches":
+                return (
+                    <LightsPanel
+                        layout={{left, width, top, height}}
+                        viewType={viewType}
+                        things={panel.things}
+                        presets={panel.presets}
+                    />
+                );
+            case "central_acs":
+                break;
+            case "hotel_controls":
+                return <HotelControls
+                        id={panel.things[0].id}
+                        viewType={viewType}
+                    />
+        }
+
         return <div></div>;
     }
 
@@ -50,7 +82,7 @@ class RoomGrid extends React.Component<PropsType, StateType> {
                 top: number,
                 width: number,
                 height: number,
-                layout: string) : PropTypes.ReactComponent<> {
+                viewType: string) : PropTypes.ReactComponent<> {
 
         var panelStyle = {
             top,
@@ -62,19 +94,30 @@ class RoomGrid extends React.Component<PropsType, StateType> {
 
         var toggleFunction = (() => this.togglePanel(panel)).bind(this);
         var closeButton = null;
-        if (layout === "detail")
+        if (viewType === 'detail')
             closeButton = <img  style={styles.closeButton}
                                 src={require('../../../assets/images/close.png')}
                                 onClick={toggleFunction}/>;
 
+        var panelContents = null;
+        if (viewType !== 'collapsed')
+            panelContents = this.renderPanelContents(
+                panel,
+                left+styles.panelBody.padding,
+                top+styles.panelBody.padding,
+                width-styles.panelBody.padding*2,
+                height-styles.panelBody.padding*2,
+                viewType
+            );
+
         return (
-            <div key={"panel-"+panel.name.en} style={panelStyle} onClick={layout !== 'detail' ? toggleFunction : null}>
+            <div key={"panel-"+panel.name.en} style={panelStyle} onClick={viewType !== 'detail' ? toggleFunction : null}>
                 <div style={styles.panelHeader}>
                     {panel.name.en}
                     {closeButton}
                 </div>
                 <div style={styles.panelBody}>
-                    {this.renderPanelContents(panel)}
+                    {panelContents}
                 </div>
             </div>
         );
@@ -187,7 +230,7 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
 
-        transition: 'left 500ms, top 500ms, width 500ms, height 500ms',
+        transition: 'left 300ms, top 300ms, width 300ms, height 300ms',
     },
     panelHeader: {
         height: 20,
@@ -200,7 +243,7 @@ const styles = {
     },
     panelBody: {
         flex: 1,
-        padding: 3,
+        padding: 5,
     }
 };
 

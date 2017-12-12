@@ -109,6 +109,8 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
             APICaller.createToken(((token: APITypes.CreatedToken) => {
                 setConnectionURL(this.createWebsocketURL(token.id));
                 WebSocketCommunication.connect(this.createWebsocketURL(token.id));
+            }).bind(this), ((error: APITypes.ErrorType) => {
+                this.setState({currentStage: 0});
             }).bind(this));
         }
     }
