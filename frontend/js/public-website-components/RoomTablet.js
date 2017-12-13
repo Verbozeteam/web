@@ -47,6 +47,7 @@ const styles = {
         backgroundColor: '#111111',
         display: "flex",
         flexDirection: 'column',
+        cursor: 'pointer',
     },
 };
 

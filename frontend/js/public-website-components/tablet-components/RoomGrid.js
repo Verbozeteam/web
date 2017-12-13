@@ -9,6 +9,7 @@ import * as connectionActions from '../redux/actions/connection';
 
 import { LightsPanel } from './LightsPanel';
 import { HotelControls } from './HotelControls';
+import { CentralAC } from './CentralAC';
 
 function mapStateToProps(state) {
     return {
@@ -66,7 +67,11 @@ class RoomGrid extends React.Component<PropsType, StateType> {
                     />
                 );
             case "central_acs":
-                break;
+                return <CentralAC
+                        id={panel.things[0].id}
+                        layout={{left, width, top, height}}
+                        viewType={viewType}
+                    />
             case "hotel_controls":
                 return <HotelControls
                         id={panel.things[0].id}
@@ -92,12 +97,18 @@ class RoomGrid extends React.Component<PropsType, StateType> {
             ...styles.panel,
         }
 
+        var panelBodyStyle = {
+            ...styles.panelBody,
+        }
+
         var toggleFunction = (() => this.togglePanel(panel)).bind(this);
         var closeButton = null;
         if (viewType === 'detail')
             closeButton = <img  style={styles.closeButton}
                                 src={require('../../../assets/images/close.png')}
                                 onClick={toggleFunction}/>;
+        else
+            panelBodyStyle.pointerEvents = 'none';
 
         var panelContents = null;
         if (viewType !== 'collapsed')
@@ -116,7 +127,7 @@ class RoomGrid extends React.Component<PropsType, StateType> {
                     {panel.name.en}
                     {closeButton}
                 </div>
-                <div style={styles.panelBody}>
+                <div style={panelBodyStyle}>
                     {panelContents}
                 </div>
             </div>

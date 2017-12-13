@@ -29,6 +29,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 type PropsType = {
+    setConnectionURL: (string) => null,
+    setThingPartialState: (string, Object) => null,
 };
 
 type StateType = {
@@ -76,7 +78,6 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
     /* websocket callback on disconnect event */
     onDisconnected() : any {
-        const { setConfig } = this.props;
         if (!this._isUnmounting)
             this.setState({currentStage: 0});
     }
@@ -167,6 +168,13 @@ const styles = {
         backgroundColor: '#1b1c1d',
         alignItems: 'center',
         justifyContent: 'center',
+
+
+        MozUserSelect: '-moz-none',
+        KhtmlUserSelect: 'none',
+        UebkitUserSelect: 'none',
+        MsUserSelect: 'none',
+        userSelect: 'none',
     },
     logo_container: {
         display: 'flex',
