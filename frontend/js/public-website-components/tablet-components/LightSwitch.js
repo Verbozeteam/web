@@ -69,12 +69,11 @@ class LightSwitch extends React.Component<PropsType, StateType> {
         if (viewType === 'detail')
             on_press = (() => this.changeIntensity(1-this.state.intensity)).bind(this);
 
-        var img_style = JSON.parse(JSON.stringify(layout));
-        img_style = Object.assign(img_style, styles.container);
-        img_style = Object.assign(img_style, intensity === 1 ? styles.light_on : styles.light_off);
+        var imgStyle = {...layout, ...styles.container};
+        imgStyle = Object.assign(imgStyle, intensity === 1 ? styles.light_on : styles.light_off);
 
         return (
-            <div style={img_style} onClick={on_press}>
+            <div style={imgStyle} onClick={on_press}>
             </div>
         );
     }

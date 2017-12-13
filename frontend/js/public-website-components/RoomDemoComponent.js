@@ -123,12 +123,15 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
         return (
             <div style={styles.roomContainer}>
-                <div style={currentStage > 1 ? styles.logo_container_faded : styles.logo_container}>
-                    <img style={styles.logo} src={this._logo} />
-                    <Button {...loading_status} primary fade='true' vertical='true' size='massive' onClick={this.startDemo.bind(this)}>
-                        {"Try demo!"}
-                    </Button>
+                <div style={styles.logoStaticContainer}>
+                    <div style={currentStage > 1 ? styles.logoContainerFaded : styles.logoContainer}>
+                        <img style={styles.logo} src={this._logo} />
+                        <Button {...loading_status} primary fade='true' vertical='true' size='massive' onClick={this.startDemo.bind(this)}>
+                            {"Try demo!"}
+                        </Button>
+                    </div>
                 </div>
+                <div style={styles.whitePad} />
             </div>
         );
     }
@@ -137,6 +140,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
         return (
             <div style={styles.roomContainer}>
                 <RoomState />
+                <div style={styles.whitePad} />
                 <RoomDemoControls />
             </div>
         );
@@ -161,13 +165,11 @@ RoomDemoComponent.contextTypes = {
 
 const styles = {
     roomContainer: {
-        height: 700,
+        height: 800,
 
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#1b1c1d',
-        alignItems: 'center',
-        justifyContent: 'center',
 
 
         MozUserSelect: '-moz-none',
@@ -176,7 +178,10 @@ const styles = {
         MsUserSelect: 'none',
         userSelect: 'none',
     },
-    logo_container: {
+    logoStaticContainer: {
+        height: 700,
+    },
+    logoContainer: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -185,7 +190,7 @@ const styles = {
         marginTop: 0,
         opacity: 1,
     },
-    logo_container_faded: {
+    logoContainerFaded: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -199,6 +204,13 @@ const styles = {
         width: 666,
         height: 400,
     },
+    whitePad: {
+        position: 'relative',
+        bottom: 0,
+        height: 100,
+        width: '100%',
+        backgroundColor: '#ffffff',
+    }
 };
 
 

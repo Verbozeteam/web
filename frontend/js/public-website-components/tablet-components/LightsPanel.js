@@ -35,7 +35,7 @@ type StateType = {
 };
 
 class LightsPanel extends React.Component<PropsType, StateType> {
-    renderDimmer(dimmer: GenericThingType) {
+    renderDimmer(dimmer: ConnectionTypes.GenericThingType) {
         const { viewType, layout } = this.props;
 
         var dimmer_name = '';
@@ -63,7 +63,7 @@ class LightsPanel extends React.Component<PropsType, StateType> {
         </div>;
     }
 
-    renderLightSwitch(light_switch: GenericThingType) {
+    renderLightSwitch(light_switch: ConnectionTypes.GenericThingType) {
         const { viewType, layout } = this.props;
 
         var switch_name = '';

@@ -98,8 +98,7 @@ class HotelControls extends React.Component<PropsType, StateType> {
         var cards = [];
 
         for (var i = 0; i < 2; i++) {
-            var cardStyle = JSON.parse(JSON.stringify(styles.card_container));
-            cardStyle = Object.assign(cardStyle, card_defs[i].extra_style)
+            var cardStyle = {...styles.card_container, ...card_defs[i].extra_style};
             cards[i] = (
                 <div key={'card-'+i} style={cardStyle} onClick={card_defs[i].toggler}>
                     <div style={styles.text_container}>

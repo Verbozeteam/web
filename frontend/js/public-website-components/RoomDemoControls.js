@@ -39,11 +39,11 @@ class RoomDemoControls extends React.Component<PropsType, StateType> {
     }
 
     render() {
-        var style = JSON.parse(JSON.stringify(styles.controlsContainer));
+        var style = {...styles.controlsContainer};
 
         if (!this.state.isRendered) {
             style.opacity = 0;
-            style.bottom = -200;
+            style.top = 800;
             requestAnimationFrame(this.animate.bind(this));
         }
 
@@ -63,12 +63,12 @@ RoomDemoControls.contextTypes = {
 
 const styles = {
     controlsContainer: {
-        position: 'relative',
+        top: 550,
+        position: 'absolute',
         height: 300,
         width: '100%',
-        bottom: -80,
         opacity: 1,
-        transition: 'opacity 500ms, bottom 500ms',
+        transition: 'opacity 500ms, top 500ms',
     },
     qr_code: {
         position: 'absolute',
