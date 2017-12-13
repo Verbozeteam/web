@@ -50,7 +50,7 @@ export default class Home extends Component<PropsType, StateType> {
                         </Grid.Row>
 
                         <Grid.Row>
-                            <Grid.Column floated='right' width={6}>
+                            <Grid.Column floated='left' width={6}>
                                 <Image
                                     bordered
                                     rounded
