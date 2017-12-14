@@ -7,7 +7,8 @@ import {
     Card,
     Icon,
     Segment,
-    Grid
+    Grid,
+    Container
 } from 'semantic-ui-react';
 
 type PropsType = {
@@ -23,73 +24,99 @@ export default class AboutUs extends Component<PropsType, StateType> {
     render() {
         return (
             <div>
-                <Segment style={ styles.cardsSegment }>
-                    <Grid textAlign='center' stackable>
-                        <Grid.Row>
+                <Segment style={ styles.teamSegment }>
+                    <Container>
+                        <Header as='h3' style={{ fontSize: '2em' }}>Team</Header>
+                        <br/>
+                        <Grid textAlign='center' columns={3} stackable>
+                            <Grid.Row>
+                                <Grid.Column>
+                                    <Card style={ styles.hasanCard }>
+                                        <Image src={ this._hasan } />
+                                        <Card.Content>
+                                            <Card.Header>
+                                                Hasan Al-Jawaheri
+                                            </Card.Header>
+                                            <Card.Meta>
+                                                <span className='date'>
+                                                    Co-Founder&nbsp;&nbsp;|&nbsp;&nbsp;CEO&nbsp;&nbsp;|&nbsp;&nbsp;Systems Engineer
+                                                </span>
+                                            </Card.Meta>
+                                            <Card.Description>
+                                                Computer Science and Business Administration from Carnegie Mellon University
+                                            </Card.Description>
+                                        </Card.Content>
+                                        <Card.Content extra>
+                                            <Icon name='mail' />
+                                            hbj@verboze.com
+                                        </Card.Content>
+                                    </Card>
+                                </Grid.Column>
 
-                            <Grid.Column width={4}>
-                                <Card style={ styles.card }>
-                                    <Image src={ this._hasan } />
-                                    <Card.Content>
-                                        <Card.Header>
-                                            Hasan Al-Jawaheri
-                                        </Card.Header>
-                                        <Card.Meta>
-                                            <span className='date'>
-                                                Co-Founder&nbsp;&nbsp;|&nbsp;&nbsp;CEO&nbsp;&nbsp;|&nbsp;&nbsp;Systems Engineer
-                                            </span>
-                                        </Card.Meta>
-                                        <Card.Description>
-                                            Computer Science and Business Administration from Carnegie Mellon University
-                                        </Card.Description>
-                                    </Card.Content>
-                                </Card>
-                            </Grid.Column>
+                                <Grid.Column>
+                                    <Card style={ styles.fituriCard }>
+                                        <Image src={ this._fituri } />
+                                        <Card.Content>
+                                            <Card.Header>
+                                                Mohammed M. Fituri
+                                            </Card.Header>
+                                            <Card.Meta>
+                                                <span className='date'>
+                                                    Co-Founder&nbsp;&nbsp;|&nbsp;&nbsp;Mobile&nbsp;&nbsp;|&nbsp;&nbsp;Design
+                                                </span>
+                                            </Card.Meta>
+                                            <Card.Description>
+                                                Computer Science and Information Systems from Carnegie Mellon University
+                                            </Card.Description>
+                                        </Card.Content>
+                                        <Card.Content extra>
+                                            <Icon name='mail' />
+                                            mfituri@verboze.com
+                                        </Card.Content>
+                                    </Card>
+                                </Grid.Column>
 
-                            <Grid.Column width={4}>
-                                <Card style={ styles.card }>
-                                    <Image src={ this._fituri } />
-                                    <Card.Content>
-                                        <Card.Header>
-                                            Mohammed M. Fituri
-                                        </Card.Header>
-                                        <Card.Meta>
-                                            <span className='date'>
-                                                Co-Founder&nbsp;&nbsp;|&nbsp;&nbsp;Mobile&nbsp;&nbsp;|&nbsp;&nbsp;Design
-                                            </span>
-                                        </Card.Meta>
-                                        <Card.Description>
-                                            Computer Science and Information Systems from Carnegie Mellon University
-                                            <br/>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                        </Card.Description>
-                                    </Card.Content>
-                                </Card>
-                            </Grid.Column>
-
-                            <Grid.Column width={4}>
-                                <Card style={ styles.card }>
-                                    <Image src={ this._yusuf } />
-                                    <Card.Content>
-                                        <Card.Header>
-                                            Yusuf Musleh
-                                        </Card.Header>
-                                        <Card.Meta>
-                                            <span className='date'>
-                                                Co-Founder&nbsp;&nbsp;|&nbsp;&nbsp;Backend&nbsp;&nbsp;|&nbsp;&nbsp;Web
-                                            </span>
-                                        </Card.Meta>
-                                        <Card.Description>
-                                            Computer Science and Business Administration from Carnegie Mellon University
-                                        </Card.Description>
-                                    </Card.Content>
-                                </Card>
-                            </Grid.Column>
-
-                        </Grid.Row>
-
-                    </Grid>
+                                <Grid.Column>
+                                    <Card style={ styles.yusufCard }>
+                                        <Image src={ this._yusuf } />
+                                        <Card.Content>
+                                            <Card.Header>
+                                                Yusuf Musleh
+                                            </Card.Header>
+                                            <Card.Meta>
+                                                <span className='date'>
+                                                    Co-Founder&nbsp;&nbsp;|&nbsp;&nbsp;Backend&nbsp;&nbsp;|&nbsp;&nbsp;Web
+                                                </span>
+                                            </Card.Meta>
+                                            <Card.Description>
+                                                Computer Science and Business Administration from Carnegie Mellon University
+                                            </Card.Description>
+                                        </Card.Content>
+                                        <Card.Content extra>
+                                            <Icon name='mail' />
+                                            ymusleh@verboze.com
+                                        </Card.Content>
+                                    </Card>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
+                    </Container>
                 </Segment>
+
+                <Segment inverted style={ styles.locationSegment }>
+                    <Container>
+                        <Grid textAlign='center' stackable>
+                            <Grid.Row>
+                                <Header as='h3' style={{ fontSize: '2em' }}>Location</Header>
+                                <br/>
+                            </Grid.Row>
+                            <Grid.Row>
+
+                            </Grid.Row>
+                        </Grid>
+                    </Container>
+                </Segment>
+
             </div>
         );
     };
@@ -97,12 +124,25 @@ export default class AboutUs extends Component<PropsType, StateType> {
 
 
 const styles = {
-    cardsSegment: {
-        padding: '12em 0em',
+    teamSegment: {
+        padding: '8em 0em',
         borderRadius: 0,
         margin: 0
     },
-    card: {
+    hasanCard: {
+        height: '100%'
+    },
+    fituriCard: {
+        height: '100%',
         margin: 'auto'
+    },
+    yusufCard: {
+        height: '100%',
+        float: 'right'
+    },
+    locationSegment: {
+        padding: '8em 0em',
+        borderRadius: 0,
+        margin: 0
     }
 }
