@@ -103,20 +103,6 @@ export default class AboutUs extends Component<PropsType, StateType> {
                     </Container>
                 </Segment>
 
-                <Segment inverted style={ styles.locationSegment }>
-                    <Container>
-                        <Grid textAlign='center' stackable>
-                            <Grid.Row>
-                                <Header as='h3' style={{ fontSize: '2em' }}>Location</Header>
-                                <br/>
-                            </Grid.Row>
-                            <Grid.Row>
-
-                            </Grid.Row>
-                        </Grid>
-                    </Container>
-                </Segment>
-
             </div>
         );
     };

@@ -50,7 +50,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
     _isUnmounting = false;
 
-    _logo = require('../../assets/images/verboze.png');
+    _logo = require('../../assets/images/verboze_logo_white.png');
 
     createWebsocketURL(token: string): string {
         return "ws://" + location.host + "/stream/" + token + '/';
@@ -126,9 +126,6 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
                 <div style={styles.logoStaticContainer}>
                     <div style={currentStage > 1 ? styles.logoContainerFaded : styles.logoContainer}>
                         <img style={styles.logo} src={this._logo} />
-                        <Button {...loading_status} primary fade='true' vertical='true' size='massive' onClick={this.startDemo.bind(this)}>
-                            {"Try demo!"}
-                        </Button>
                     </div>
                 </div>
                 <div style={styles.whitePad} />
@@ -201,7 +198,6 @@ const styles = {
         transition: 'margin-top 1s, opacity 500ms',
     },
     logo: {
-        width: 666,
         height: 400,
     },
     whitePad: {

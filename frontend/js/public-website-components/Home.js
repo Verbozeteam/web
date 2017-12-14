@@ -22,7 +22,7 @@ type StateType = {
 };
 
 export default class Home extends Component<PropsType, StateType> {
-    _white_image = require('../../assets/images/white-image.png');
+    _transparent_image = require('../../assets/images/transparent-image.png');
 
     render() {
         return (
@@ -41,10 +41,8 @@ export default class Home extends Component<PropsType, StateType> {
                             </Grid.Column>
                             <Grid.Column floated='right' width={6}>
                                 <Image
-                                    bordered
-                                    rounded
                                     size='medium'
-                                    src={ this._white_image }
+                                    src={ this._transparent_image }
                                 />
                             </Grid.Column>
                         </Grid.Row>
@@ -52,10 +50,8 @@ export default class Home extends Component<PropsType, StateType> {
                         <Grid.Row>
                             <Grid.Column floated='left' width={6}>
                                 <Image
-                                    bordered
-                                    rounded
                                     size='medium'
-                                    src={ this._white_image }
+                                    src={ this._transparent_image }
                                 />
                             </Grid.Column>
                             <Grid.Column width={8}>
@@ -79,10 +75,8 @@ export default class Home extends Component<PropsType, StateType> {
                             </Grid.Column>
                             <Grid.Column floated='right' width={6}>
                                 <Image
-                                    bordered
-                                    rounded
                                     size='medium'
-                                    src={ this._white_image }
+                                    src={ this._transparent_image }
                                 />
                             </Grid.Column>
                         </Grid.Row>
