@@ -60,7 +60,16 @@ Now whenever we edit react js files, you have to build in order for webpack to c
 ```sh
 $ npm run build
 ```
-> **Note:** I added these bundles and `webpack-stats.json` to gitignore and deleted them from repo, since we can generate then locally. Whenever you run the command above, delete the old bundled files, otherwise it will keep creating new files, we never use the old ones again. I will incorporate something to automate this process soon.
+In production we have a slightly different config, we run the following command:
+```sh
+$ npm run build-production
+```
+> **Note:** We use [Flow](https://flow.org/) (should have been installed through the `package.json`), we use it to add static type checking for the front end code we write. It helps minimize errors and helps with the understanding and expectation of code. Make sure to set it up with your text [editor](https://flow.org/en/docs/editors/).
+
+You can run the following command to see if there are any errors:
+```sh
+$ npm run flow
+```
 
 #### Setting up redis
 Install redis and enable auto start
@@ -80,7 +89,11 @@ PONG
 
 #### Setting up gunicorn
 Gunicorn should have been installed as one of the packages in `requirements.txt`. We use gunicorn as our WSGI HTTP server, instead of the django development server, it will handle all incoming HTTP requests.
-
+> **Note:** For local development we should use the django development server inorder to get reload on code save, verbose output/errors etc:
+Run with the following command (port is important):
+```sh
+$ python manage.py runserver 127.0.0.1:8001
+```
 Start gunicorn (the port is important):
 ```sh
 $ gunicorn verboze.wsgi --bind=127.0.0.1:8001
@@ -103,6 +116,7 @@ $ daphne -b 127.0.0.1 -p 8005 verboze.asgi:channel_layer
 ```
 #### Run django worker
 The worker is needed to handle websockets communication.
+> **Note:** For local development since we are using the django development server it runs the worker automatically, so we do not need to do anything in this step.
 In a new terminal tab, start the worker:
 ```sh
 $ python manage.py runworker
@@ -208,7 +222,7 @@ http {
 
         location /static/public_website/ {
 
-	        # replace with your path
+            # replace with your path
             root /Users/ymusleh/Documents/verboze/web/public_website/;
 
             autoindex on;
@@ -245,7 +259,7 @@ http {
         }
 
         location /static/bundles/ {
-	        # replace with your path
+            # replace with your path
             alias /Users/ymusleh/Documents/verboze/web/frontend/bundles/;
 
             autoindex on;
