@@ -75,6 +75,13 @@ class RoomState extends React.Component<PropsType, StateType> {
             gl_FragColor = texture2D(textureSampler, vUv) * vec4(brightness, brightness, brightness, opacity);
         }`;
 
+    flatPixelShader: string = `
+        uniform vec4 color;
+
+        void main() {
+            gl_FragColor = color;
+        }`;
+
     _imageDimensions: {width: number, height: number}
     = {
         width: 2048,
@@ -146,6 +153,7 @@ class RoomState extends React.Component<PropsType, StateType> {
     cameraOrtho: Object;
     sceneOrtho: Object;
     renderer: Object;
+    tempOverlayMaterial: Object = undefined;
 
     componentDidMount() {
         const width = this.mount.clientWidth;
@@ -172,6 +180,23 @@ class RoomState extends React.Component<PropsType, StateType> {
         }
     }
 
+    loadTemperatureOverlay() {
+        this.tempOverlayMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                scale: {value: new THREE.Vector3(1, 1, 1)},
+                offset: {value: new THREE.Vector3(0, 0, 0)},
+                color: {value: new THREE.Vector4(1, 0, 0, 0)},
+            },
+            vertexShader: this.vertexShader,
+            fragmentShader: this.flatPixelShader,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+        });
+        var sprite = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 0, 0), this.tempOverlayMaterial);
+        sprite.renderOrder = 100;
+        this.sceneOrtho.add(sprite);
+    }
+
     loadAssets() {
         var textureLoader = new THREE.TextureLoader();
         var promises = [];
@@ -184,7 +209,6 @@ class RoomState extends React.Component<PropsType, StateType> {
             for (var i = 0; i < textures.length; i++) {
                 var img = textures[i].key;
                 this._images[img].texture = textures[i].texture;
-                //this._images[img].material = new THREE.SpriteMaterial({map: this._images[img].texture});
                 this._images[img].material = new THREE.ShaderMaterial({
                     uniforms: {
                         scale: {value: new THREE.Vector3(1, 1, 1)},
@@ -203,6 +227,7 @@ class RoomState extends React.Component<PropsType, StateType> {
                 this._images[img].sprite.renderOrder = textures[i].z;
                 this.sceneOrtho.add(this._images[img].sprite);
             }
+            this.loadTemperatureOverlay();
             this.renderLayers();
         }).bind(this)).catch(((reason) => {
             console.log(reason);
@@ -285,6 +310,20 @@ class RoomState extends React.Component<PropsType, StateType> {
                         }
                     }
                     break;
+                case "central_acs":
+                    var tempDiff = thing.set_pt - thing.temp;
+                    var a = 0, r = 0, g = 0, b = 0;
+                    if (Math.abs(tempDiff) > 0.01) {
+                        setTimeout(() => requestAnimationFrame(this.stepTemperature.bind(this)), 300);
+                        a =  Math.min(Math.max(Math.abs(tempDiff) / 30, 0), 0.1);
+                        if (tempDiff > 0)
+                            r = 1;
+                        else
+                            b = 1;
+                    }
+                    if (this.tempOverlayMaterial)
+                        this.tempOverlayMaterial.uniforms.color.value.set(r, g, b, a);
+                    break;
             }
         }
     }
@@ -313,6 +352,10 @@ class RoomState extends React.Component<PropsType, StateType> {
                     // this._images[key].sprite.scale.set(imgWidth, imgHeight, 1);
                     // this._images[key].sprite.position.set(0, 0, 1); // center
                 }
+            }
+            if (this.tempOverlayMaterial) {
+                this.tempOverlayMaterial.uniforms.offset.value.set(0, 0, 2);
+                this.tempOverlayMaterial.uniforms.scale.value.set(imgWidth, imgHeight, 1);
             }
 
             this.updateThingSprites();
