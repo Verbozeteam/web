@@ -272,7 +272,7 @@ class RoomState extends React.Component<PropsType, StateType> {
                         this._images[key+"-2"].material.uniforms.brightness.value = curtainBrightness;
                         if (thing.curtain != 0) {
                             const passedThing = thing;
-                            setTimeout(() => requestAnimationFrame(this.stepCurtain(passedThing).bind(this)), 25);
+                            setTimeout(() => requestAnimationFrame(this.stepCurtain(passedThing).bind(this)), 40);
                         }
                     } else if (key in this._images && this._images[key].material) {
                         var opening = curtainOpenings[thing.id] || 0;
@@ -281,7 +281,7 @@ class RoomState extends React.Component<PropsType, StateType> {
                         this._images[key].material.uniforms.brightness.value = curtainBrightness;
                         if (thing.curtain != 0) {
                             const passedThing = thing;
-                            setTimeout(() => requestAnimationFrame(this.stepCurtain(passedThing).bind(this)), 25);
+                            setTimeout(() => requestAnimationFrame(this.stepCurtain(passedThing).bind(this)), 40);
                         }
                     }
                     break;
