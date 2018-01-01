@@ -1,3 +1,4 @@
+/** @flow */
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -8,6 +9,7 @@ import * as connectionActions from '../redux/actions/connection';
 
 import * as ConnectionTypes from '../../api-utils/ConnectionTypes';
 import { WebSocketCommunication } from '../../api-utils/WebSocketCommunication';
+import { TimeoutHandler } from './utils/TimeoutHandler';
 
 type PropsType = {
     layout: {
@@ -35,8 +37,10 @@ class Curtains extends React.Component<PropsType, StateType> {
     _open_arrow = require('../../../assets/images/open_arrow.png');
     _stop_button = require('../../../assets/images/stop_button.png');
 
-    _clickState : {[string]: {time: number, autoClearTimeout?: () => null, moveMaxTime: number}}
-        = {}; // curtain-id -> time last clicked, a timeout set to auto stop the curtain and the max time needed to clear
+    // curtain-id -> max time needed for curtain to fully open or close
+    _curtainMoveMaxTimes : {[string]: number} = {};
+    // curtain-id -> time it was clicked
+    _curtainClickTimes : {[string]: number} = {};
 
     state = {
         curtains: {},
@@ -67,12 +71,8 @@ class Curtains extends React.Component<PropsType, StateType> {
                 const my_val = curtains[curtain_id];
                 const my_redux_state = reduxState.connection.roomState[curtain_id];
                 if (my_redux_state && my_redux_state.curtain != undefined && my_redux_state.curtain != my_val) {
-                    if (this._clickState[curtain_id].autoClearTimeout) {
-                        clearTimeout(this._clickState[curtain_id].autoClearTimeout);
-                        this._clickState[curtain_id].autoClearTimeout = undefined;
-                    }
-                    if (my_redux_state.moveMaxTime)
-                        this._clickState[curtain_id].moveMaxTime = my_redux_state.moveMaxTime;
+                    TimeoutHandler.clearTimeout(curtain_id);
+                    this._curtainMoveMaxTimes[curtain_id] = my_redux_state.moveMaxTime || 2000;
                     this.setState({curtains: {...this.state.curtains, ...{[curtain_id]: my_redux_state.curtain}}});
                 }
             }
@@ -84,18 +84,18 @@ class Curtains extends React.Component<PropsType, StateType> {
 
         return ((value: number) => {
             var totalUpdate = {};
-            var curTimeMs = (new Date).getTime();
+            var curTime = (new Date()).getTime();
             for (var i = 0; i < curtains.length; i++) {
                 if (value !== 0) { // first click, record the time
-                    this._clickState[curtains[i].id].time = curTimeMs;
+                    this._curtainClickTimes[curtains[i].id] = curTime;
                 } else { // ending the click, if too short, then let the curtain auto move
-                    if (curTimeMs - this._clickState[curtains[i].id].time < 500) {
-                        this._clickState[curtains[i].id].time = 0;
+                    if (curTime - this._curtainClickTimes[curtains[i].id] < 500) {
                         const c = curtains[i];
                         const v = value;
-                        if (this._clickState[curtains[i].id].autoClearTimeout)
-                            clearTimeout(this._clickState[curtains[i].id].autoClearTimeout);
-                        this._clickState[curtains[i].id].autoClearTimeout = setTimeout(() => this.setCurtainValue(c)(v), this._clickState[curtains[i].id].moveMaxTime);
+                        TimeoutHandler.createTimeout(
+                            curtains[i].id,
+                            this._curtainMoveMaxTimes[curtains[i].id],
+                            () => this.setCurtainValue(c)(v));
                         continue; // don't perform the update on this curtain, auto update will do it
                     }
                 }
@@ -111,9 +111,6 @@ class Curtains extends React.Component<PropsType, StateType> {
 
     renderCurtain(thing: ConnectionTypes.GenericThingType, isUpDown: boolean) {
         const { things, layout, viewType } = this.props;
-
-        if (thing && !this._clickState[thing.id])
-            this._clickState[thing.id] = {time: 0, moveMaxTime: 2000};
 
         var my_width = layout.width / (things.length + 1);
         var container_layout = {
