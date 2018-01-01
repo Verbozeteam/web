@@ -49,8 +49,14 @@ class RoomState extends React.Component<PropsType, StateType> {
     state = {
         currentStage: 0,
         curtainOpenings: {
-            ['curtain-1']: 0,
-            ['curtain-2']: 0,
+            ['curtain-1']: 25,
+            ['curtain-2']: 15,
+        },
+        lightIntensities: {
+            ['lightswitch-1']: 0,
+            ['lightswitch-2']: 0,
+            ['lightswitch-3']: 0,
+            ['dimmer-1']: 0,
         },
     };
 
@@ -154,6 +160,7 @@ class RoomState extends React.Component<PropsType, StateType> {
     sceneOrtho: Object;
     renderer: Object;
     tempOverlayMaterial: Object = undefined;
+    animationTimeout: any = undefined;
 
     componentDidMount() {
         const width = this.mount.clientWidth;
@@ -228,7 +235,7 @@ class RoomState extends React.Component<PropsType, StateType> {
                 this.sceneOrtho.add(this._images[img].sprite);
             }
             this.loadTemperatureOverlay();
-            this.renderLayers();
+            this.forceUpdate();
         }).bind(this)).catch(((reason) => {
             console.log(reason);
             this.props.setConnectionURL("");
@@ -245,25 +252,18 @@ class RoomState extends React.Component<PropsType, StateType> {
     }
 
     computeLightBrightness() {
-        const { roomState } = this.props;
-
         var brightness = 0;
         var num_lights = 0;
-        for (var key in roomState) {
-            if (roomState[key].category === 'light_switches') {
-                brightness += roomState[key].intensity;
-                num_lights += 1;
-            } else if (roomState[key].category === 'dimmers') {
-                brightness += roomState[key].intensity / 100;
-                num_lights += 1;
-            }
+        for (var key in this.state.lightIntensities) {
+            brightness += this.state.lightIntensities[key] / 100;
+            num_lights += 1;
         }
         return Math.min(Math.max((brightness / num_lights + this.computeCurtainsLight()), 0), 1);
     }
 
     updateThingSprites() {
         const { roomState } = this.props;
-        const { curtainOpenings } = this.state;
+        const { curtainOpenings, lightIntensities } = this.state;
 
         var curtainBrightness = 0.3 + this.computeLightBrightness() * 0.7;
         var windowBrightness = this.computeCurtainsLight();
@@ -274,16 +274,18 @@ class RoomState extends React.Component<PropsType, StateType> {
         if ("window" in this._images && this._images.window.material)
             this._images.window.material.uniforms.brightness.value = curtainBrightness * 0.8;
 
+        var needAnimation: boolean = false;
         for (var key in roomState) {
             var thing = roomState[key];
             switch (thing.category) {
                 case "light_switches":
-                    if (key in this._images && this._images[key].material)
-                        this._images[key].material.uniforms.opacity.value = thing.intensity;
-                    break;
                 case "dimmers":
-                    if (key in this._images && this._images[key].material)
-                        this._images[key].material.uniforms.opacity.value = thing.intensity / 100;
+                    if (key in this._images && this._images[key].material) {
+                        var curIntensity = lightIntensities[key];
+                        this._images[key].material.uniforms.opacity.value = curIntensity / 100;
+                        if (curIntensity !== thing.intensity)
+                            needAnimation = true;
+                    }
                     break;
                 case "curtains":
                     if (key+"-1" in this._images && key+"-2" in this._images &&
@@ -295,26 +297,22 @@ class RoomState extends React.Component<PropsType, StateType> {
                         this._images[key+"-2"].material.uniforms.offset.value.set(+2+opening*1.8, 0, 1);
                         this._images[key+"-2"].material.uniforms.scale.value.x *= 1 - (opening/200);
                         this._images[key+"-2"].material.uniforms.brightness.value = curtainBrightness;
-                        if (thing.curtain != 0) {
-                            const passedThing = thing;
-                            setTimeout(() => requestAnimationFrame(this.stepCurtain(passedThing).bind(this)), 40);
-                        }
+                        if (thing.curtain != 0)
+                            needAnimation = true;
                     } else if (key in this._images && this._images[key].material) {
                         var opening = curtainOpenings[thing.id] || 0;
                         this._images[key].material.uniforms.offset.value.set(0, 5+opening*2.2, 1);
                         this._images[key].material.uniforms.scale.value.y *= 1 - (opening/200);
                         this._images[key].material.uniforms.brightness.value = curtainBrightness;
-                        if (thing.curtain != 0) {
-                            const passedThing = thing;
-                            setTimeout(() => requestAnimationFrame(this.stepCurtain(passedThing).bind(this)), 40);
-                        }
+                        if (thing.curtain != 0)
+                            needAnimation = true;
                     }
                     break;
                 case "central_acs":
                     var tempDiff = thing.set_pt - thing.temp;
                     var a = 0, r = 0, g = 0, b = 0;
                     if (Math.abs(tempDiff) > 0.01) {
-                        setTimeout(() => requestAnimationFrame(this.stepTemperature.bind(this)), 300);
+                        needAnimation = true;
                         a =  Math.min(Math.max(Math.abs(tempDiff) / 30, 0), 0.1);
                         if (tempDiff > 0)
                             r = 1;
@@ -325,6 +323,10 @@ class RoomState extends React.Component<PropsType, StateType> {
                         this.tempOverlayMaterial.uniforms.color.value.set(r, g, b, a);
                     break;
             }
+        }
+
+        if (needAnimation && !this.animationTimeout) {
+            this.animationTimeout = setTimeout(() => this.stepAnimation(), 50);
         }
     }
 
@@ -364,52 +366,82 @@ class RoomState extends React.Component<PropsType, StateType> {
         }
     }
 
-
-    stepCurtain(curtain: Object) {
-        return (() => {
-            var step = curtain.curtain === 1 ? 1 : -1;
-            var curVal = this.state.curtainOpenings[curtain.id] || 0;
-            var newVal = Math.min(Math.max(curVal + step, 0), 100);
-            this.setState({curtainOpenings: {...this.state.curtainOpenings, [curtain.id]: newVal}});
-        }).bind(this);
-    }
-
-    stepTemperature() {
+    stepAnimation() {
         const { roomState } = this.props;
+
+        this.animationTimeout = undefined;
+
+        var totalUpdate = {};
 
         for (var key in roomState) {
             var thing = roomState[key];
-            if (thing.category === 'central_acs') {
-                var step;
-                var tempDiff = thing.set_pt - thing.temp;
-                if (tempDiff > 1 || tempDiff < -1)
-                    step = tempDiff * 0.2;
-                else if (tempDiff > 0)
-                    step = 0.08;
-                else
-                    step = -0.08;
-                var state_update = {
-                    temp: Math.abs(tempDiff) < 0.1 ? thing.set_pt : thing.temp + step,
-                };
-                if (Math.abs(state_update.temp - thing.temp) > 0.1) {
-                    WebSocketCommunication.sendMessage({
-                        [thing.id]: {
-                            ...thing,
-                            ...state_update,
+            switch (thing.category) {
+                case "light_switches":
+                case "dimmers":
+                    var thingIntensity = thing.category === "dimmers" ? thing.intensity : thing.intensity * 100;
+                    var stepSpeed = thing.category === "dimmers" ? 10 : 25;
+                    var curVal = this.state.lightIntensities[thing.id] || 0;
+                    if (thingIntensity !== curVal) {
+                        var diff = thingIntensity - curVal;
+                        var absdiff = Math.abs(thingIntensity - curVal);
+                        var step = (diff / absdiff) * Math.min(stepSpeed, absdiff);
+                        var newVal = Math.min(Math.max(curVal + step, 0), 100);
+                        if (newVal != curVal) {
+                            if (!totalUpdate.lightIntensities) totalUpdate.lightIntensities = this.state.lightIntensities;
+                            totalUpdate.lightIntensities[thing.id] = newVal;
                         }
-                    });
-                }
-                this.context.store.dispatch(connectionActions.setThingPartialState(thing.id, state_update));
-                return;
+                    }
+                    break;
+                case "curtains":
+                    var step = thing.curtain === 1 ? 1 : (thing.curtain === 2 ? -1 : 0);
+                    var curVal = this.state.curtainOpenings[thing.id] || 0;
+                    var newVal = Math.min(Math.max(curVal + step, 0), 100);
+                    if (newVal != curVal) {
+                        if (!totalUpdate.curtainOpenings) totalUpdate.curtainOpenings = this.state.curtainOpenings;
+                        totalUpdate.curtainOpenings[thing.id] = newVal;
+                    }
+                    break;
+                case "central_acs":
+                    var step;
+                    var tempDiff = thing.set_pt - thing.temp;
+                    if (tempDiff > 1 || tempDiff < -1)
+                        step = tempDiff * 0.02;
+                    else if (tempDiff > 0)
+                        step = 0.01;
+                    else
+                        step = -0.01;
+                    var state_update = {
+                        temp: Math.abs(tempDiff) < 0.05 ? thing.set_pt : thing.temp + step,
+                    };
+                    if (Math.abs(state_update.temp - thing.temp) > 0.1) {
+                        WebSocketCommunication.sendMessage({
+                            [thing.id]: {
+                                ...thing,
+                                ...state_update,
+                            }
+                        });
+                    }
+                    if (Math.abs(state_update.temp - thing.temp) > 0.001)
+                        this.context.store.dispatch(connectionActions.setThingPartialState(thing.id, state_update));
+                    break;
             }
         }
+
+        if (Object.keys(totalUpdate).length > 0)
+            this.setState(totalUpdate);
     }
 
     render() {
+        var { opacity } = this.props;
+
+        var curOpacity = opacity;
+        if (!this.tempOverlayMaterial)
+            curOpacity = 0;
+
         requestAnimationFrame(this.renderLayers.bind(this));
         return (
             <div
-                style={styles.container}
+                style={{...styles.container, opacity: curOpacity}}
                 ref={(mount: any) => { this.mount = mount }}>
                 <ReactResizeDetector handleWidth handleHeight onResize={this.renderLayers.bind(this)} />
             </div>
@@ -433,7 +465,7 @@ const styles = {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
 
-        transition: 'filter 2000ms',
+        transition: 'opacity 2000ms',
     },
 };
 

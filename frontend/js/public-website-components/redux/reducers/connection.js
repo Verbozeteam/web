@@ -108,8 +108,8 @@ const defaultState: StateType = {
         "lightswitch-1": {"id": "lightswitch-1", "category": "light_switches", "intensity": 0},
         "lightswitch-2": {"id": "lightswitch-2", "category": "light_switches", "intensity": 0},
         "lightswitch-3": {"id": "lightswitch-3", "category": "light_switches", "intensity": 0},
-        "curtain-1": {"id": "curtain-1", "category": "curtains", "curtain": 0},
-        "curtain-2": {"id": "curtain-2", "category": "curtains", "curtain": 0},
+        "curtain-1": {"id": "curtain-1", "category": "curtains", "curtain": 0, "moveMaxTime": 10000},
+        "curtain-2": {"id": "curtain-2", "category": "curtains", "curtain": 0, "moveMaxTime": 10000},
         "central-ac-v0-d50": {"id": "central-ac-v0-d50", "category": "central_acs", "set_pt": 25.0, "temp": 25.0, "fan": 1},
         "hotel-controls": {"id": "hotel-controls", "category": "hotel_controls", "card": 1, "do_not_disturb": 0, "room_service": 0, "power": 1}
     },
