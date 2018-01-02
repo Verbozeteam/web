@@ -18,14 +18,12 @@ class TimeoutHandlerImpl {
             timeout: interval,
         };
         this._timeouts[key].autoClearTimeout = f;
-        console.log("timeout started ", key);
     }
 
     clearTimeout(key: string) {
         if (key in this._timeouts) {
             clearTimeout(this._timeouts[key]);
             delete this._timeouts[key];
-            console.log("timeout CLEARED", key)
         }
     }
 

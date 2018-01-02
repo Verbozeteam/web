@@ -3,6 +3,7 @@
 import * as React from 'react';
 import * as THREE from 'three'
 import PropTypes from 'prop-types';
+import { Grid, Progress } from 'semantic-ui-react';
 
 import ReactResizeDetector from 'react-resize-detector';
 
@@ -37,7 +38,9 @@ type StateType = {
      * 1: render full display
      */
     currentStage: number,
-    curtainOpenings: {[string]: number}
+    curtainOpenings: {[string]: number},
+    lightIntensities: {[string]: number},
+    loadingProgress: number, // 0-1, 1 is done
 };
 
 class RoomState extends React.Component<PropsType, StateType> {
@@ -47,6 +50,7 @@ class RoomState extends React.Component<PropsType, StateType> {
     };
 
     state = {
+        loadingProgress: 0,
         currentStage: 0,
         curtainOpenings: {
             ['curtain-1']: 25,
@@ -207,9 +211,15 @@ class RoomState extends React.Component<PropsType, StateType> {
     loadAssets() {
         var textureLoader = new THREE.TextureLoader();
         var promises = [];
+        var curProgress = 0;
+        var progress = (() => {
+            curProgress += 1;
+            this.setState({loadingProgress: curProgress / Object.keys(this._images).length});
+        }).bind(this);
+
         for (var key in this._images) {
             const k = key;
-            promises.push(new Promise((success, fail) => textureLoader.load(this._images[k].image, (t) => success({...this._images[k], key: k, texture: t}), fail)));
+            promises.push(new Promise((success, fail) => textureLoader.load(this._images[k].image, (t) => {progress(); success({...this._images[k], key: k, texture: t})}, fail)));
         }
 
         Promise.all(promises).then((textures => {
@@ -432,18 +442,28 @@ class RoomState extends React.Component<PropsType, StateType> {
     }
 
     render() {
+        var { loadingProgress } = this.state;
         var { opacity } = this.props;
 
         var curOpacity = opacity;
         if (!this.tempOverlayMaterial)
             curOpacity = 0;
 
+        var progress = null;
+        if (loadingProgress < 1 && opacity >= 1)
+            progress = <Progress style={styles.progress} size={"medium"} percent={Math.floor(loadingProgress * 100)} progress indicating />
+
         requestAnimationFrame(this.renderLayers.bind(this));
         return (
-            <div
-                style={{...styles.container, opacity: curOpacity}}
-                ref={(mount: any) => { this.mount = mount }}>
-                <ReactResizeDetector handleWidth handleHeight onResize={this.renderLayers.bind(this)} />
+            <div style={{...styles.container}}>
+                <Grid style={styles.progressContainer} centered columns={1} verticalAlign='middle'>
+                    {progress}
+                </Grid>
+                <div
+                    style={{...styles.canvas, opacity: curOpacity}}
+                    ref={(mount: any) => { this.mount = mount }}>
+                    <ReactResizeDetector handleWidth handleHeight onResize={this.renderLayers.bind(this)} />
+                </div>
             </div>
         )
     }
@@ -457,16 +477,22 @@ const styles = {
         position: 'relative',
         width: '100%',
         height: 700,
-        display: 'flex',
-        flexDirection: 'row',
-        color: 'red',
-
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-
+    },
+    canvas: {
+        width: '100%',
+        height: '100%',
         transition: 'opacity 2000ms',
     },
+    progressContainer: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    progress: {
+        width: 300,
+    }
 };
 
 module.exports = { RoomState: ReduxConnect(mapStateToProps, mapDispatchToProps) (RoomState) };
