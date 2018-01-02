@@ -20,6 +20,12 @@
 </head>
 <body>
   <div id="react-app" style="height: 100%; width: 100%"></div>
-  {% render_bundle 'public_website' %}
+
+  {% if debug %}
+    {% render_bundle 'public_website' 'js' %}
+  {% else %}
+    {% render_bundle 'public_website' 'js.gz' %}
+  {% endif %}
+
 </body>
 </html>

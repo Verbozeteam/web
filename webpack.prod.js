@@ -3,6 +3,7 @@ var BundleTracker = require('webpack-bundle-tracker');
 var WebpackMerge = require('webpack-merge');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var CompressionPlugin = require('compression-webpack-plugin');
 
 var common = require('./webpack.common.js');
 
@@ -13,7 +14,14 @@ module.exports = WebpackMerge(common, {
         new CleanWebpackPlugin(['frontend/bundles/*.*']),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
-        })
+        }),
+        new CompressionPlugin({
+            asset: "[path].gz[query]",
+            algorithm: "gzip",
+            test: /\.js$/,
+            threshold: 10240,
+            minRatio: 0.8
+        }),
     ],
 
 
@@ -38,7 +46,7 @@ module.exports = WebpackMerge(common, {
                                 optimizationLevel: 7,
                             },
                             pngquant: {
-                                quality: '90-100',
+                                quality: '80-85',
                                 speed: 1
                             },
                             mozjpeg: {
