@@ -16,7 +16,7 @@ module.exports = WebpackMerge(common, {
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
         new CompressionPlugin({
-            asset: "[path].gz[query]",
+            asset: "[path].jgz[query]",
             algorithm: "gzip",
             test: /\.js$/,
             threshold: 10240,
