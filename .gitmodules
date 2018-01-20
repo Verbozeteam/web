@@ -3,4 +3,4 @@
 	url = https://0c0abfeb85e9ace480d5c1620df495637fcae1b2:x-oauth-basic@github.com/Verbozeteam/react-components.git
 [submodule "frontend/js/js-api-utils"]
 	path = frontend/js/js-api-utils
-	url = https://0c0abfeb85e9ace480d5c1620df495637fcae1b2:x-oauth-basic@github.com:Verbozeteam/js-api-utils.git
+	url = https://0c0abfeb85e9ace480d5c1620df495637fcae1b2:x-oauth-basic@github.com/Verbozeteam/js-api-utils.git
