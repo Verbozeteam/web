@@ -1,11 +1,8 @@
 import datetime
-from django.utils.timezone import utc
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token as AuthToken
-import json
-
 
 class ObtainExpiringAuthToken(ObtainAuthToken):
     def post(self, request):

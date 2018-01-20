@@ -4,7 +4,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 
 import * as connectionActions from '../redux/actions/connection';
-import { WebSocketCommunication } from '../../api-utils/WebSocketCommunication';
+import { WebSocketCommunication } from '../../js-api-utils/WebSocketCommunication';
 
 type PropsType = {
     id: string,

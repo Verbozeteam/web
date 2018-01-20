@@ -7,7 +7,7 @@ import { LightDimmer } from './LightDimmer';
 import { LightSwitch } from './LightSwitch';
 import { PresetsSwitch } from './PresetsSwitch';
 
-import * as ConnectionTypes from '../../api-utils/ConnectionTypes';
+import * as ConnectionTypes from '../../js-api-utils/ConnectionTypes';
 
 type PropsType = {
     layout: {

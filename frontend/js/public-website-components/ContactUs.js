@@ -17,8 +17,8 @@ import {
   Form, Input, TextArea, Checkbox, Radio, RadioGroup, Dropdown, Select,
 } from 'formsy-semantic-ui-react';
 
-import * as APITypes from '../api-utils/APITypes';
-import { PublicWebsiteAPICaller } from '../api-utils/PublicWebsiteAPI';
+import * as APITypes from '../js-api-utils/APITypes';
+import { PublicWebsiteAPICaller } from '../js-api-utils/PublicWebsiteAPI';
 
 import * as Cookies from 'js-cookie';
 

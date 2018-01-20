@@ -36,19 +36,6 @@ class App extends Component<PropsType, StateType> {
         return (
             <div>
                 { visible ? <NavBar sticky={true}  /> : null }
-                <Visibility
-                    onBottomPassed={this.showStickyMenu}
-                    onBottomVisible={this.hideStickyMenu}
-                    once={false} >
-                    <Segment
-                        inverted
-                        textAlign='center'
-                        vertical >
-
-                        <NavBar sticky={false} />
-
-                    </Segment>
-                </Visibility>
 
                 <Content />
 

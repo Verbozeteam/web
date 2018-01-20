@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import * as ConnectionTypes from '../../api-utils/ConnectionTypes';
+import * as ConnectionTypes from '../../js-api-utils/ConnectionTypes';
 
 import { LightsPanel } from './LightsPanel';
 import { HotelControls } from './HotelControls';

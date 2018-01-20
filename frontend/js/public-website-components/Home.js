@@ -40,7 +40,6 @@ export default class Home extends Component<PropsType, StateType> {
                                 <p style={{ fontSize: '1.33em' }}>
                                     Technology doesn't have to negatively impact your luxurious image. In fact, we worked hard
                                     to improve it, by allowing your guests to experience all what you have to offer at their finger tips.
-
                                 </p>
                             </Grid.Column>
                             <Grid.Column floated='right' width={6}>

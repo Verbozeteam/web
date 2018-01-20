@@ -8,7 +8,7 @@ const GenericToggle = require('../../react-components/GenericToggle.web');
 const GenericButton = require('../../react-components/GenericButton.web');
 
 import * as connectionActions from '../redux/actions/connection';
-const { WebSocketCommunication } = require('../../api-utils/WebSocketCommunication');
+const { WebSocketCommunication } = require('../../js-api-utils/WebSocketCommunication');
 
 type StateType = {
     set_pt: number,

@@ -27,7 +27,7 @@ export default class NavBar extends Component<PropsType, StateType> {
     render() {
         if (this.props.sticky) {
             return (
-                <Menu fixed='top' size='large'>
+                <Menu fixed='top' size='large' style={styles.fixed}>
                     <Container>
                         <Menu.Item as={NavLink} activeClassName="" exact to='/'>
                             <img src={this._verboze_logo} />
@@ -42,17 +42,8 @@ export default class NavBar extends Component<PropsType, StateType> {
         }
         else {
             return (
-                <Container>
-                    <Menu inverted pointing secondary size='large'>
-                        <Menu.Item as={NavLink} activeClassName="" exact to='/'>
-                            <img style={ styles.logo } src={this._verboze_logo} />
-                        </Menu.Item>
-                        <Menu.Item as={NavLink} exact to='/' >Home</Menu.Item>
-                        <Menu.Item as={NavLink} to='/features'>Features</Menu.Item>
-                        <Menu.Item as={NavLink} to='/about-us'>About Us</Menu.Item>
-                        <Menu.Item as={NavLink} to='/contact-us'>Contact Us</Menu.Item>
-                    </Menu>
-                </Container>
+                <div>
+                </div>
             );
         };
     };
@@ -62,5 +53,5 @@ const styles = {
     logo: {
         marginTop: -10,
         marginBottom: -10
-    }
+    },
 }

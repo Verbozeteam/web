@@ -1,7 +1,7 @@
 /* @flow */
 
-import * as APITypes from '../../../api-utils/APITypes';
-import * as ConnectionTypes from '../../../api-utils/ConnectionTypes';
+import * as APITypes from '../../../js-api-utils/APITypes';
+import * as ConnectionTypes from '../../../js-api-utils/ConnectionTypes';
 
 export const SET_CONNECTION_STATE = 'SET_CONNECTION_STATE';
 export const SET_ROOMS = 'SET_ROOMS';

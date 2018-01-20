@@ -7,11 +7,11 @@ import { connect as ReduxConnect } from 'react-redux';
 import { STORE, AppWrapper } from "./redux/store";
 import * as connectionActions from './redux/actions/connection';
 
-import * as APITypes from '../api-utils/APITypes';
-import * as ConnectionTypes from '../api-utils/ConnectionTypes';
-import { DashboardAPICaller } from '../api-utils/DashboardAPI';
+import * as APITypes from '../js-api-utils/APITypes';
+import * as ConnectionTypes from '../js-api-utils/ConnectionTypes';
+import { DashboardAPICaller } from '../js-api-utils/DashboardAPI';
 
-import { WebSocketCommunication } from '../api-utils/WebSocketCommunication';
+import { WebSocketCommunication } from '../js-api-utils/WebSocketCommunication';
 
 import { RoomCard } from './RoomCard';
 import { RoomWindow } from './RoomWindow';

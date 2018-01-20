@@ -32,11 +32,10 @@ const styles = {
         width: 500,
         backgroundColor: 'black',
         borderRadius: 10,
-        position: 'absolute',
-        right: 100,
-        border: '1px solid white',
+        //border: '1px solid white',
         alignItems: 'center',
         justifyContent: 'center',
+        position: 'relative',
     },
     bezel: {
         top: 20,
