@@ -8,8 +8,8 @@ import {
     SET_THING_PARTIAL_STATE,
 } from '../actions/connection';
 
-import * as APITypes from '../../../api-utils/APITypes';
-import * as ConnectionTypes from '../../../api-utils/ConnectionTypes';
+import * as APITypes from '../../../js-api-utils/APITypes';
+import * as ConnectionTypes from '../../../js-api-utils/ConnectionTypes';
 
 type StateType = {
     connectionState: 0 | 1 | 2,
@@ -48,19 +48,19 @@ const defaultState: StateType = {
                     "things": [{
                         "category": "dimmers",
                         "id": "dimmer-1",
-                        "name": {"en": "Bedside"}
+                        "name": {"en": "Ceiling"}
                     }, {
                         "category": "light_switches",
                         "id": "lightswitch-1",
-                        "name": {"en": "Main"}
+                        "name": {"en": "Sconce"}
                     }, {
                         "category": "light_switches",
                         "id": "lightswitch-2",
-                        "name": {"en": "Side"}
+                        "name": {"en": "Bedside"}
                     }, {
                         "category": "light_switches",
                         "id": "lightswitch-3",
-                        "name": {"en": "Entrance"}
+                        "name": {"en": "Spot"}
                     }]
                 }, {
                     "name": {"en": "Curtains"},

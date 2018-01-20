@@ -20,6 +20,7 @@ function mapDispatchToProps(dispatch) {
 
 type PropsType = {
     connectionURL: string,
+    dimensions: {width: number, height: number},
 };
 
 type StateType = {
@@ -41,13 +42,14 @@ class RoomDemoControls extends React.Component<PropsType, StateType> {
     }
 
     render() {
+        const { dimensions } = this.props;
         const { curPage } = this.state;
 
-        var style = {...styles.controlsContainer};
+        var style = {...styles.controlsContainer, ...{top: dimensions.height-300 - 10, left: dimensions.width/2-350}};
 
         if (!this.state.isRendered) {
             style.opacity = 0;
-            style.top = 800;
+            style.top = dimensions.height;
             requestAnimationFrame(this.animate.bind(this));
         }
 
@@ -89,12 +91,13 @@ RoomDemoControls.contextTypes = {
 
 const styles = {
     controlsContainer: {
-        top: 550,
         position: 'absolute',
         height: 300,
-        width: '100%',
+        width: 700,
         opacity: 1,
         transition: 'opacity 500ms, top 500ms',
+        display: 'flex',
+        flexDirection: 'row',
     },
     phone_instructions: {
         backgroundImage: 'url(' + require('../../assets/images/iphone_black.png') + ')',
@@ -105,9 +108,6 @@ const styles = {
         width: 200,
         height: 300,
 
-        position: 'absolute',
-        right: 650,
-        bottom: 0,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

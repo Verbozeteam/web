@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const GenericToggle = require('../../react-components/GenericToggle.web');
 
 const connectionActions = require('../redux/actions/connection');
-import { WebSocketCommunication } from '../../api-utils/WebSocketCommunication';
+import { WebSocketCommunication } from '../../js-api-utils/WebSocketCommunication';
 
 type StateType = {
     currentPresetIndex: number,

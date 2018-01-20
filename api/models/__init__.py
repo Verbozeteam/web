@@ -1,6 +1,3 @@
-from .models import (
-	User, Room, Hotel, Hub, Token
-)
-from .user_models import (
-	GuestUser, HotelUser, HubUser
-)
+from .ws_models import *
+from .user_models import *
+from .hotel_models import *

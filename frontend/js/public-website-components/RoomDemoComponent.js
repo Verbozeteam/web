@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 
 import { connect as ReduxConnect } from 'react-redux';
 
-import * as APITypes from '../api-utils/APITypes';
-import * as ConnectionTypes from '../api-utils/ConnectionTypes';
+import * as APITypes from '../js-api-utils/APITypes';
+import * as ConnectionTypes from '../js-api-utils/ConnectionTypes';
 
-import { PublicWebsiteAPICaller } from '../api-utils/PublicWebsiteAPI';
+import { PublicWebsiteAPICaller } from '../js-api-utils/PublicWebsiteAPI';
 
-import { WebSocketCommunication } from '../api-utils/WebSocketCommunication';
+import { WebSocketCommunication } from '../js-api-utils/WebSocketCommunication';
 
 import * as tabletActions from './redux/actions/tabletstate';
 import * as connectionActions from './redux/actions/connection';
@@ -43,11 +43,16 @@ type StateType = {
      * 3: display tablet controls
      */
     currentStage: number,
+
+    width: number,
+    height: number,
 };
 
 class RoomDemoComponent extends React.Component<PropsType, StateType> {
     state = {
         currentStage: 0,
+        width: 1,
+        height: 1,
     };
 
     _isUnmounting = false;
@@ -61,6 +66,10 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
         return protocol + location.host + "/stream/" + token + '/';
     }
 
+    constructor(props) {
+        super(props);
+    }
+
     componentWillMount() {
         this._isUnmounting = false;
 
@@ -68,11 +77,23 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
         WebSocketCommunication.setOnConnected(this.onConnected.bind(this));
         WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
         WebSocketCommunication.setOnMessage(this.onMessage.bind(this));
+
+        this.startDemo();
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions.bind(this));
     }
 
     componentWillUnmount() {
         this._isUnmounting = true;
         WebSocketCommunication.disconnect();
+        window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
+    }
+
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
     /* websocket callback on connect event */
@@ -121,49 +142,17 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
         }
     }
 
-    renderLogo() {
-        const { currentStage } = this.state;
-
-        var _white_image = require('../../assets/images/white-image.png');
-
-        var loading_status = currentStage > 0 ? {loading: true} : {};
-
-        return (
-            <div style={styles.roomContainer}>
-                <RoomState opacity={0.2} />
-                <div style={styles.logoStaticContainer}>
-                    <div style={currentStage > 1 ? styles.logoContainerFaded : styles.logoContainer}>
-                        <img style={styles.logo} src={this._logo} />
-                        <br/>
-                        <br/>
-                    </div>
-                </div>
-                <div style={styles.whitePad} />
-            </div>
-        );
-    }
-
-    renderDemo() {
-        return (
-            <div style={styles.roomContainer}>
-                <RoomState />
-                <div style={styles.whitePad} />
-                <RoomDemoControls />
-            </div>
-        );
-    }
-
     render() {
-        const { currentStage } = this.state;
+        const { currentStage, width, height } = this.state;
 
-        switch (currentStage) {
-            case 0:
-            case 1:
-            case 2:
-                return this.renderLogo();
-            case 3:
-                return this.renderDemo();
-        }
+        var dimensions = {width, height: height};
+
+        return (
+            <div style={{...styles.roomContainer, ...dimensions}}>
+                <RoomState navbarHeight={100} opacity={currentStage === 3 ? 1.0 : 0.2} dimensions={dimensions} />
+                <RoomDemoControls dimensions={dimensions} />
+            </div>
+        );
     }
 };
 RoomDemoComponent.contextTypes = {
@@ -172,13 +161,9 @@ RoomDemoComponent.contextTypes = {
 
 const styles = {
     roomContainer: {
-        height: 800,
-
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#1b1c1d',
-        alignItems: 'center',
-        justifyContent: 'center',
 
 
         MozUserSelect: '-moz-none',
@@ -211,13 +196,6 @@ const styles = {
     },
     logo: {
         width: 666,
-    },
-    whitePad: {
-        position: 'relative',
-        bottom: 0,
-        height: 100,
-        width: '100%',
-        backgroundColor: '#ffffff',
     }
 };
 

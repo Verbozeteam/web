@@ -7,9 +7,9 @@ const GenericSlider = require('../../react-components/GenericSlider.web');
 const GenericButton = require('../../react-components/GenericButton.web');
 import * as connectionActions from '../redux/actions/connection';
 
-import * as ConnectionTypes from '../../api-utils/ConnectionTypes';
-import { WebSocketCommunication } from '../../api-utils/WebSocketCommunication';
-import { TimeoutHandler } from './utils/TimeoutHandler';
+import * as ConnectionTypes from '../../js-api-utils/ConnectionTypes';
+import { WebSocketCommunication } from '../../js-api-utils/WebSocketCommunication';
+import { TimeoutHandler } from '../../js-api-utils/TimeoutHandler';
 
 type PropsType = {
     layout: {
