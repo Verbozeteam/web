@@ -5,14 +5,14 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './Home';
 import Features from './Features';
 import AboutUs from './AboutUs';
-import ContactUs from './ContactUs'
+import Contact from './Contact'
 
 
 const Content = () => (
     <Switch>
       <Route path='/features' component={Features}/>
       <Route path='/about-us' component={AboutUs}/>
-      <Route path='/contact-us' component={ContactUs}/>
+      <Route path='/contact-us' component={Contact}/>
       <Route exact path='/' component={Home}/>
     </Switch>
 )

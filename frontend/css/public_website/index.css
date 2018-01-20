@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'CeraPRO';
+  src: url('../../assets/fonts/CeraPRO/CeraPRO-Regular.ttf') format('truetype'),
+}
+
+body {
+  font-family: 'CeraPRO';
+}

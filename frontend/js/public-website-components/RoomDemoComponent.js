@@ -2,10 +2,7 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {
-    Button,
-    Header,
-} from 'semantic-ui-react';
+
 import { connect as ReduxConnect } from 'react-redux';
 
 import * as APITypes from '../api-utils/APITypes';
@@ -137,18 +134,8 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
                 <div style={styles.logoStaticContainer}>
                     <div style={currentStage > 1 ? styles.logoContainerFaded : styles.logoContainer}>
                         <img style={styles.logo} src={this._logo} />
-                        <Header inverted as='h3' style={{ textAlign:'center', fontSize: '2em' }}>
-                            The most advanced smart phone activated automation system for hotels.
-                            <br/>
-                            Seamless Installation. Intuitive Control. Replicable Experience.
-
-                        </Header>
                         <br/>
                         <br/>
-
-                        <Button {...loading_status} primary fade='true' vertical='true' size='massive' onClick={this.startDemo.bind(this)}>
-                            {"Try quick demo"}
-                        </Button>
                     </div>
                 </div>
                 <div style={styles.whitePad} />

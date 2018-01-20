@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'semantic-ui-react';
 import { connect as ReduxConnect } from 'react-redux';
 
 const QRCode = require('qrcode.react');
@@ -72,9 +71,6 @@ class RoomDemoControls extends React.Component<PropsType, StateType> {
                     <div style={styles.qr_code}>
                         <QRCode value={this.props.connectionURL} size={105} />
                     </div>
-                    <Button primary fade='true' vertical='true' size='small' style={styles.button} onClick={(() => this.setState({curPage: 0})).bind(this)}>
-                        {"< Back"}
-                    </Button>
                 </div>
             );
         }

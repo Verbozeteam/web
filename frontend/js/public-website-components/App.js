@@ -1,10 +1,6 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import {
-    Segment,
-    Visibility,
-} from 'semantic-ui-react';
 
 import { withRouter } from 'react-router-dom'
 import { connect as ReduxConnect } from 'react-redux';
@@ -36,19 +32,6 @@ class App extends Component<PropsType, StateType> {
         return (
             <div>
                 { visible ? <NavBar sticky={true}  /> : null }
-                <Visibility
-                    onBottomPassed={this.showStickyMenu}
-                    onBottomVisible={this.hideStickyMenu}
-                    once={false} >
-                    <Segment
-                        inverted
-                        textAlign='center'
-                        vertical >
-
-                        <NavBar sticky={false} />
-
-                    </Segment>
-                </Visibility>
 
                 <Content />
 

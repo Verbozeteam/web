@@ -3,7 +3,6 @@
 import * as React from 'react';
 import * as THREE from 'three'
 import PropTypes from 'prop-types';
-import { Grid, Progress } from 'semantic-ui-react';
 
 import ReactResizeDetector from 'react-resize-detector';
 
@@ -450,15 +449,10 @@ class RoomState extends React.Component<PropsType, StateType> {
             curOpacity = 0;
 
         var progress = null;
-        if (loadingProgress < 1 && opacity >= 1)
-            progress = <Progress style={styles.progress} size={"medium"} percent={Math.floor(loadingProgress * 100)} progress indicating />
 
         requestAnimationFrame(this.renderLayers.bind(this));
         return (
             <div style={{...styles.container}}>
-                <Grid style={styles.progressContainer} centered columns={1} verticalAlign='middle'>
-                    {progress}
-                </Grid>
                 <div
                     style={{...styles.canvas, opacity: curOpacity}}
                     ref={(mount: any) => { this.mount = mount }}>
