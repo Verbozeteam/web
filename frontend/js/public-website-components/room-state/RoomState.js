@@ -758,11 +758,9 @@ class RoomState extends React.Component<PropsType, StateType> {
         if (!this._materials.tempOverlay)
             curOpacity = 0;
 
-        var progress = null;
-
         this.renderLayers();
         return (
-            <div style={{...styles.container}}>
+            <div style={{...styles.container, ...dimensions}}>
                 <div
                     style={{...styles.canvas, opacity: curOpacity}}
                     ref={(mount: any) => { this.mount = mount }}>

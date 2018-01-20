@@ -61,9 +61,9 @@ class RoomDemoControls extends React.Component<PropsType, StateType> {
                     <img src={require('../../assets/images/play_store.png')} style={styles.store_icon} />
                     <img src={require('../../assets/images/app_store.png')} style={styles.store_icon} />
 
-                    <Button primary fade='true' vertical='true' size='small' style={styles.button} onClick={(() => this.setState({curPage: 1})).bind(this)}>
+                    {/*<Button primary fade='true' vertical='true' size='small' style={styles.button} onClick={(() => this.setState({curPage: 1})).bind(this)}>
                         {"Use the app"}
-                    </Button>
+                    </Button>*/}
                 </div>
             );
         } else if (curPage === 1) {
