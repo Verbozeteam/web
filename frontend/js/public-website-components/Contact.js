@@ -80,7 +80,7 @@ export default class Contact extends Component<PropsType, StateType> {
 const styles = {
     contactDiv: {
         height: '100vh',
-        background: 'black',
+        background: 'grey',
         color: 'white',
     }
 };
