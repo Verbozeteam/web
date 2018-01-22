@@ -65,8 +65,22 @@ export default class Contact extends Component<PropsType, StateType> {
     }
 
     render() {
-        <div>
-            CALL TO ACTION FORM (CONTACT US OR REQUEST DEMO)
-        </div>
+        return (
+            <div style={styles.contactDiv}>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                CALL TO ACTION FORM (CONTACT US OR REQUEST DEMO)
+            </div>
+        );
+    };
+};
+
+const styles = {
+    contactDiv: {
+        height: '100vh',
+        background: 'black',
+        color: 'white',
     }
 };

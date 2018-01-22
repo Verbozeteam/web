@@ -1,8 +1,72 @@
 @font-face {
-  font-family: 'CeraPRO';
-  src: url('../../assets/fonts/CeraPRO/CeraPRO-Regular.ttf') format('truetype'),
+    font-family: "CeraPRO";
+    src: url(../../assets/fonts/CeraPRO/CeraPRO-Regular.ttf) format("truetype");
 }
 
+@font-face {
+	font-family: 'CeraPRO';
+	src: url('../../assets/fonts/CeraPRO/CeraPRO-RegularItalic.ttf') format('truetype');
+	font-weight: normal;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'CeraPRO';
+	src: url('../../assets/fonts/CeraPRO/CeraPRO-Bold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'CeraPRO';
+	src: url('../../assets/fonts/CeraPRO/CeraPRO-BoldItalic.ttf') format('truetype');
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'CeraPRO';
+	src: url('../../assets/fonts/CeraPRO/CeraPRO-Light.ttf') format('truetype');
+	font-weight: lighter;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'CeraPRO';
+	src: url('../../assets/fonts/CeraPRO/CeraPRO-LightItalic.ttf') format('truetype');
+	font-weight: lighter;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'CeraPRO';
+	src: url('../../assets/fonts/CeraPRO/CeraPRO-Medium.ttf') format('truetype');
+	font-weight: medium;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'CeraPRO';
+	src: url('../../assets/fonts/CeraPRO/CeraPRO-MediumItalic.ttf') format('truetype');
+	font-weight: medium;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'CeraPRO';
+	src: url('../../assets/fonts/CeraPRO/CeraPRO-Thin.ttf') format('truetype');
+	font-weight: 100;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'CeraPRO';
+	src: url('../../assets/fonts/CeraPRO/CeraPRO-ThinItalic.ttf') format('truetype');
+	font-weight: 100;
+	font-style: italic;
+}
+
+
 body {
-  font-family: 'CeraPRO';
+    font-family: "CeraPRO";
 }

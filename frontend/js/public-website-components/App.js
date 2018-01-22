@@ -10,6 +10,8 @@ import NavBar from './NavBar';
 import Content from './Content';
 import { Footer } from './Footer';
 
+import css from '../../css/public_website/index.css';
+
 type PropsType = {
     ...any,
 };
@@ -23,15 +25,15 @@ class App extends Component<PropsType, StateType> {
 
     state = {}
 
-    hideStickyMenu = () => this.setState({ visible: false })
-    showStickyMenu = () => this.setState({ visible: true })
+    // hideStickyMenu = () => this.setState({ visible: false })
+    // showStickyMenu = () => this.setState({ visible: true })
 
     render() {
-        const { visible } = this.state
+        // const { visible } = this.state
 
         return (
             <div>
-                { visible ? <NavBar sticky={true}  /> : null }
+                <NavBar />
 
                 <Content />
 
