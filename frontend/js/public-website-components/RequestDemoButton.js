@@ -28,8 +28,12 @@ class RequestDemoButton extends React.Component<PropsType, StateType> {
 
 const styles = {
   button: {
+    color: '#FFFFFF',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     borderWidth: 2,
     borderColor: '#D04F4C',
+    height: 45,
+    width: 220,
   }
 }
 

@@ -40,9 +40,6 @@ export default class Home extends Component<PropsType, StateType> {
 
         return (
             <div>
-              <RequestDemoButton toggle={this.toggleModal.bind(this)}/>
-              <RequestDemoModal open={modal_open}
-                toggle={this.toggleModal.bind(this)}/>
               <RoomDemoComponent />
             </div>
         )

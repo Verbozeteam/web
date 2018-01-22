@@ -24,14 +24,14 @@ class RequestDemoModal extends React.Component<PropsType, StateType> {
 
   _modal_animation_closed = {
     top: '30%',
-    left: '15%',
-    height: '40%',
-    width: '70%',
+    left: '10%',
+    height: '50%',
+    width: '80%',
     opacity: 0
   };
 
   _modal_animation_open = {
-    top: '20%',
+    top: '15%',
     left: '5%',
     height: '60%',
     width: '90%',
@@ -61,33 +61,20 @@ class RequestDemoModal extends React.Component<PropsType, StateType> {
     const { open, toggle } = this.props;
     const { transition_stage } = this.state;
 
+    /* decide which styling to apply - either animation initial or end */
     var overlay_style;
-    if (open) {
-      if (transition_stage == 0) {
-        overlay_style = {
-          ...styles.overlay,
-          ...this._overlay_animation_hidden
-        };
-      } else {
-        overlay_style = {
-          ...styles.overlay,
-          ...this._overlay_animation_visible
-        };
-      }
+    if ((open && transition_stage !== 0) || (!open && transition_stage == 0)) {
+      overlay_style = {
+        ...styles.overlay,
+        ...this._overlay_animation_visible
+      };
     }
 
     else {
-      if (transition_stage == 0) {
-        overlay_style = {
-          ...styles.overlay,
-          ...this._overlay_animation_visible
-        };
-      } else {
-        overlay_style = {
-          ...styles.overlay,
-          ...this._overlay_animation_hidden
-        };
-      }
+      overlay_style = {
+        ...styles.overlay,
+        ...this._overlay_animation_hidden
+      };
     }
 
     return (
@@ -100,33 +87,20 @@ class RequestDemoModal extends React.Component<PropsType, StateType> {
     const { open } = this.props;
     const { transition_stage } = this.state;
 
+    /* decide which styling to apply - either animation initial or end */
     var modal_style;
-    if (open) {
-      if (transition_stage == 0) {
-        modal_style = {
-          ...styles.modal,
-          ...this._modal_animation_closed
-        };
-      } else {
-        modal_style = {
-          ...styles.modal,
-          ...this._modal_animation_open
-        };
-      }
+    if ((open && transition_stage !== 0) || (!open && transition_stage == 0)) {
+      modal_style = {
+        ...styles.modal,
+        ...this._modal_animation_open
+      };
     }
 
     else {
-      if (transition_stage == 0) {
-        modal_style = {
-          ...styles.modal,
-          ...this._modal_animation_open
-        };
-      } else {
-        modal_style = {
-          ...styles.modal,
-          ...this._modal_animation_closed
-        };
-      }
+      modal_style = {
+        ...styles.modal,
+        ...this._modal_animation_closed
+      };
     }
 
     return (
@@ -187,8 +161,11 @@ class RequestDemoModal extends React.Component<PropsType, StateType> {
       overlay = this._renderOverlay();
     }
 
+    /* increment transition stage */
     if (transition_stage < 2) {
       requestAnimationFrame(() => {
+
+        /* if modal exiting, set timeout before modal is actually removed */
         var duration = 0;
         if (!open && transition_stage == 1) {
           duration = 200;
