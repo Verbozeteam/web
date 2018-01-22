@@ -197,7 +197,7 @@ class RequestDemoModal extends React.Component<PropsType, StateType> {
 
 const styles = {
   container: {
-    position: 'absolute',
+    position: 'fixed',
     height: '100%',
     width: '100%',
     zIndex: 1000,

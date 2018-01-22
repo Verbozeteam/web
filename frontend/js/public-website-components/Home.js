@@ -3,8 +3,8 @@
 import React, { Component } from 'react';
 
 import { RoomDemoComponent } from './RoomDemoComponent';
-const RequestDemoButton = require('./RequestDemoButton');
 const RequestDemoModal = require('./RequestDemoModal');
+const RequestDemoBanner = require('./RequestDemoBanner');
 
 import { Link } from 'react-router-dom';
 
@@ -27,7 +27,6 @@ export default class Home extends Component<PropsType, StateType> {
     };
 
     toggleModal() {
-      console.log('open modal');
       const { modal_open } = this.state;
 
       this.setState({
@@ -40,7 +39,10 @@ export default class Home extends Component<PropsType, StateType> {
 
         return (
             <div>
+              <RequestDemoModal open={modal_open}
+                toggle={this.toggleModal.bind(this)} />
               <RoomDemoComponent />
+              <RequestDemoBanner toggleModal={this.toggleModal.bind(this)} />
             </div>
         )
     };
