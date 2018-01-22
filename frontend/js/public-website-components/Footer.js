@@ -13,7 +13,16 @@ import verboze_logo from '../../assets/images/logo_symbol.png';
 export const Footer = () => (
 
     <div>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+		<br/>
+    	<br/>
         FOOTER
+        <br/>
     </div>
 
 );
