@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-const RequestDemoButton = require('./RequestDemoButton');
-
 type PropsType = {
   toggleModal: () => null
 };

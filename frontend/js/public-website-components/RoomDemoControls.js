@@ -151,4 +151,3 @@ const styles = {
 };
 
 module.exports = { RoomDemoControls: ReduxConnect(mapStateToProps, mapDispatchToProps) (RoomDemoControls) };
-

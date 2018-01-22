@@ -6,6 +6,8 @@ import { RoomDemoComponent } from './RoomDemoComponent';
 const RequestDemoModal = require('./RequestDemoModal');
 const RequestDemoBanner = require('./RequestDemoBanner');
 
+const FeaturesPanels = require('./FeaturesPanels');
+
 import { Link } from 'react-router-dom';
 
 type PropsType = {
@@ -38,11 +40,12 @@ export default class Home extends Component<PropsType, StateType> {
       const { modal_open } = this.state;
 
         return (
-            <div>
+            <div style={{height: '100%'}}>
               <RequestDemoModal open={modal_open}
                 toggle={this.toggleModal.bind(this)} />
               <RoomDemoComponent />
               <RequestDemoBanner toggleModal={this.toggleModal.bind(this)} />
+              <FeaturesPanels expanded={true} />
             </div>
         )
     };
