@@ -87,7 +87,7 @@ export default class NavBar extends Component<PropsType, StateType> {
     }
 
     handleScroll(e: Event) {
-        let temp1 = document.documentElement;
+        let temp1 = document.scrollingElement || document.documentElement;
 
         if (!(temp1 === null)) {
             let temp2 = temp1.scrollTop
