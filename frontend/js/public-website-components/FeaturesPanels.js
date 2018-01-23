@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import css from '../../css/public_website/FeaturesPanels.css';
 
 type PropsType = {
@@ -12,7 +14,8 @@ type StateType = {};
 
 type PanelType = {
   name: string,
-  image: number
+  image: number,
+  link: string
 };
 
 class FeaturesPanels extends React.Component<PropsType, StateType> {
@@ -22,24 +25,28 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
   };
 
   _expanded_height: string = 600;
-  _collapsed_height: number = 100;
+  _collapsed_height: number = 150;
 
   _panels: Array<PanelType> = [
     {
         name: 'Modernizing Control',
-        image: require('../../assets/images/iphone_slice.png')
+        image: require('../../assets/images/iphone_slice.png'),
+        link: '/modernizing-control'
     },
     {
       name: 'Empowering Guests',
-      image: require('../../assets/images/car_slice.png')
+      image: require('../../assets/images/car_slice.png'),
+      link: '/empowering-guests'
     },
     {
       name: 'Enhancing Hotels',
-      image: require('../../assets/images/building_slice.png')
+      image: require('../../assets/images/building_slice.png'),
+      link: 'enhancing-hotels'
     },
     {
       name: 'Choosing Verboze',
-      image: require('../../assets/images/iphone_slice.png')
+      image: require('../../assets/images/iphone_slice.png'),
+      link: 'choosing-verboze'
     }
   ];
 
@@ -56,24 +63,30 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
     }
 
     return (
-      <div className={'header-container'}
-        style={styles.header_container}>
+      <div className={'header-container'}>
           {lines}
       </div>
     );
   }
 
   _renderPanel(id: number, panel: PanelType) {
-    console.log(panel);
+    const { expanded } = this.props;
+
+    var class_name = 'panel ';
+    if (expanded) {
+      class_name += 'expanded';
+    } else {
+      class_name += 'collapsed';
+    }
 
     return (
-      <div key={'panel-' + id}
-        className={'panel'}
-        style={{...styles.panel, backgroundColor: panel.color}}>
-        <img className={'image'} src={panel.image} />
+      <Link key={'panel-' + id}
+        to={panel.link}
+        className={class_name}>
+        <img className={'panel-image'} src={panel.image} />
         <div className={'overlay'}></div>
         {this._renderHeader(panel.name)}
-      </div>
+      </Link>
     );
   }
 
@@ -81,6 +94,7 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
     const { expanded } = this.props;
 
     const panels = [];
+    const x_offset = 1 / this._panels.length * 100;
     for (var i = 0; i < this._panels.length; i++) {
       panels.push(this._renderPanel(i, this._panels[i]));
     }
@@ -94,25 +108,12 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
     }
 
     return (
-      <div style={{...styles.container, ...container_style}}>
+      <div className={'panels-container'}
+        style={container_style}>
         {panels}
       </div>
     );
   }
 }
-
-const styles = {
-  container: {
-    display: 'flex'
-  },
-  panel: {
-    position: 'relative',
-    padding: 50,
-    overflow: 'hidden'
-  },
-  header_container: {
-    marginTop: 100
-  }
-};
 
 module.exports = FeaturesPanels;
