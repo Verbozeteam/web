@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 
 import PageTopBanner from '../PageTopBanner';
+const FeaturesPanels = require('../FeaturesPanels');
+
 
 type PropsType = {};
 
@@ -14,9 +16,13 @@ export default class EmpoweringGuests extends Component<PropsType, StateType> {
 
     render() {
         return (
-            <div style={styles.empoweringGuestsDiv}>
-        		<PageTopBanner title="Empowering Guests make them feel that they have a say in the place they choose to stay" imageUrl={ this._banner_img } />
+					<div>
+						<div style={styles.empoweringGuestsDiv}>
+        			<PageTopBanner title="Empowering Guests make them feel that they have a say in the place they choose to stay" imageUrl={ this._banner_img } />
             </div>
+						<FeaturesPanels expanded={false} />
+					</div>
+
         );
     };
 };

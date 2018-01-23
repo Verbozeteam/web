@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 
 import PageTopBanner from '../PageTopBanner';
+const FeaturesPanels = require('../FeaturesPanels');
+
 
 type PropsType = {};
 
@@ -14,9 +16,12 @@ export default class ModernizingControl extends Component<PropsType, StateType> 
 
     render() {
         return (
-            <div style={styles.modernizingControlDiv}>
+					<div>
+						<div style={styles.modernizingControlDiv}>
             	<PageTopBanner title="Introducing the Hospitality Industry to the 21st Century" imageUrl={ this._banner_img } />
             </div>
+						<FeaturesPanels expanded={false} />
+					</div>
         );
     };
 };

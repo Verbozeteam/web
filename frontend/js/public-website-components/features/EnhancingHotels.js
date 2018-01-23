@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 
 import PageTopBanner from '../PageTopBanner';
+const FeaturesPanels = require('../FeaturesPanels');
+
 
 type PropsType = {};
 
@@ -14,9 +16,12 @@ export default class EnhancingHotels extends Component<PropsType, StateType> {
 
     render() {
         return (
-            <div style={styles.enhancingHotelsDiv}>
+					<div>
+						<div style={styles.enhancingHotelsDiv}>
                 <PageTopBanner title="Enhancing Hotels is our middle name, let us take care of it for You" imageUrl={ this._banner_img } />
             </div>
+						<FeaturesPanels expanded={false} />
+					</div>
         );
     };
 };
