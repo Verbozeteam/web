@@ -44,13 +44,21 @@ export default class NavBar extends Component<PropsType, StateType> {
                                 FEATURES
                             </a>
                             <div className="dropdown-menu" aria-labelledby="${navbarDropdownId}">
-                                <a className="dropdown-item" href="#">Modernizing Control</a>
+                                <Link className="dropdown-item" to="/modernizing-control">
+                                    Modernizing Control
+                                </Link>
                                 <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="#">Empowering Guests</a>
+                                <Link className="dropdown-item" to="/empowering-guests">
+                                    Empowering Guests
+                                </Link>
                                 <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="#">Enhancing Hotels</a>
+                                <Link className="dropdown-item" to="/enhancing-hotels">
+                                    Enhancing Hotels
+                                </Link>
                                 <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="#">Choosing Verboze</a>
+                                <Link className="dropdown-item" to="/choosing-verboze">
+                                    Choosing Verboze
+                                </Link>
                             </div>
                         </li>
                         <NavLink className="nav-item" activeClassName="active" to='/company'>

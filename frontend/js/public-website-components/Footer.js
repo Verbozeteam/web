@@ -41,22 +41,30 @@ export default class Footer extends Component<PropsType, StateType> {
                                 <hr style={ styles.hrStyle }/>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        Modernizing Control
+                                        <Link className="footer-link" to='/modernizing-control'>
+                                            Modernizing Control
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        Empowering Guests
+                                        <Link className="footer-link" to='/empowering-guests'>
+                                            Empowering Guests
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        Enhancing Hotels
+                                        <Link className="footer-link" to='/enhancing-hotels'>
+                                            Enhancing Hotels
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        Choosing Verboze
+                                        <Link className="footer-link" to='/choosing-verboze'>
+                                            Choosing Verboze
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
