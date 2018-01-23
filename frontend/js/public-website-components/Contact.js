@@ -7,6 +7,8 @@ import { PublicWebsiteAPICaller } from '../js-api-utils/PublicWebsiteAPI';
 
 import * as Cookies from 'js-cookie';
 
+import PageTopBanner from './PageTopBanner';
+
 type PropsType = {};
 
 type StateType = {
@@ -29,6 +31,8 @@ type FormData = {
 };
 
 export default class Contact extends Component<PropsType, StateType> {
+    _banner_img = require('../../assets/images/page_top_banners/banner.png');
+
     state = {
         submitStage: 0,
         errorMessage: "",
@@ -67,11 +71,7 @@ export default class Contact extends Component<PropsType, StateType> {
     render() {
         return (
             <div style={styles.contactDiv}>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                CALL TO ACTION FORM (CONTACT US OR REQUEST DEMO)
+                <PageTopBanner title="This should be some title for the contact page" imageUrl={ this._banner_img } />
             </div>
         );
     };

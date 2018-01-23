@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 
+import PageTopBanner from './PageTopBanner';
+
 import { Link } from 'react-router-dom';
 
 type PropsType = {
@@ -13,6 +15,7 @@ type StateType = {
 };
 
 export default class Company extends Component<PropsType, StateType> {
+    _banner_img = require('../../assets/images/page_top_banners/banner.png');
 
     constructor(props: PropsType) {
         super(props);
@@ -42,12 +45,7 @@ export default class Company extends Component<PropsType, StateType> {
         // height: this.state.height, width: this.state.width,
         return (
             <div style={{...styles.companyDiv}}>
-            	<br/>
-            	<br/>
-            	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
-            	<br/>
-                COMPANY PAGE
+            	<PageTopBanner title="We will empower hotels to do what they do best, but even better" imageUrl={ this._banner_img } />
             </div>
         );
     };
@@ -56,6 +54,7 @@ export default class Company extends Component<PropsType, StateType> {
 
 const styles = {
 	companyDiv: {
+        height: '100vh',
 		background: 'grey',
 		color: 'white',
 	}

@@ -25,11 +25,7 @@ class App extends Component<PropsType, StateType> {
 
     state = {}
 
-    // hideStickyMenu = () => this.setState({ visible: false })
-    // showStickyMenu = () => this.setState({ visible: true })
-
     render() {
-        // const { visible } = this.state
 
         return (
             <div>
