@@ -37,6 +37,8 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
 
   _parallax_offset_movement_range: number = 50;
 
+  _bound_handleScroll = (e: Event): null => this.handleScroll(e);
+
   _panels: Array<PanelType> = [
     {
         name: 'Modernizing Control',
@@ -61,11 +63,11 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
   ];
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll.bind(this));
+    window.addEventListener('scroll', this._bound_handleScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll.bind(this));
+    window.removeEventListener('scroll', this._bound_handleScroll);
   }
 
   handleScroll(e: Event) {
