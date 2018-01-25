@@ -1,12 +1,14 @@
 /* @flow */
 
 import React from 'react';
+import Radium from 'radium';
 
 type PropsType = {
   founder: {
     name: string,
     text: string,
     email: string,
+    linkedin: string,
     image: number
   }
 };
@@ -26,6 +28,10 @@ class FounderCard extends React.Component<PropsType, StateType> {
             <h4 style={styles.name}>{founder.name}</h4>
             <p style={styles.text}>{founder.text}</p>
             <a style={styles.email} href={'mailto:' + founder.email}>{founder.email}</a>
+            &nbsp;&nbsp;&nbsp;
+            <a style={styles.linkedin} target={'_blank'} href={founder.linkedin}>
+              <i className="fa fa-linkedin"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -55,8 +61,15 @@ const styles = {
   },
   email: {
     color: '#D04F4C',
-    fontWeight: 'lighter'
+    fontWeight: 'lighter',
+    ':hover': {
+      textDecoration: 'none',
+      fontWeight: 'bold'
+    }
+  },
+  linkedin: {
+    color: '#D04F4C',
   }
 };
 
-module.exports = FounderCard;
+module.exports = Radium(FounderCard);
