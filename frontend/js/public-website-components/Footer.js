@@ -10,14 +10,15 @@ import { HashLink } from 'react-router-hash-link';
 // Use it just like a RRv4 link (to can be a string or an object, see RRv4 api for details):
 // <HashLink to="/some/path#with-hash-fragment">Link to Hash Fragment</HashLink>
 
-import verboze_logo from '../../assets/images/logo_symbol.png';
-
 type PropsType = {};
 
 type StateType = {};
 
 
 export default class Footer extends Component<PropsType, StateType> {
+
+    _verboze_white = require('../../assets/images/verboze_white.png');
+
     render() {
         return (
             <Fragment>
@@ -28,7 +29,7 @@ export default class Footer extends Component<PropsType, StateType> {
                             <div className="col-md-2 footer-col-md-2">
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <img src={ verboze_logo } className="d-inline-block align-top" alt="" style={ styles.logoStyle }/>
+                                        <img src={ this._verboze_white } className="d-inline-block align-top" alt="" style={ styles.logoStyle }/>
                                     </div>
                                 </div>
                             </div>

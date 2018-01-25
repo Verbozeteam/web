@@ -22,13 +22,15 @@ export default class NavBar extends Component<PropsType, StateType> {
         sticky: false,
     };
 
-    _verboze_logo = require('../../assets/images/logo_symbol.png');
+    _verboze_white = require('../../assets/images/verboze_white.png');
+    _verboze_black = require('../../assets/images/verboze_black.png');
 
     renderNavbarContent(navbarTogglerId: string, navbarDropdownId: string) {
+      const { sticky } = this.state;
         return (
             <div className="container">
                 <NavLink className="navbar-brand" exact to="/">
-                    <img src={ this._verboze_logo } height="30" className="d-inline-block align-top" alt="" id="navbarLogo"/>
+                    <img src={ (sticky) ? this._verboze_black : this._verboze_white } height="30" className="d-inline-block align-top" alt="" id="navbarLogo"/>
                     VERBOZE
                 </NavLink>
 
