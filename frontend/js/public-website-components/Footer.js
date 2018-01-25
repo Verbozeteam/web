@@ -133,6 +133,7 @@ export default class Footer extends Component<PropsType, StateType> {
 
 const styles = {
     footerStyle: {
+        borderTop: '#444444 1px solid',
         padding: 30,
         backgroundColor: 'black',
         color: 'white',
@@ -157,4 +158,3 @@ const styles = {
     }
 
 };
-
