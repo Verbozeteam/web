@@ -12,27 +12,18 @@ import Footer from './Footer';
 
 import css from '../../css/public_website/index.css';
 
-type PropsType = {
-    ...any,
-};
+type PropsType = {};
 
-type StateType = {
-    ...any,
-};
+type StateType = {};
 
 
 class App extends Component<PropsType, StateType> {
 
-    state = {}
-
     render() {
-
         return (
             <div>
                 <NavBar />
-
                 <Content />
-
                 <Footer />
             </div>
         );
