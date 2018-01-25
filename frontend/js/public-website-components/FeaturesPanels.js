@@ -169,11 +169,17 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
 
     return (
       <div className={'panels-container'}
-        style={container_style}>
+        style={{...styles.container, ...container_style}}>
         {panels}
       </div>
     );
   }
 }
+
+const styles = {
+  container: {
+    backgroundColor: '#000000'
+  }
+};
 
 module.exports = FeaturesPanels;
