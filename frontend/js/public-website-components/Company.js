@@ -63,7 +63,6 @@ export default class Company extends React.Component<PropsType, StateType> {
 
   _renderLocationSection() {
 
-
     return (
       <div className={'container'} style={styles.section}>
         <h2 style={styles.header}>Office Location</h2>

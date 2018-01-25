@@ -27,11 +27,12 @@ class FounderCard extends React.Component<PropsType, StateType> {
           <div style={styles.details}>
             <h4 style={styles.name}>{founder.name}</h4>
             <p style={styles.text}>{founder.text}</p>
-            <a style={styles.email} href={'mailto:' + founder.email}>{founder.email}</a>
-            &nbsp;&nbsp;&nbsp;
-            <a style={styles.linkedin} target={'_blank'} href={founder.linkedin}>
-              <i className="fa fa-linkedin"></i>
+            <a style={styles.email} href={'mailto:' + founder.email}>
+              <i className={'fa fa-envelope-o'}></i>&nbsp;{founder.email}</a>
+            <a key={'linkedin-' + founder.name} style={styles.linkedin} target={'_blank'} href={founder.linkedin}>
+              <i className={'fa fa-linkedin'}></i>&nbsp;Linkedin
             </a>
+            <div style={{clear: 'both'}}></div>
           </div>
         </div>
       </div>
@@ -62,13 +63,20 @@ const styles = {
   email: {
     color: '#D04F4C',
     fontWeight: 'lighter',
+    float: 'left',
     ':hover': {
       textDecoration: 'none',
-      fontWeight: 'bold'
+      fontWeight: 'normal'
     }
   },
   linkedin: {
     color: '#D04F4C',
+    fontWeight: 'lighter',
+    float: 'right',
+    ':hover': {
+      textDecoration: 'none',
+      fontWeight: 'normal'
+    }
   }
 };
 
