@@ -5,7 +5,6 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './Home';
 
 import Company from './Company';
-import AboutUs from './AboutUs';
 import Contact from './Contact';
 
 // Features
@@ -18,7 +17,6 @@ import ChoosingVerboze from './features/ChoosingVerboze';
 const Content = () => (
     <Switch>
       <Route path='/company' component={Company}/>
-      <Route path='/about-us' component={AboutUs}/>
       <Route path='/contact' component={Contact}/>
       <Route path='/modernizing-control' component={ModernizingControl}/>
       <Route path='/empowering-guests' component={EmpoweringGuests}/>
