@@ -2,7 +2,7 @@
 
 import React, { Component, Fragment } from 'react';
 
-import css from '../../css/public_website/navbar.css';
+import css from '../../css/public_website/NavBar.css';
 
 import {
   NavLink,
@@ -24,6 +24,8 @@ export default class NavBar extends Component<PropsType, StateType> {
 
     _verboze_white = require('../../assets/images/verboze_white.png');
     _verboze_black = require('../../assets/images/verboze_black.png');
+
+    _bound_handleScroll = (e: Event): null => this.handleScroll(e);
 
     renderNavbarContent(navbarTogglerId: string, navbarDropdownId: string) {
       const { sticky } = this.state;
@@ -81,14 +83,14 @@ export default class NavBar extends Component<PropsType, StateType> {
     };
 
     componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll.bind(this));
+        window.addEventListener('scroll', this._bound_handleScroll);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll.bind(this));
+        window.removeEventListener('scroll', this._bound_handleScroll)
     }
 
-    handleScroll(e: Event) {
+    handleScroll(e: Event): null {
         let temp1 = document.scrollingElement || document.documentElement;
 
         if (!(temp1 === null)) {
@@ -101,6 +103,8 @@ export default class NavBar extends Component<PropsType, StateType> {
                 }
             }
         }
+
+        return null;
 
     }
 

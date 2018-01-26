@@ -2,7 +2,7 @@
 
 import React, { Component, Fragment } from 'react';
 
-import css from '../../css/public_website/footer.css';
+import css from '../../css/public_website/Footer.css';
 
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';

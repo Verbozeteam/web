@@ -10,7 +10,7 @@ import NavBar from './NavBar';
 import Content from './Content';
 import Footer from './Footer';
 
-import css from '../../css/public_website/index.css';
+import css from '../../css/public_website/App.css';
 
 type PropsType = {};
 

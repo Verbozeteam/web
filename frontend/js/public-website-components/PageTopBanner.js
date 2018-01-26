@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 
-import css from '../../css/public_website/pageTopBanner.css';
+import css from '../../css/public_website/PageTopBanner.css';
 
 type PropsType = {
 	title: string,

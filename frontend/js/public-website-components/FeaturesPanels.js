@@ -9,7 +9,6 @@ import css from '../../css/public_website/FeaturesPanels.css';
 
 type PropsType = {
   expanded?: boolean,
-  top_offset: number
 };
 
 type StateType = {
