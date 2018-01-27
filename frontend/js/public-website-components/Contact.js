@@ -76,8 +76,9 @@ export default class Contact extends Component<PropsType, StateType> {
                 <div className="container">
                     <h5 style={{ fontWeight: 'lighter' }}>Reach out to us for any questions or enquiries, we're eager to hear from you:</h5>
                     <br/>
+                    <ContactOrDemoForm  requestDemo={ false } />
+                    <br/>
                 </div>
-                <ContactOrDemoForm  requestDemo={ false } />
             </div>
         );
     };
@@ -85,7 +86,7 @@ export default class Contact extends Component<PropsType, StateType> {
 
 const styles = {
     contactDiv: {
-        height: '100vh',
+        minHeight: '100vh',
         background: 'black',
         color: 'white',
     }
