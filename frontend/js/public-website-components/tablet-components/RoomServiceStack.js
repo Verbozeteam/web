@@ -20,7 +20,7 @@ type StateType = {
 
 class RoomServiceStack extends React.Component<PropsType, StateType> {
     _unsubscribe: () => null = () => null;
-    _dndColor: string = '#D04F4C';
+    _dndColor: string = '#BA3737';
     _rsColor: string = '#2b9fff';
 
     state: StateType = {

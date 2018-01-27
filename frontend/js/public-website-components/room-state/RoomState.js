@@ -14,6 +14,7 @@ import { RoomStateUpdater } from '../utilities/RoomStateUpdater';
 const connectionActions = require('../redux/actions/connection');
 import * as tabletActions from '../redux/actions/tabletstate';
 const { WebSocketCommunication } = require('../../js-api-utils/WebSocketCommunication');
+import { DimmerSlider } from '../tablet-components/DimmerSlider';
 
 function mapStateToProps(state) {
     return {
@@ -41,10 +42,10 @@ type StateType = {
      * 0: render faded out
      * 1: render full display
      */
-    currentStage: number,
     curtainOpenings: {[string]: number},
     lightIntensities: {[string]: number},
     loadingProgress: number, // 0-1, 1 is done
+    loadedDemo: boolean,
 };
 
 class RoomState extends React.Component<PropsType, StateType> {
@@ -55,8 +56,8 @@ class RoomState extends React.Component<PropsType, StateType> {
     };
 
     state = {
+        loadedDemo: false,
         loadingProgress: 0,
-        currentStage: 0,
         curtainOpenings: {
             ['curtain-1']: 0,
             ['curtain-2']: 0,
@@ -68,6 +69,8 @@ class RoomState extends React.Component<PropsType, StateType> {
             ['dimmer-1']: 0,
         },
     };
+
+    _accentColor: string = "#BA3737";
 
     _rendererDimensions = {width: 0, height: 0};
 
@@ -209,7 +212,6 @@ class RoomState extends React.Component<PropsType, StateType> {
         this.prepareComposer();
         this.createFinalComposition();
         this.loadAssets();
-        this.renderLayers();
     }
 
     componentWillUnmount() {
@@ -222,27 +224,28 @@ class RoomState extends React.Component<PropsType, StateType> {
     runInitialAnimation() {
         const store = this.context.store;
 
+        this.setState({loadedDemo: true});
+
+        RoomStateUpdater.resetDemo();
+        RoomStateUpdater.updateMany(store, {
+            'lightswitch-1': {intensity: 0},
+            'lightswitch-2': {intensity: 0},
+            'lightswitch-3': {intensity: 0},
+            'dimmer-1': {intensity: 0},
+        }, true);
+
         setTimeout(() => {
-            RoomStateUpdater.resetDemo();
-            RoomStateUpdater.updateMany(store, {
-                'lightswitch-1': {intensity: 0},
-                'lightswitch-2': {intensity: 0},
-                'lightswitch-3': {intensity: 0},
-                'dimmer-1': {intensity: 0},
-            }, true);
+            RoomStateUpdater.update(store, 'lightswitch-1', {intensity: 1}, true);
             setTimeout(() => {
-                RoomStateUpdater.update(store, 'lightswitch-1', {intensity: 1}, true);
+                RoomStateUpdater.update(store, 'dimmer-1', {intensity: 100}, true);
                 setTimeout(() => {
-                    RoomStateUpdater.update(store, 'dimmer-1', {intensity: 100}, true);
+                    RoomStateUpdater.update(store, 'lightswitch-2', {intensity: 1}, true);
                     setTimeout(() => {
-                        RoomStateUpdater.update(store, 'lightswitch-2', {intensity: 1}, true);
-                        setTimeout(() => {
-                            RoomStateUpdater.update(store, 'lightswitch-3', {intensity: 1}, true);
-                        }, 1500);
+                        RoomStateUpdater.update(store, 'lightswitch-3', {intensity: 1}, true);
                     }, 1500);
                 }, 1500);
-            }, 2000);
-        }, 1000);
+            }, 1500);
+        }, 2000);
     }
 
     loadGeometries() {
@@ -378,8 +381,7 @@ class RoomState extends React.Component<PropsType, StateType> {
         var curProgress = 0;
         var progress = (() => {
             curProgress += 1;
-            if (this.renderer)
-                this.setState({loadingProgress: curProgress / Object.keys(this._images).length});
+            this.setState({loadingProgress: curProgress / (Object.keys(this._images).length+1)});
         }).bind(this);
 
         for (var key in this._images) {
@@ -416,7 +418,8 @@ class RoomState extends React.Component<PropsType, StateType> {
                 } else {
                     this._images[img].material = new THREE.ShaderMaterial({
                         uniforms: {
-                            brightness: {value: 1.0},
+                            lightIntensities: {value: new THREE.Vector4(0, 0, 0, 0)},
+                            curtainOpening: {value: 0.0},
                             textureSampler: {type: 't', value: this._images[img].texture},
                             alphaSampler: {type: 't', value: this._images.curtainMask.texture},
                         },
@@ -433,9 +436,8 @@ class RoomState extends React.Component<PropsType, StateType> {
                 }
             }
             this.loadTemperatureOverlay();
-            this.runInitialAnimation();
-            if (this.renderer)
-                this.forceUpdate();
+            progress();
+            console.log("done loading...")
         }).bind(this)).catch(((reason) => {
             console.log(reason);
             this.props.setConnectionURL("");
@@ -465,14 +467,12 @@ class RoomState extends React.Component<PropsType, StateType> {
         const { roomState } = this.props;
         const { curtainOpenings, lightIntensities } = this.state;
 
-        var curtainBrightness = 0.1 + this.computeLightBrightness() * 0.5;
         var windowBrightness = this.computeCurtainsLight();
+        var intensities = Object.keys(lightIntensities).sort().map(k => lightIntensities[k]/100);
+        var lightIntensitiesVector = new THREE.Vector4(intensities[0], intensities[1], intensities[2], intensities[3]);
 
         if ("curtainLight" in this._images && this._images.curtainLight.material)
             this._images.curtainLight.material.uniforms.opacity.value = windowBrightness * 0.6;
-
-        if ("window" in this._images && this._images.window.material)
-            this._images.window.material.uniforms.brightness.value = curtainBrightness * 0.8;
 
         var needAnimation: boolean = false;
         for (var key in roomState) {
@@ -493,15 +493,19 @@ class RoomState extends React.Component<PropsType, StateType> {
                         var opening = (curtainOpenings[thing.id] || 0) / 100;
                         this._images[key+"-1"].sprite.position.x += opening*1.5;
                         this._images[key+"-1"].sprite.scale.x *= 1 - (opening/1.8);
-                        this._images[key+"-1"].material.uniforms.brightness.value = curtainBrightness;
                         this._images[key+"-2"].sprite.position.x += -opening*1.5;
                         this._images[key+"-2"].sprite.scale.x *= 1 - (opening/1.8);
-                        this._images[key+"-2"].material.uniforms.brightness.value = curtainBrightness;
+                        this._images[key+"-1"].material.uniforms.lightIntensities.value = lightIntensitiesVector;
+                        this._images[key+"-1"].material.uniforms.curtainOpening.value = windowBrightness;
+                        this._images[key+"-2"].material.uniforms.lightIntensities.value = lightIntensitiesVector;
+                        this._images[key+"-2"].material.uniforms.curtainOpening.value = windowBrightness;
                         if (thing.curtain != 0)
                             needAnimation = true;
                     } else if (key in this._images && this._images[key].material) {
                         var opening = (curtainOpenings[thing.id] || 0) / 100;
                         this._images[key].sprite.position.y += opening * 2.1;
+                        this._images[key].material.uniforms.lightIntensities.value = lightIntensitiesVector;
+                        this._images[key].material.uniforms.curtainOpening.value = windowBrightness;
                         if (thing.curtain != 0)
                             needAnimation = true;
                     }
@@ -577,7 +581,7 @@ class RoomState extends React.Component<PropsType, StateType> {
                         this._images[key].material.uniforms.offset.value.set(0, 0, 1);
                         this._images[key].material.uniforms.scale.value.set(maxRenderedLayerDimension, maxRenderedLayerDimension, 1);
                     } else if (this._images[key].material) {
-                        this._images[key].sprite.position.set(-1.44469, 1.389754, -8.079868);
+                        this._images[key].sprite.position.set(-1.44469-0.12, 1.389754-0.04, -8.079868);
                         this._images[key].sprite.rotation.y = 180.0 * Math.PI / 180.0;
                         this._images[key].sprite.scale.set(5.0, 5.0, 5.0);
                     }
@@ -671,20 +675,36 @@ class RoomState extends React.Component<PropsType, StateType> {
     }
 
     render() {
-        var { loadingProgress } = this.state;
+        var { loadingProgress, loadedDemo } = this.state;
         var { opacity, dimensions } = this.props;
 
         var curOpacity = opacity;
-        if (!this._materials.tempOverlay)
+        if (!this._materials.tempOverlay || !loadedDemo)
             curOpacity = 0;
 
-        this.renderLayers();
+        if (opacity >= 1 && loadingProgress >= 1 && !loadedDemo)
+            requestAnimationFrame((() => this.runInitialAnimation()).bind(this));
+
+        if (loadedDemo)
+            this.renderLayers();
+
         return (
             <div style={{...styles.container, ...dimensions}}>
                 <div
                     style={{...styles.canvas, opacity: curOpacity}}
                     ref={(mount: any) => { this.mount = mount }}>
                     <ReactResizeDetector handleWidth handleHeight onResize={this.renderLayers.bind(this)} />
+                </div>
+
+                <div style={{...styles.loadingContainer, opacity: loadedDemo ? 0 : 1}}>
+                    <div style={styles.loadingText}>{"Loading..."}</div>
+                    <DimmerSlider width={400}
+                                  height={10}
+                                  value={loadingProgress}
+                                  maxValue={1}
+                                  glowColor={this._accentColor}
+                                  disabled={true}
+                                  showKnob={false}/>
                 </div>
             </div>
         )
@@ -702,17 +722,23 @@ const styles = {
     canvas: {
         width: '100%',
         height: '100%',
+        position: 'absolute',
         transition: 'opacity 2000ms',
     },
-    progressContainer: {
+    loadingContainer: {
+        display: 'flex',
+        flexDirection: 'column',
         position: 'absolute',
         width: '100%',
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        transition: 'opacity 500ms',
     },
-    progress: {
-        width: 300,
+    loadingText: {
+        fontWeight: 'lighter',
+        color: '#ffffff',
+        fontSize: 26,
     }
 };
 

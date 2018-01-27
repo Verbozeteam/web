@@ -35,7 +35,7 @@ const styles = {
     bar: {
         height: 1,
         marginTop: 5,
-        backgroundColor: '#D04F4C',
+        backgroundColor: '#BA3737',
         width: 50,
     },
 };
