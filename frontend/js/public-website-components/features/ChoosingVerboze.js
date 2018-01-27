@@ -4,12 +4,16 @@ import React, { Component } from 'react';
 
 import PageTopBanner from '../PageTopBanner';
 import SideNavBar from '../features/components/SideNavBar';
+const RequestDemoModal = require('../RequestDemoModal');
+const RequestDemoBanner = require('../RequestDemoBanner');
 const FeaturesPanels = require('../FeaturesPanels');
 
 
 type PropsType = {};
 
-type StateType = {};
+type StateType = {
+    modal_open: boolean
+};
 
 
 export default class ChoosingVerboze extends Component<PropsType, StateType> {
@@ -38,9 +42,25 @@ export default class ChoosingVerboze extends Component<PropsType, StateType> {
         },
     ];
 
+    state = {
+        modal_open: false
+    };
+
+    toggleModal() {
+        const { modal_open } = this.state;
+
+        this.setState({
+          modal_open: !modal_open
+        });
+    };
+
     render() {
+        const { modal_open } = this.state;
+
         return (
             <div>
+                <RequestDemoModal open={modal_open}
+                    toggle={this.toggleModal.bind(this)} />
                 <div style={styles.choosingVerbozeDiv}>
                     <PageTopBanner title="Choosing Verboze is the best thing you will ever do to your Hotel" imageUrl={ this._banner_img } />
                     <SideNavBar sections={ this._sections } containerId="choosing-verboze-container" />
@@ -137,6 +157,7 @@ export default class ChoosingVerboze extends Component<PropsType, StateType> {
                         </div>
                     </div>
                 </div>
+                <RequestDemoBanner toggleModal={this.toggleModal.bind(this)} />
                 <FeaturesPanels expanded={false} />
             </div>
         );

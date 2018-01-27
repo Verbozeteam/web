@@ -8,6 +8,7 @@ import { PublicWebsiteAPICaller } from '../js-api-utils/PublicWebsiteAPI';
 import * as Cookies from 'js-cookie';
 
 import PageTopBanner from './PageTopBanner';
+import ContactOrDemoForm from './ContactOrDemoForm';
 
 type PropsType = {};
 
@@ -71,7 +72,12 @@ export default class Contact extends Component<PropsType, StateType> {
     render() {
         return (
             <div style={styles.contactDiv}>
-                <PageTopBanner title="This should be some title for the contact page" imageUrl={ this._banner_img } />
+                <PageTopBanner title="Get in Touch" imageUrl={ this._banner_img } />
+                <div className="container">
+                    <h5 style={{ fontWeight: 'lighter' }}>Reach out to us for any questions or enquiries, we're eager to hear from you:</h5>
+                    <br/>
+                </div>
+                <ContactOrDemoForm  requestDemo={ false } />
             </div>
         );
     };
@@ -80,7 +86,7 @@ export default class Contact extends Component<PropsType, StateType> {
 const styles = {
     contactDiv: {
         height: '100vh',
-        background: 'grey',
+        background: 'black',
         color: 'white',
     }
 };
