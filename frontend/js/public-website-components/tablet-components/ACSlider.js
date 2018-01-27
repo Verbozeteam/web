@@ -55,7 +55,7 @@ class ACSlider extends React.Component<PropsType, StateType> {
     _numDashes: number = 25;
     _minimum: number = 16;
     _maximum: number = 32;
-    _hotColor: {r: number, g: number, b: number} = {r: 208, g: 79, b: 76};
+    _hotColor: {r: number, g: number, b: number} = {r: 0xBA, g: 0x37, b: 0x37}; // #BA3737
     _coldColor: {r: number, g: number, b: number} = {r: 43, g: 159, b: 255};
 
     _container_ref = null;

@@ -34,6 +34,9 @@ type PropsType = {
     increment?: number,
     glowColor?: string,
     onChange?: number => null,
+    disabled?: boolean,
+    showKnob?: boolean,
+    animateSliding?: boolean,
 };
 
 type StateType = {
@@ -54,6 +57,9 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
         onChange: (n: number) => null,
         extraStyle: {},
         increment: 1,
+        disabled: false,
+        showKnob: true,
+        animateSliding: false,
     };
 
     state: StateType = {
@@ -88,10 +94,13 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
     }
 
     onMouseMove(e: Object) {
-        const { onChange } = this.props;
+        const { onChange, disabled } = this.props;
         const { dragging, lastValue } = this.state;
         const { x, y } = this.getMouseCoordinatesFromEvent(e);
         var stateUpdate = {};
+
+        if (disabled)
+            return;
 
         if (!dragging) {
             if (x <= this._sizes.buttonWidth + this._sizes.sliderMargin/2)
@@ -113,8 +122,12 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
     }
 
     onMouseDown(e: Object) {
+        const { disabled } = this.props;
         const { hoverState, currentValue } = this.state;
         const { x, y } = this.getMouseCoordinatesFromEvent(e);
+
+        if (disabled)
+            return;
 
         if (hoverState === 1) {
             captureMouseEvents(e, this.onMouseMove.bind(this), this.onMouseUp.bind(this));
@@ -127,14 +140,17 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
     }
 
     onMouseUp(e: Object) {
-        const { onChange, value, maxValue, increment } = this.props;
+        const { onChange, value, maxValue, increment, disabled } = this.props;
         const { dragging, currentValue, lastValue, hoverState } = this.state;
+
+        if (disabled)
+            return;
 
         if (dragging) {
             if (onChange && currentValue !== lastValue)
                 onChange(currentValue);
         } else if (hoverState === 0 || hoverState === 2) {
-            var newVal = Math.max(0, Math.min(maxValue, value + increment * (hoverState-1)));
+            var newVal = parseInt(Math.max(0, Math.min(maxValue, value + increment * (hoverState-1))));
             if (onChange && lastValue !== newVal)
                 onChange(newVal);
         }
@@ -153,7 +169,7 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
     }
 
     render() {
-        const { width, height, value, maxValue, glowColor, onChange } = this.props;
+        const { width, height, value, maxValue, glowColor, onChange, showKnob, animateSliding } = this.props;
         const { hoverState, dragging, currentValue } = this.state;
 
         var v = dragging ? currentValue : value;
@@ -190,6 +206,14 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
         else if (hoverState === 2)
             plusStyle.color = '#ffffff';
 
+        var knob = showKnob? <div style={knobStyle} /> : null;
+        var plus = showKnob? <div style={plusStyle}>{"+"}</div> : null;
+        var minus = showKnob? <div style={minusStyle}>{"-"}</div> : null;
+
+        var sliderInnerContainerStyle = {...styles.sliderInnerContainer};
+        if (animateSliding)
+            sliderInnerContainerStyle.transition = 'width 300ms';
+
         return (
             <div style={{...styles.container, width, height}}
                  onMouseMove={this.onMouseMove.bind(this)}
@@ -197,13 +221,13 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
                  onMouseUp={this.onMouseUp.bind(this)}
                  onMouseLeave={this.onMouseLeave.bind(this)}
                  ref={r => this._container_ref = r}>
-                <div style={minusStyle}>{"-"}</div>
+                {minus}
                 <div style={{...styles.sliderContainer, width: this._sizes.sliderWidth, height: this._sizes.barHeight, marginLeft: this._sizes.sliderMargin/2, marginRight: this._sizes.sliderMargin/2}}>
-                    <div style={{...styles.sliderInnerContainer, width: this._sizes.valueWidth, ...sliderGlow}} />
-                    <div style={{...styles.sliderInnerContainer, width: this._sizes.sliderWidth-this._sizes.valueWidth}} />
-                    <div style={knobStyle} />
+                    <div style={{...sliderInnerContainerStyle, width: this._sizes.valueWidth, ...sliderGlow}} />
+                    <div style={{...sliderInnerContainerStyle, width: this._sizes.sliderWidth-this._sizes.valueWidth}} />
+                    {knob}
                 </div>
-                <div style={plusStyle}>{"+"}</div>
+                {plus}
             </div>
         );
     }
@@ -227,7 +251,7 @@ const styles = {
     },
     sliderInnerContainer: {
         height: 2,
-        backgroundColor: '#999999'
+        backgroundColor: '#999999',
     },
     knob: {
         position: 'absolute',

@@ -23,7 +23,7 @@ type StateType = {
 class CurtainsStack extends React.Component<PropsType, StateType> {
     _unsubscribe: () => null = () => null;
 
-    _accentColor: string = "#D04F4C";
+    _accentColor: string = "#BA3737";
 
     _openIcon: string = require('../../../assets/images/open_arrow.png');
     _closeIcon: string = require('../../../assets/images/close_arrow.png');

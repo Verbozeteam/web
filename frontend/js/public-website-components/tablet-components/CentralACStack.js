@@ -23,7 +23,7 @@ type StateType = {
 class CentralACStack extends React.Component<PropsType, StateType> {
     _unsubscribe: () => null = () => null;
 
-    _accentColor: string = "#D04F4C";
+    _accentColor: string = "#BA3737";
 
     state: StateType = {
         things: [],
