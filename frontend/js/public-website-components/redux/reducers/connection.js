@@ -48,19 +48,19 @@ const defaultState: StateType = {
                     "things": [{
                         "category": "dimmers",
                         "id": "dimmer-1",
-                        "name": {"en": "Ceiling"}
+                        "name": {"en": "Bedside Light"}
                     }, {
                         "category": "light_switches",
                         "id": "lightswitch-1",
-                        "name": {"en": "Sconce"}
+                        "name": {"en": "Ceiling Light"}
                     }, {
                         "category": "light_switches",
                         "id": "lightswitch-2",
-                        "name": {"en": "Bedside"}
+                        "name": {"en": "Spot Light"}
                     }, {
                         "category": "light_switches",
                         "id": "lightswitch-3",
-                        "name": {"en": "Spot"}
+                        "name": {"en": "Reading Light"}
                     }]
                 }, {
                     "name": {"en": "Curtains"},
