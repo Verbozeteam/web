@@ -11,9 +11,7 @@ type PropsType = {
   expanded?: boolean,
 };
 
-type StateType = {
-  top_offset: number
-};
+type StateType = {};
 
 type PanelType = {
   name: string,
@@ -27,14 +25,12 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
     expanded: true,
   };
 
-  state = {
-    top_offset: -10
-  }
-
   _expanded_height: string = 600;
   _collapsed_height: number = 150;
+  _collapsed_parallax_offset: number = -150;
 
   _parallax_offset_movement_range: number = 50;
+  _parallax_objects = [];
 
   _bound_handleScroll = (e: Event): null => this.handleScroll(e);
 
@@ -70,6 +66,8 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
   }
 
   handleScroll(e: Event) {
+    const { expanded } = this.props;
+
     /* get dom element to calculate distance from top and height */
     const dom_element = ReactDOM.findDOMNode(this).getBoundingClientRect();
 
@@ -98,12 +96,19 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
         top_offset = (scroll - top) / (page_height - bottom + dom_element.height);
       }
 
-      top_offset = (top_offset * this._parallax_offset_movement_range) -
-        (this._parallax_offset_movement_range);
+      top_offset = ((top_offset * this._parallax_offset_movement_range) -
+        (this._parallax_offset_movement_range));
 
-      this.setState({
-        top_offset
-      });
+      if (!expanded) {
+        top_offset += this._collapsed_parallax_offset;
+      }
+
+      top_offset = top_offset.toString() + '%';
+
+      /* apply style to parallax objects */
+      for (var i = 0; i < this._parallax_objects.length; i++) {
+        this._parallax_objects[i].style.top = top_offset;
+      }
     }
   }
 
@@ -128,7 +133,6 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
 
   _renderPanel(id: number, panel: PanelType) {
     const { expanded } = this.props;
-    const { top_offset } = this.state;
 
     var class_name = 'panel ';
     if (expanded) {
@@ -141,8 +145,8 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
       <Link key={'panel-' + id}
         to={panel.link}
         className={class_name}>
-        <img className={'panel-image'} src={panel.image}
-          style={{top: top_offset.toString() + '%'}} />
+        <img ref={(element) => (element) ? this._parallax_objects.push(element) : null}
+          className={'panel-image'} src={panel.image} />
         <div className={'overlay'}></div>
         {this._renderHeader(panel.name)}
       </Link>
