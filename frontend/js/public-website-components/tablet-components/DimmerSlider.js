@@ -35,7 +35,7 @@ type PropsType = {
     glowColor?: string,
     onChange?: number => null,
     disabled?: boolean,
-    showKnon?: boolean,
+    showKnob?: boolean,
 };
 
 type StateType = {
@@ -57,7 +57,7 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
         extraStyle: {},
         increment: 1,
         disabled: false,
-        showKnon: true,
+        showKnob: true,
     };
 
     state: StateType = {
