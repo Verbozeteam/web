@@ -27,8 +27,7 @@ export default class NavBar extends Component<PropsType, StateType> {
 
     _bound_handleScroll = (e: Event): null => this.handleScroll(e);
 
-    renderNavbarContent(navbarTogglerId: string, navbarDropdownId: string) {
-      const { sticky } = this.state;
+    renderNavbarContent(navbarTogglerId: string, navbarDropdownId: string, sticky: boolean) {
         return (
             <div className="container">
                 <NavLink className="navbar-brand" exact to="/">
@@ -44,7 +43,7 @@ export default class NavBar extends Component<PropsType, StateType> {
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
                     <ul className="navbar-nav mt-2 mt-lg-0">
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="${navbarDropdownId}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a className={"nav-link dropdown-toggle" + (sticky ? ' sticky' : '')} href="#" id="${navbarDropdownId}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 FEATURES
                             </a>
                             <div className="dropdown-menu" aria-labelledby="${navbarDropdownId}">
@@ -66,13 +65,13 @@ export default class NavBar extends Component<PropsType, StateType> {
                             </div>
                         </li>
                         <NavLink className="nav-item" activeClassName="active" to='/company'>
-                            <span className="nav-link">
+                            <span className={"nav-link" + (sticky ? ' sticky' : '')}>
                                 COMPANY
                             </span>
                         </NavLink>
 
                         <NavLink className="nav-item" activeClassName="active" to='/contact'>
-                            <span className="nav-link">
+                            <span className={"nav-link" + (sticky ? ' sticky' : '')}>
                                 CONTACT
                             </span>
                         </NavLink>
@@ -124,10 +123,10 @@ export default class NavBar extends Component<PropsType, StateType> {
         return (
             <div>
                 <nav style={stickyNavStyle} className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-                    { this.renderNavbarContent('navbarTogglerSticky', 'navbarDropdownSticky') }
+                    { this.renderNavbarContent('navbarTogglerSticky', 'navbarDropdownSticky', true) }
                 </nav>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{...{ position: 'absolute' }, ...fixedNavbarStyle}}>
-                    { this.renderNavbarContent('navbarToggler', 'navbarDropdown') }
+                    { this.renderNavbarContent('navbarToggler', 'navbarDropdown', false) }
                 </nav>
             </div>
         );

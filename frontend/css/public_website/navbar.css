@@ -51,11 +51,11 @@ div.dropdown-divider {
 
 a.dropdown-item {
 	padding-top: .25rem;
-    padding-bottom: .25rem;
-    padding-left: 0.4rem;
-    width: 165px;
-    margin: auto;
-    font-weight: lighter;
+  padding-bottom: .25rem;
+  padding-left: 0.4rem;
+  width: 165px;
+  margin: auto;
+  font-weight: lighter;
 }
 
 a.dropdown-item:hover {
@@ -79,6 +79,9 @@ span.nav-link, a.nav-link {
   border-bottom-color: #D04F4C;
 }
 
+span.nav-link.sticky, a.nav-link.sticky {
+	font-weight: normal;
+}
 
 a.nav-item:hover {
     text-decoration: none !important;
