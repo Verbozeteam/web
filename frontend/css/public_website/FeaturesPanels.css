@@ -85,14 +85,13 @@
   height: 100%;
   width: 100%;
   background-color: red;
-  background: -moz-linear-gradient(top, rgba(238,238,238,0.2) 0%, rgba(238,238,238,0.5) 100%);
-  background: -webkit-linear-gradient(top, rgba(238,238,238,0.2) 0%,rgba(238,238,238,0.5) 100%);
-  background: linear-gradient(to bottom, rgba(238,238,238,0.2) 0%,rgba(238,238,238,0.5) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33eeeeee', endColorstr='#80eeeeee',GradientType=0 );
-  opacity: 0.6;
+  background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%);
+  background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.7) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.7) 100%);
+  opacity: 1;
   transition: 150ms ease-out;
 }
 
 .overlay:hover {
-  opacity: 0;
+  opacity: 0.1;
 }
