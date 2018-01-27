@@ -47,66 +47,79 @@ module.exports = {
         uniform float curtainOpening;
         uniform sampler2D textureSampler;
         uniform sampler2D alphaSampler;
+        uniform sampler2D normalSampler;
 
-        vec3 computeAmbience(vec2 screenCoords, float ambience) {
-            return vec3((0.8 - (distance(screenCoords, vec2(0.31, 0.45)))) * ambience);
+
+        vec3 PointLight(vec3 pixelPos, vec3 pixelNorm, float intensity, float range, vec3 screenPosition, vec3 color, float scatter) {
+            // The distance from surface to light
+            vec3 lightVec = screenPosition - pixelPos;
+            float d = length (lightVec);
+            // N dot L lighting term
+            vec3 lDir = normalize(lightVec);
+            float nl = min(max(dot(pixelNorm, lDir), 0.0), 1.0);
+
+            float xVal = min(max((range-d)/range, 0.0), 1.0);
+            return vec3(color * xVal * nl * intensity) + intensity * color * scatter;
         }
 
-        vec3 computeLight1(vec2 screenCoords) {
-            // bedside (dimmer)
-            const float lightPower = 0.6;
-            //const vec3 color = vec3(0.79, 0.69, 0.36);
-            const vec3 color = vec3(0.61, 0.51, 0.34);
-            const vec3 screenPosition = vec3(0.5, 0.4, 0.2);
-            float intensity = lightIntensities.r;
-            float dist = distance(vec3(screenCoords, 0.0), screenPosition) * 3.0;
-            float spotPower = 1.0 - min(1.0, dist * dist);
-            return color * vec3(spotPower * lightPower * intensity);
+        vec3 computeAmbience(vec3 screenCoords, float ambience) {
+            return vec3((0.8 - (distance(screenCoords, vec3(0.31, 0.45, 0.0)))) * ambience);
         }
 
-        vec3 computeLight2(vec2 screenCoords) {
-            // ceiling light
-            const float lightPower = 0.25;
-            float intensity = lightIntensities.g;
-            float spotPower = (screenCoords.y) - 0.25;
-            return vec3(spotPower * lightPower * intensity);
+        vec3 computeLight1(vec3 screenCoords, vec3 surfaceNormal) {
+            float intensity = lightIntensities.r * 10.0;
+            float scatter = 0.04;
+            float range = 0.5;
+            vec3 pos = vec3(0.6, 0.42, -0.02);
+            vec3 color = vec3(0.61, 0.51, 0.34);
+            return PointLight(screenCoords, surfaceNormal, intensity, range, pos, color, scatter)  * computeAmbience(screenCoords, 1.4);;
         }
 
-        vec3 computeLight3(vec2 screenCoords) {
+        vec3 computeLight2(vec3 screenCoords, vec3 surfaceNormal) {
+            float intensity = lightIntensities.g * 1.0;
+            float scatter = 0.04;
+            float range = 2.0;
+            vec3 pos = vec3(-0.5, 0.62, 0.4);
+            vec3 color = vec3(0.7, 0.7, 0.7);
+            return PointLight(screenCoords, surfaceNormal, intensity, range, pos, color, scatter);
+        }
+
+        vec3 computeLight3(vec3 screenCoords, vec3 surfaceNormal) {
             // bed spot
-            const float lightPower = 0.15;
+            const float lightPower = 0.3;
             const vec3 screenPosition = vec3(0.6, 0.7, 0.7);
             float intensity = lightIntensities.b;
-            float spotPower = 1.0 - min(1.0, distance(vec3(screenCoords, 0.0), screenPosition));
-            return vec3(spotPower * lightPower * intensity);
+            float spotPower = 1.0 - min(1.0, distance(screenCoords, screenPosition));
+            return vec3(spotPower * lightPower * intensity) * computeAmbience(screenCoords, 1.4);
         }
 
-        vec3 computeLight4(vec2 screenCoords) {
-            // bed spot
-            const float lightPower = 0.25;
-            const vec3 color = vec3(0.61, 0.51, 0.34);
-            const vec3 screenPosition = vec3(0.1, 0.8, 0.0);
-            float intensity = lightIntensities.a;
-            float dist = distance(vec3(screenCoords, 0.0), screenPosition)*2.0;
-            float spotPower = 1.0 - min(1.0, dist);
-            return color * vec3(spotPower * lightPower * intensity);
+        vec3 computeLight4(vec3 screenCoords, vec3 surfaceNormal) {
+            float intensity = lightIntensities.a * 2.0;
+            float scatter = 0.05;
+            float range = 0.4;
+            vec3 pos = vec3(0.1, 0.42, -0.04);
+            vec3 color = vec3(0.61, 0.51, 0.34);
+            return PointLight(screenCoords, surfaceNormal, intensity, range, pos, color, scatter);
         }
 
-        vec3 computeLight(vec2 screenCoords) {
+        vec3 computeLight(vec3 screenCoords, vec3 surfaceNormal) {
             vec3 ambience = computeAmbience(screenCoords, 0.2 + (curtainOpening/7.0));
-            vec3 fullAmbience = computeAmbience(screenCoords, 1.4);
             return ambience +
-                computeLight1(screenCoords) * fullAmbience +
-                computeLight2(screenCoords) * fullAmbience +
-                computeLight3(screenCoords) * fullAmbience +
-                computeLight4(screenCoords) * fullAmbience;
+                computeLight1(screenCoords, surfaceNormal) +
+                computeLight2(screenCoords, surfaceNormal) +
+                computeLight3(screenCoords, surfaceNormal) +
+                computeLight4(screenCoords, surfaceNormal);
         }
 
         void main() {
-            vec2 screenCoords = (uvScreen.xy / uvScreen.w + vec2(1.0, 1.0)) / 2.0;
             gl_FragColor = texture2D(textureSampler, vUv);
-            gl_FragColor.rgb *= computeLight(screenCoords);
-            gl_FragColor.a *= texture2D(alphaSampler, screenCoords).r;
+
+            float bump = -gl_FragColor.r * 0.05;
+            vec3 screenCoords = vec3((uvScreen.xy / uvScreen.w + vec2(1.0, 1.0)) / 2.0, bump);
+            vec3 surfaceNormal = texture2D(normalSampler, vUv).rgb * 2.0 - 1.0;
+
+            gl_FragColor.rgb *= computeLight(screenCoords, surfaceNormal);
+            gl_FragColor.a *= texture2D(alphaSampler, screenCoords.xy).r;
         }`,
 
     pixelShader: `

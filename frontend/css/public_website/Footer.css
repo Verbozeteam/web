@@ -1,0 +1,19 @@
+.footer-col {
+	padding-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+	.footer-col-md-2 {
+		padding-bottom: 25px;
+	}
+}
+
+.footer-link {
+	color: white;
+}
+
+.footer-link:hover {
+	color: white;
+	text-decoration: none;
+	font-weight: normal;
+}
