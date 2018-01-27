@@ -42,7 +42,7 @@ class RequestDemoModal extends React.Component<PropsType, StateType> {
   };
 
   _overlay_animation_visible = {
-    opacity: 0.7
+    opacity: 0.8
   };
 
   _overlay_animation_hidden = {
