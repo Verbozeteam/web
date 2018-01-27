@@ -437,7 +437,6 @@ class RoomState extends React.Component<PropsType, StateType> {
             }
             this.loadTemperatureOverlay();
             progress();
-            console.log("done loading...")
         }).bind(this)).catch(((reason) => {
             console.log(reason);
             this.props.setConnectionURL("");
