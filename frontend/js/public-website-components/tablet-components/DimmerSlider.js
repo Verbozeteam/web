@@ -36,6 +36,7 @@ type PropsType = {
     onChange?: number => null,
     disabled?: boolean,
     showKnob?: boolean,
+    animateSliding?: boolean,
 };
 
 type StateType = {
@@ -58,6 +59,7 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
         increment: 1,
         disabled: false,
         showKnob: true,
+        animateSliding: false,
     };
 
     state: StateType = {
@@ -167,7 +169,7 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
     }
 
     render() {
-        const { width, height, value, maxValue, glowColor, onChange, showKnob } = this.props;
+        const { width, height, value, maxValue, glowColor, onChange, showKnob, animateSliding } = this.props;
         const { hoverState, dragging, currentValue } = this.state;
 
         var v = dragging ? currentValue : value;
@@ -208,6 +210,10 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
         var plus = showKnob? <div style={plusStyle}>{"+"}</div> : null;
         var minus = showKnob? <div style={minusStyle}>{"-"}</div> : null;
 
+        var sliderInnerContainerStyle = {...styles.sliderInnerContainer};
+        if (animateSliding)
+            sliderInnerContainerStyle.transition = 'width 300ms';
+
         return (
             <div style={{...styles.container, width, height}}
                  onMouseMove={this.onMouseMove.bind(this)}
@@ -217,8 +223,8 @@ class DimmerSlider extends React.Component<PropsType, StateType> {
                  ref={r => this._container_ref = r}>
                 {minus}
                 <div style={{...styles.sliderContainer, width: this._sizes.sliderWidth, height: this._sizes.barHeight, marginLeft: this._sizes.sliderMargin/2, marginRight: this._sizes.sliderMargin/2}}>
-                    <div style={{...styles.sliderInnerContainer, width: this._sizes.valueWidth, ...sliderGlow}} />
-                    <div style={{...styles.sliderInnerContainer, width: this._sizes.sliderWidth-this._sizes.valueWidth}} />
+                    <div style={{...sliderInnerContainerStyle, width: this._sizes.valueWidth, ...sliderGlow}} />
+                    <div style={{...sliderInnerContainerStyle, width: this._sizes.sliderWidth-this._sizes.valueWidth}} />
                     {knob}
                 </div>
                 {plus}
@@ -246,7 +252,6 @@ const styles = {
     sliderInnerContainer: {
         height: 2,
         backgroundColor: '#999999',
-        transition: 'width 300ms',
     },
     knob: {
         position: 'absolute',

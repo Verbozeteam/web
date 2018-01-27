@@ -703,7 +703,8 @@ class RoomState extends React.Component<PropsType, StateType> {
                                   maxValue={1}
                                   glowColor={this._accentColor}
                                   disabled={true}
-                                  showKnob={false}/>
+                                  showKnob={false}
+                                  animateSliding={true} />
                 </div>
             </div>
         )
