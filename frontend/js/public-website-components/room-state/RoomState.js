@@ -10,6 +10,7 @@ import ReactResizeDetector from 'react-resize-detector';
 
 import { connect as ReduxConnect } from 'react-redux';
 
+import { RoomDemoControls } from '../RoomDemoControls';
 import { RoomStateUpdater } from '../utilities/RoomStateUpdater';
 const connectionActions = require('../redux/actions/connection');
 import * as tabletActions from '../redux/actions/tabletstate';
@@ -537,7 +538,7 @@ class RoomState extends React.Component<PropsType, StateType> {
             const height = this.mount.clientHeight;
 
             if (width > 1 && height > 1) {
-                const maxRenderedLayerWidth = Math.min(this._imageInnerDimensions.width, width - 50);
+                const maxRenderedLayerWidth = Math.min(this._imageInnerDimensions.width, width);
                 const maxRenderedLayerHeight = Math.min(this._imageInnerDimensions.height, height - this.props.navbarHeight - 50);
 
                 var scaler = Math.min(maxRenderedLayerWidth / this._imageInnerDimensions.width,
@@ -590,7 +591,11 @@ class RoomState extends React.Component<PropsType, StateType> {
                     this._materials.tempOverlay.uniforms.scale.value.set(imgWidth, imgHeight, 1);
                 }
                 if (this._materials.backgroundRender && this._materials.foregroundRender) {
-                    var yOffset = (height-renderedLayerHeight) / 2.0 - this.props.navbarHeight;
+                    var topOffset = this.props.navbarHeight;
+                    if (width <= 992)
+                        topOffset = Math.max(topOffset, (height - 100)/2 - renderedLayerHeight/2);
+
+                    var yOffset = (height-renderedLayerHeight) / 2.0 - topOffset;
                     var scaler = Math.max(width / renderedLayerWidth, height / renderedLayerHeight);
                     this._materials.backgroundRender.uniforms.offset.value.set(0, 0, 2);
                     this._materials.backgroundRender.uniforms.scale.value.set(imgWidth * scaler, imgHeight * scaler, 1);
@@ -697,7 +702,7 @@ class RoomState extends React.Component<PropsType, StateType> {
 
                 <div style={{...styles.loadingContainer, opacity: loadedDemo ? 0 : 1}}>
                     <div style={styles.loadingText}>{"Loading..."}</div>
-                    <DimmerSlider width={400}
+                    <DimmerSlider width={300}
                                   height={10}
                                   value={loadingProgress}
                                   maxValue={1}
@@ -705,6 +710,10 @@ class RoomState extends React.Component<PropsType, StateType> {
                                   disabled={true}
                                   showKnob={false}
                                   animateSliding={true} />
+                </div>
+
+                <div style={{...styles.canvas, opacity: curOpacity}}>
+                    <RoomDemoControls dimensions={dimensions} />
                 </div>
             </div>
         )

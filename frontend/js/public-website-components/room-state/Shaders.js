@@ -94,7 +94,7 @@ module.exports = {
 
         vec3 computeLight(vec2 screenCoords) {
             vec3 ambience = computeAmbience(screenCoords, 0.2 + (curtainOpening/7.0));
-            vec3 fullAmbience = computeAmbience(screenCoords, 1.0);
+            vec3 fullAmbience = computeAmbience(screenCoords, 1.4);
             return ambience +
                 computeLight1(screenCoords) * fullAmbience +
                 computeLight2(screenCoords) * fullAmbience +

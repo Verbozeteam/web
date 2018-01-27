@@ -35,52 +35,58 @@ class RoomDemoControls extends React.Component<PropsType, StateType> {
     };
 
     animate() {
-        setTimeout((() => {
-            if (!this.state.isRendered)
-                this.setState({isRendered: true})
-        }).bind(this), 100)
+        if (!this.state.isRendered)
+            this.setState({isRendered: true});
     }
 
     render() {
         const { dimensions } = this.props;
-        const { curPage } = this.state;
+        const { curPage, isRendered } = this.state;
 
-        var style = {...styles.controlsContainer, ...{top: dimensions.height-300 - 10, left: dimensions.width/2-350}};
+        var isOnPhone = dimensions.width <= 992;
 
-        if (!this.state.isRendered) {
-            style.opacity = 0;
-            style.top = dimensions.height;
+        if (!isRendered) {
             requestAnimationFrame(this.animate.bind(this));
         }
 
         var contents = null;
-        if (curPage === 0) {
-            contents = (
-                <div style={styles.phone_instructions}>
-                    <div style={styles.header}>Get the App</div>
-                    <img src={require('../../assets/images/play_store.png')} style={styles.store_icon} />
-                    <img src={require('../../assets/images/app_store.png')} style={styles.store_icon} />
+        if (!isOnPhone) {
+            if (curPage === 0) {
+                contents = (
+                    <div style={styles.phone_instructions}>
+                        <div style={styles.header}>Get the App</div>
+                        <img src={require('../../assets/images/play_store.png')} style={styles.store_icon} />
+                        <img src={require('../../assets/images/app_store.png')} style={styles.store_icon} />
 
-                    {/*<Button primary fade='true' vertical='true' size='small' style={styles.button} onClick={(() => this.setState({curPage: 1})).bind(this)}>
-                        {"Use the app"}
-                    </Button>*/}
-                </div>
-            );
-        } else if (curPage === 1) {
-            contents = (
-                <div style={styles.phone_instructions}>
-                    <div style={styles.header}>Scan this code</div>
-                    <div style={styles.qr_code}>
-                        <QRCode value={this.props.connectionURL} size={105} />
+                        {/*<Button primary fade='true' vertical='true' size='small' style={styles.button} onClick={(() => this.setState({curPage: 1})).bind(this)}>
+                            {"Use the app"}
+                        </Button>*/}
                     </div>
+                );
+            } else if (curPage === 1) {
+                contents = (
+                    <div style={styles.phone_instructions}>
+                        <div style={styles.header}>Scan this code</div>
+                        <div style={styles.qr_code}>
+                            <QRCode value={this.props.connectionURL} size={105} />
+                        </div>
+                    </div>
+                );
+            }
+        } else {
+            contents = (
+                <div style={styles.phoneText}>
+                    {"View this page on a browser to interact with the room"}
                 </div>
             );
         }
 
         return (
-            <div style={style}>
-                {contents}
-                <RoomTablet />
+            <div style={{...styles.controlsContainer, opacity: isRendered ? 1 : 0}}>
+                <div style={styles.content}>
+                    {contents}
+                    {!isOnPhone ? <RoomTablet /> : null}
+                </div>
             </div>
         );
     }
@@ -91,11 +97,17 @@ RoomDemoControls.contextTypes = {
 
 const styles = {
     controlsContainer: {
+        position: 'relative',
+        height: '100%',
+        width: '100%',
+        transition: 'opacity 500ms',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    content: {
         position: 'absolute',
-        height: 300,
-        width: 700,
-        opacity: 1,
-        transition: 'opacity 500ms, top 500ms',
+        bottom: 5,
         display: 'flex',
         flexDirection: 'row',
     },
@@ -104,6 +116,7 @@ const styles = {
         backgroundSize: 'contain',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
+        fontWeight: 'lighter',
 
         width: 200,
         height: 300,
@@ -147,6 +160,14 @@ const styles = {
         bottom: 46,
         height: 30,
         width: 110,
+    },
+    phoneText: {
+        padding: 10,
+        paddingBottom: 50,
+        fontWeight: 'lighter',
+        fontSize: 24,
+        color: '#ffffff',
+        textAlign: 'center',
     },
 };
 
