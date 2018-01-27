@@ -3,13 +3,16 @@
 import React from 'react';
 
 import PageTopBanner from './PageTopBanner';
-
+const RequestDemoModal = require('./RequestDemoModal');
+const RequestDemoBanner = require('./RequestDemoBanner');
 const FounderCard = require('./FounderCard');
 
 import { Link } from 'react-router-dom';
 
 type PropsType = {};
-type StateType = {};
+type StateType = {
+  modal_open: boolean
+};
 
 export default class Company extends React.Component<PropsType, StateType> {
   _banner_img = require('../../assets/images/page_top_banners/banner.png');
@@ -40,6 +43,19 @@ export default class Company extends React.Component<PropsType, StateType> {
       image: require('../../assets/images/yusuf.png')
     }
   ];
+
+  state = {
+    modal_open: false
+  };
+
+  toggleModal() {
+    const { modal_open } = this.state;
+
+    this.setState({
+      modal_open: !modal_open
+    });
+  }
+
 
   _renderFoundersSection() {
 
@@ -81,12 +97,17 @@ export default class Company extends React.Component<PropsType, StateType> {
   }
 
   render() {
+    const { modal_open } = this.state;
+
     return (
       <div style={styles.contentDiv}>
+        <RequestDemoModal open={modal_open}
+          toggle={this.toggleModal.bind(this)} />
         <PageTopBanner title={this._title}
           imageUrl={this._banner_img}/>
         {this._renderFoundersSection()}
         {this._renderLocationSection()}
+        <RequestDemoBanner toggleModal={this.toggleModal.bind(this)} />
       </div>
     );
   }
