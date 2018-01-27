@@ -15,7 +15,6 @@ import { WebSocketCommunication } from '../js-api-utils/WebSocketCommunication';
 import * as tabletActions from './redux/actions/tabletstate';
 import * as connectionActions from './redux/actions/connection';
 
-import { RoomDemoControls } from './RoomDemoControls';
 import { RoomState } from './room-state/RoomState';
 
 function mapStateToProps(state) {
@@ -150,7 +149,6 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
         return (
             <div style={{...styles.roomContainer, ...dimensions}}>
                 <RoomState navbarHeight={66} opacity={currentStage === 3 ? 1.0 : 0.2} dimensions={dimensions} />
-                <RoomDemoControls dimensions={dimensions} />
             </div>
         );
     }
