@@ -24,11 +24,11 @@
 
 .side-nav-bar {
 	width: 200px;
-    float: right;
-    line-height: 50px;
-    position: relative;
-    padding-top: 45px;
-    font-weight: lighter;
+  float: right;
+  line-height: 50px;
+  position: relative;
+  padding-top: 45px;
+  font-weight: lighter;
 }
 
 .sticky-side-nav-bar {
@@ -58,37 +58,37 @@
 
 .diamond-selector {
 	width: 0;
-    height: 0;
-    border: 5px solid transparent;
-    border-bottom-color: white;
-    position: relative;
-    top: -13px;
-    left: -19px;
+  height: 0;
+  border: 5px solid transparent;
+  border-bottom-color: white;
+  position: relative;
+  top: -13px;
+  left: -19px;
 }
 
 .diamond-selector:after {
 	content: '';
-    position: absolute;
-    left: -5px;
-    top: 21px;
-    width: 0;
-    height: 0;
-    border: 5px solid transparent;
-    border-top-color: white;
+  position: absolute;
+  left: -5px;
+  top: 21px;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-top-color: white;
 }
 
 .selected-diamond {
 	border: 10px solid transparent;
-    border-bottom-color: #BA3737;
-    left: -24px;
-    top: -18px;
+  border-bottom-color: #BA3737;
+  left: -24px;
+  top: -18px;
 }
 
 .selected-diamond:after {
 	border: 10px solid transparent;
-    border-top-color: #BA3737;
-    left: -10px;
-    top: 26px;
+  border-top-color: #BA3737;
+  left: -10px;
+  top: 26px;
 }
 
 .anchor-links {

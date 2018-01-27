@@ -30,7 +30,7 @@ class FounderCard extends React.Component<PropsType, StateType> {
             <a style={styles.email} href={'mailto:' + founder.email}>
               <i className={'fa fa-envelope-o'}></i>&nbsp;{founder.email}</a>
             <a key={'linkedin-' + founder.name} style={styles.linkedin} target={'_blank'} href={founder.linkedin}>
-              <i className={'fa fa-linkedin'}></i>&nbsp;Linkedin
+              <i className={'fa fa-linkedin'}></i>&nbsp;LinkedIn
             </a>
             <div style={{clear: 'both'}}></div>
           </div>

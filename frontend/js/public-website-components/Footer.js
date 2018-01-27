@@ -29,7 +29,9 @@ export default class Footer extends Component<PropsType, StateType> {
                             <div className="col-md-2 footer-col-md-2">
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <img src={ this._verboze_white } className="d-inline-block align-top" alt="" style={ styles.logoStyle }/>
+                                        <Link to={'/'}>
+                                          <img src={ this._verboze_white } className="d-inline-block align-top" alt="" style={ styles.logoStyle }/>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +97,7 @@ export default class Footer extends Component<PropsType, StateType> {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-2 footer-col-md-2">
+                            <div className="col-md-3 footer-col-md-2">
                                 <div className="row">
                                     <div className="col footer-col">
                                         <Link className="footer-link" to='/contact'>
@@ -106,16 +108,20 @@ export default class Footer extends Component<PropsType, StateType> {
                                 <hr style={ styles.hrStyle }/>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        Request Demo
+                                        <a href="mailto:contact@verboze.com" className="footer-link" style={ styles.contactLinkStyle }>
+                                          <i className={'fa fa-envelope'}>&nbsp;&nbsp;</i>contact@verboze.com
+                                        </a>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <a href="mailto:contact@verboze.com" className="footer-link" style={ styles.contactLinkStyle }>contact@verboze.com</a>
+                                        <a href={'https://www.linkedin.com/company/verboze'} className={'footer-link'}>
+                                          <i className={'fa fa-linkedin'}></i>&nbsp;&nbsp;LinkedIn
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-3">
                                 <div className="row">
                                     <div className="col footer-col">
                                         <span className="float-right">2018 Verboze. All Rights Reserved.</span>
