@@ -87,7 +87,6 @@ export default class Contact extends Component<PropsType, StateType> {
 const styles = {
     contactDiv: {
         minHeight: '100vh',
-        background: 'black',
         color: 'white',
     }
 };

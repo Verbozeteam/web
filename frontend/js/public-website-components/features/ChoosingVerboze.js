@@ -167,7 +167,6 @@ export default class ChoosingVerboze extends Component<PropsType, StateType> {
 const styles = {
     choosingVerbozeDiv: {
         minHeight: '100vh',
-        background: 'black',
         color: 'white',
     },
 

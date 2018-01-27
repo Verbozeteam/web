@@ -167,7 +167,6 @@ export default class EnhancingHotels extends Component<PropsType, StateType> {
 const styles = {
     enhancingHotelsDiv: {
         minHeight: '100vh',
-        background: 'black',
         color: 'white',
     },
 

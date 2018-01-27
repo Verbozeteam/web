@@ -116,7 +116,6 @@ export default class Company extends React.Component<PropsType, StateType> {
 const styles = {
   contentDiv: {
     minHeight: '100vh',
-    background: '#000000',
     color: 'white'
   },
   header: {

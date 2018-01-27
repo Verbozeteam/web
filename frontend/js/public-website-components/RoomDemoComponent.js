@@ -162,8 +162,6 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#1b1c1d',
-
-
         MozUserSelect: '-moz-none',
         KhtmlUserSelect: 'none',
         UebkitUserSelect: 'none',

@@ -170,7 +170,6 @@ export default class EmpoweringGuests extends Component<PropsType, StateType> {
 const styles = {
     empoweringGuestsDiv: {
         minHeight: '100vh',
-        background: 'black',
         color: 'white',
     },
 
