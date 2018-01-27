@@ -1,6 +1,9 @@
 /* @flow */
 
 import React from 'react';
+
+import css from '../../css/public_website/RequestDemoModal.css';
+
 import ContactOrDemoForm from './ContactOrDemoForm';
 
 type PropsType = {
@@ -106,8 +109,8 @@ class RequestDemoModal extends React.Component<PropsType, StateType> {
     return (
       <div style={styles.modal_container}>
         <div style={modal_style}>
-          <div className="container" style={styles.modal_header}>
-            <h2 style={styles.modal_title}>Request Demo</h2>
+          <div className="container modal-header-container" style={styles.modal_header}>
+            <h2 style={styles.modal_title}>Request A Demo</h2>
             <h5 style={styles.modal_sub_title}>Some sentence describing what a demo means, and how they can benifit from it, being free and all.</h5>
           </div>
           <div style={styles.modal_content}>
@@ -214,5 +217,7 @@ const styles = {
     paddingBottom: 50,
   },
 }
+
+
 
 module.exports = RequestDemoModal;

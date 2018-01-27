@@ -86,7 +86,7 @@ export default class ContactOrDemoForm extends React.Component<PropsType, StateT
     }
 
     renderSubmitButton() {
-        var displayText = this.props.requestDemo ? "REQUEST DEMO" : "SUBMIT" ;
+        var displayText = this.props.requestDemo ? "REQUEST A DEMO" : "SUBMIT" ;
 
         if (this.state.submitStage === 0) {
             return (

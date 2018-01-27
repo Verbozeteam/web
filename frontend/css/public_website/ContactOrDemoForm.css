@@ -42,7 +42,7 @@ textarea.form-control {
     margin-right: 5px;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 600px) {
     .submit-button {
         width: 177px;
     }
