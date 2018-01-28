@@ -10,7 +10,7 @@ type StateType = {};
 
 export default class EmpoweringGuests extends Component<PropsType, StateType> {
     _contentProps: {title: string, banner: string, sections:Array<Object>} = {
-        title: "Empowering Guests make them feel that they have a say in the place they choose to stay",
+        title: "Empowering Guests to take control of their hotel stay",
         banner: require('../../../assets/images/page_top_banners/banner.png'),
         sections: [{
             name: "Reservation Data",
@@ -35,28 +35,28 @@ export default class EmpoweringGuests extends Component<PropsType, StateType> {
         return (
             <ContentPage {...this._contentProps} >
                 <div id="reservation-data-info" style={ styles.textDivStyle }>
-                    <h1>Reservation Data</h1>
+                    <div style={styles.header}>Reservation Data</div>
                     <br />
                     <p>
                         Guests can review information regarding their reservation, billing, check-out time, wifi password, duration of their stay, amenities the hotel has to offer and much more. Keeping the guests aware of their reservation details and expenditure prevents any unpleasant surprises at checkout time.
                     </p>
                 </div>
                 <div id="room-services-info" style={ styles.textDivStyle }>
-                    <h1>Room Services</h1>
+                    <div style={styles.header}>Room Services</div>
                     <br />
                     <p>
                         Guests are able to request pillows, sheets, toiletries or any other services your hotel chooses to offer at the comfort of their fingertips. Requests will be forwarded to your staff who will serve your guest.
                     </p>
                 </div>
                 <div id="feedback-info" style={ styles.textDivStyle }>
-                    <h1>Feedback</h1>
+                    <div style={styles.header}>Feedback</div>
                     <br />
                     <p>
                         Guests can provide feedback to the staff to let them know about any inconveniences encountered. The staff can use the feedback to tailor their treatment and services and ensure guest satisfaction. The last thing a hotel wants is having a guest leave unhappy without knowing why and trying to make it right for them.
                     </p>
                 </div>
                 <div id="keyless-entry-info" style={ styles.textDivStyle } >
-                    <h1>Keyless Entry</h1>
+                    <div style={styles.header}>Keyless Entry</div>
                     <br />
                     <p>
                         Guests will gain access to their rooms and other amenities in your hotel, such as pools or spas, using only their smartphones. There will no longer be a need to carry around cards or ask for permissions or availability of amenities.
@@ -68,6 +68,9 @@ export default class EmpoweringGuests extends Component<PropsType, StateType> {
 };
 
 const styles = {
+    header: {
+        fontSize: 34,
+    },
     textDivStyle: {
         fontWeight: 'lighter',
         paddingTop: 60

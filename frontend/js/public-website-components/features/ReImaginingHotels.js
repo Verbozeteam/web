@@ -10,7 +10,7 @@ type StateType = {};
 
 export default class ReImaginingHotels extends Component<PropsType, StateType> {
     _contentProps: {title: string, banner: string, sections:Array<Object>} = {
-        title: "Enhancing Hotels is our middle name, let us take care of it for You",
+        title: "A hotel experience like never before",
         banner: require('../../../assets/images/page_top_banners/banner.png'),
         sections: [{
             name: "Preferences",
@@ -27,7 +27,7 @@ export default class ReImaginingHotels extends Component<PropsType, StateType> {
         return (
             <ContentPage {...this._contentProps} >
                 <div id="preferences-info" style={ styles.textDivStyle }>
-                    <h1>Preferences</h1>
+                    <div style={styles.header}>Preferences</div>
                     <br />
                     <p>
                         Each of your guests lives in their own unique homes, with their favorite T.V. channels and their preferred room temperature set, so why should they all have the same cookie-cut experience when they stay at you hotel?
@@ -37,7 +37,7 @@ export default class ReImaginingHotels extends Component<PropsType, StateType> {
                     </p>
                 </div>
                 <div id="automation-info" style={ styles.textDivStyle }>
-                    <h1>Automation</h1>
+                    <div style={styles.header}>Automation</div>
                     <br />
                     <p>
                         Your hotel will impress your guests with the most innovative automated convenience. Your guests can set alarms on the system to wake them up in the morning to a soothing melody and shining sunlight after automatically opening the curtains. The rooms will automatically turn on just enough light when the guest wakes up at night and tries to get off their bed.
@@ -52,6 +52,9 @@ export default class ReImaginingHotels extends Component<PropsType, StateType> {
 };
 
 const styles = {
+    header: {
+        fontSize: 34,
+    },
     textDivStyle: {
         fontWeight: 'lighter',
         paddingTop: 60
