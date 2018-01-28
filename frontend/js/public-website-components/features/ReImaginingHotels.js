@@ -10,7 +10,7 @@ type StateType = {};
 
 export default class ReImaginingHotels extends Component<PropsType, StateType> {
     _contentProps: {title: string, banner: string, sections:Array<Object>} = {
-        title: "Enhancing Hotels is our middle name, let us take care of it for You",
+        title: "A hotel experience like never before",
         banner: require('../../../assets/images/page_top_banners/banner.png'),
         sections: [{
             name: "Preferences",

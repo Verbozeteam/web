@@ -10,7 +10,7 @@ type StateType = {};
 
 export default class ChoosingVerboze extends Component<PropsType, StateType> {
     _contentProps: {title: string, banner: string, sections:Array<Object>} = {
-        title: "Choosing Verboze is the best thing you will ever do to your Hotel",
+        title: "Carving the path to the seamless future",
         banner: require('../../../assets/images/page_top_banners/banner.png'),
         sections: [{
             name: "Retrofitting",
