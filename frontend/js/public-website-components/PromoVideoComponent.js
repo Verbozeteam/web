@@ -17,11 +17,11 @@ class PromoVideoComponent extends React.Component<any, StateType> {
 
     componentDidMount() {
         this.updateWindowDimensions();
-        window.addEventListener('resize', this.updateWindowDimensions);
+        window.addEventListener('resize', this.updateWindowDimensions.bind(this));
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions);
+        window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
     }
 
     updateWindowDimensions() {

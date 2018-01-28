@@ -46,9 +46,9 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
       link: '/empowering-guests'
     },
     {
-      name: 'Enhancing Hotels',
+      name: 'Reimagining Hotels',
       image: require('../../assets/images/building_slice.png'),
-      link: 'enhancing-hotels'
+      link: 'reimagining-hotels'
     },
     {
       name: 'Choosing Verboze',

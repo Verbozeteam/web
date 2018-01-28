@@ -1,7 +1,8 @@
 /* @flow */
 
 import React from 'react';
-import Radium from 'radium';
+
+import { SquareButton } from './SquareButton';
 
 type PropsType = {
   toggleModal: () => null
@@ -15,20 +16,9 @@ class RequestDemoBanner extends React.Component<PropsType, StateType> {
     toggleModal: () => null
   };
 
-  _renderButton() {
+  render() {
     const { toggleModal } = this.props;
 
-    return (
-      <div key="request-demo-button" style={styles.button}>
-        <button className="btn" onClick={toggleModal}
-          style={styles.button}>
-          REQUEST A DEMO
-        </button>
-      </div>
-    );
-  }
-
-  render() {
     return (
       <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
         <div className='container container-fluid'>
@@ -37,7 +27,9 @@ class RequestDemoBanner extends React.Component<PropsType, StateType> {
               <h2 style={styles.header}>See Verboze in action at your Hotel</h2>
             </div>
             <div className='col-lg-4 col-md-4 col-12'>
-              {this._renderButton()}
+              <SquareButton onClick={toggleModal} extraStyle={{height: 45, width: 220}}>
+                REQUEST A DEMO
+              </SquareButton>
             </div>
           </div>
         </div>
@@ -55,27 +47,6 @@ const styles = {
     display: 'block',
     verticalAlign: 'middle'
   },
-  button: {
-    color: '#FFFFFF',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    borderWidth: 2,
-    borderColor: '#BA3737',
-    height: 45,
-    width: 220,
-    display: 'block',
-    margin: '0 auto',
-    borderRadius: 0,
-    fontWeight: 'lighter',
-    WebkitTransition: 'background-color 150ms linear',
-    MozTransition: 'background-color 150ms linear',
-    Otransition: 'background-color 150ms linear',
-    msTransition: 'background-color 150ms linear',
-    transition: 'background-color 150ms linear',
-    ':hover': {
-      backgroundColor: '#BA3737',
-      cursor: 'pointer',
-    }
-  },
   header: {
     color: '#FFFFFF',
     textAlign: 'center',
@@ -83,4 +54,4 @@ const styles = {
   }
 };
 
-module.exports = Radium(RequestDemoBanner);
+module.exports = RequestDemoBanner;

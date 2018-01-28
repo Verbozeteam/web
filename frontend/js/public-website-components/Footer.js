@@ -58,8 +58,8 @@ export default class Footer extends Component<PropsType, StateType> {
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/enhancing-hotels'>
-                                            Enhancing Hotels
+                                        <Link className="footer-link" to='/reimagining-hotels'>
+                                            Reimagining Hotels
                                         </Link>
                                     </div>
                                 </div>

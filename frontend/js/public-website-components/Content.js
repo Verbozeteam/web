@@ -10,7 +10,7 @@ import Contact from './Contact';
 // Features
 import ModernizingControl from './features/ModernizingControl';
 import EmpoweringGuests from './features/EmpoweringGuests';
-import EnhancingHotels from './features/EnhancingHotels';
+import ReImaginingHotels from './features/ReImaginingHotels';
 import ChoosingVerboze from './features/ChoosingVerboze';
 
 
@@ -20,7 +20,7 @@ const Content = () => (
       <Route path='/contact' component={Contact}/>
       <Route path='/modernizing-control' component={ModernizingControl}/>
       <Route path='/empowering-guests' component={EmpoweringGuests}/>
-      <Route path='/enhancing-hotels' component={EnhancingHotels}/>
+      <Route path='/reimagining-hotels' component={ReImaginingHotels}/>
       <Route path='/choosing-verboze' component={ChoosingVerboze}/>
       <Route exact path='/' component={Home}/>
     </Switch>

@@ -160,9 +160,9 @@ class RequestDemoModal extends React.Component<PropsType, StateType> {
     /* set body scroll */
     const body = document.body;
     if (open) {
-      body.style.overflow = 'hidden';
+      body.style.overflowY = 'hidden';
     } else {
-      body.style.overflow = 'scroll';
+      body.style.overflowY = 'scroll';
     }
 
     return (
@@ -180,7 +180,6 @@ const styles = {
     height: '100%',
     width: '100%',
     zIndex: 9999999,
-    overflow: 'scroll'
   },
   overlay: {
     position: 'fixed',

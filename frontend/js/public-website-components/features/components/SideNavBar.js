@@ -71,90 +71,101 @@ export default class SideNavBar extends Component<PropsType, StateType> {
         window.removeEventListener('scroll', this._bound_handleScroll)
     }
 
-    isFullyInViewport(elem: Object) {
+    scrolledPastElement(elem: Object) {
         let screenTop = document.scrollingElement || document.documentElement;
 
-        var elementTop = elem.offsetTop;
-        var elementBottom = elem.offsetTop + elem.offsetHeight;
-
+        var elementTop = elem.offsetTop + 480;
         var viewportTop = screenTop.scrollTop;
-        var viewportBottom = screenTop.scrollTop + window.innerHeight;
-
-        return (elementTop - viewportTop < 180);
-
+        return elementTop - 100 <= viewportTop;
     }
 
-    isAtBottom() {
+    isAtBottom(): Object {
         let screenTop = document.scrollingElement || document.documentElement;
 
         var container = document.getElementById(this.props.containerId);
         var containerTop = container.offsetTop;
         var containerBottom = containerTop + container.offsetHeight;
+        var cutoff = 280;
 
-        if (containerBottom - screenTop.scrollTop <= 350 && this.state.sticky && !this.state.bottom){
-            this.setState({
-                bottom: true
-            });
-        }
-        else if (containerBottom - screenTop.scrollTop > 350 && this.state.sticky && this.state.bottom) {
-            this.setState({
-                bottom: false
-            });
-        }
+        var update = {};
+
+        if (containerBottom - screenTop.scrollTop <= cutoff && this.state.sticky && !this.state.bottom)
+            update.bottom = true;
+        else if (containerBottom - screenTop.scrollTop > cutoff && this.state.sticky && this.state.bottom)
+            update.bottom = false;
+
+        return update;
     }
 
     handleScroll(e: Event) {
         let tempScreenTop = document.scrollingElement || document.documentElement;
+        var stateUpdate = {};
 
         /* determine to stick the side nav bar or not */
-        if (tempScreenTop.scrollTop >= 435 && !this.state.sticky) {
-            this.setState({
-                sticky: true
-            });
-        }
-        else if (tempScreenTop.scrollTop < 435 && this.state.sticky) {
-            this.setState({
-                sticky: false
-            });
-        }
+        if (tempScreenTop.scrollTop >= 495 && !this.state.sticky)
+            stateUpdate = {...stateUpdate, sticky: true};
+        else if (tempScreenTop.scrollTop < 495 && this.state.sticky)
+            stateUpdate = {...stateUpdate, sticky: false};
 
         /* determine if navbar is at the bottom to stop it from going down further */
-        this.isAtBottom();
+        stateUpdate = {...stateUpdate, ...this.isAtBottom()};
 
         /* determine which section we are on to change the diamond */
+        var selectedElem = null;
         for (var j = 0; j < this.props.sections.length; j++) {
             var elemId = this.props.sections[j].slug + "-info";
             var elem = document.getElementById(elemId);
-
-            if (this.isFullyInViewport(elem)){
-                this.setState({
-                    currentSection: elemId
-                });
-            };
+            if (this.scrolledPastElement(elem))
+                selectedElem = elemId
         }
+        if (selectedElem && this.state.currentSection !== selectedElem)
+            stateUpdate = {...stateUpdate, currentSection: selectedElem};
+
+        if (Object.keys(stateUpdate).length > 0)
+            this.setState(stateUpdate);
 
         return null;
     };
 
+    renderSVG() {
+        var content = [
+            <line key={"nav-line"} x1={20} x2={20} y1={20} y2={20 + 40*(this.props.sections.length-1)} style={styles.lineStyle} />
+        ];
+        for (var i = 0; i < this.props.sections.length; i++) {
+            var curOffset = i * 40;
+            var style = {...styles.diamondStyle};
+            var s = 4;
+            if (this.props.sections[i].slug+"-info" === this.state.currentSection) {
+                s = 10;
+                style.fill = "#BA3737";
+            }
+            var points = [
+                (20)+  ","+(20+curOffset-s),
+                (20+s)+","+(20+curOffset),
+                (20)+  ","+(20+curOffset+s),
+                (20-s)+","+(20+curOffset),
+            ];
+            content.push(<polygon key={"nav-diamond-"+i} points={points.join(" ")} style={style} />);
+        }
+        return <svg width={40} height={this.props.sections.length * 40}>{content}</svg>;
+    }
+
     renderSections() {
+        const { currentSection } = this.state;
         var sections = [];
 
         for (var i = 0; i < this.props.sections.length; i++) {
-
+            var isSelected = (this.props.sections[i].slug+"-info") === currentSection;
+            var padding = isSelected ? 15 : 5;
             var section = (
-                <Fragment key={i}>
-                    <span
-                        className={ this.state.currentSection === this.props.sections[i].slug + "-info" ?  "diamond-selector selected-diamond" : "diamond-selector" }
-                        id={ this.props.sections[i].slug + "-diamond" }>
-                    </span>
+                <div key={"nav-section-"+i} style={{...styles.sectionFragment, paddingLeft: padding}}>
                     <HashLink
-                        className={ this.state.currentSection === this.props.sections[i].slug + "-info" ? "anchor-links selected-anchor" : "anchor-links" }
+                        className={this.state.currentSection === this.props.sections[i].slug + "-info" ? "anchor-links selected-anchor" : "anchor-links"}
                         id={ this.props.sections[i].slug + "-hashlink" }
                         to={ this.props.sections[i].pageUrl + "#" +  this.props.sections[i].slug + "-info" }>
                         {this.props.sections[i].name}
                     </HashLink>
-                    <br/>
-                </Fragment>
+                </div>
             );
             sections.push(section);
         }
@@ -162,50 +173,81 @@ export default class SideNavBar extends Component<PropsType, StateType> {
         return sections;
     }
 
-    renderSideNavBar() {
-        const sections = this.renderSections();
+    render () {
+        const { sticky, bottom } = this.state;
 
-        if (this.state.sticky) {
-            if (this.state.bottom) {
-                /* know where to stop the sidenav bar at the bottom */
-                var container = document.getElementById(this.props.containerId);
+        var content = (
+            <Fragment>
+                <div style={styles.leftPanel}>
+                    {this.renderSVG()}
+                </div>
+                <div style={styles.rightPanel}>
+                    {this.renderSections()}
+                </div>
+            </Fragment>
+        );
 
+        if (sticky) {
+            if (!bottom) {
                 return (
-                    <div className="side-nav-bar sticky-side-nav-bar sticky-side-nav-bar-bottom" style={{ top: container.offsetHeight - 276 }}>
-                        <div className="side-nav-bar-content">
-                            { sections }
-                        </div>
+                    <div style={styles.stickyContainer}>
+                        {content}
                     </div>
                 );
-            }
-            else {
-                return (
-                    <div className="side-nav-bar sticky-side-nav-bar">
-                        <div className="side-nav-bar-content">
-                            { sections }
-                        </div>
-                    </div>
-                );
-            }
-        }
-        else {
+            } else {
             return (
-                <div className="side-nav-bar">
-                    <div className="side-nav-bar-content">
-                        { sections }
-                    </div>
+                <div style={styles.stickyBottomContainer}>
+                    {content}
+                </div>
+            );
+            }
+        } else {
+            return (
+                <div style={styles.container}>
+                    {content}
                 </div>
             );
         }
     }
+};
 
-    render () {
-        return (
-            <div className="container">
-                <div className="side-nav-bar-container">
-                    { this.renderSideNavBar() }
-                </div>
-            </div>
-        )
-    };
+const styles = {
+    container: {
+        display: 'flex',
+        flexDirection: 'row',
+        paddingTop: 60,
+    },
+    stickyContainer: {
+        position: 'fixed',
+        display: 'flex',
+        flexDirection: 'row',
+        top: 75,
+    },
+    stickyBottomContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        position: 'absolute',
+        bottom: 0,
+    },
+    leftPanel: {
+        width: 40,
+    },
+    rightPanel: {
+        flex: 1,
+    },
+    sectionFragment: {
+        height: 40,
+        lineHeight: '40px',
+        fontWeight: 'lighter',
+    },
+
+    lineStyle: {
+        stroke: '#BA3737',
+        strokeWidth: 2
+    },
+    diamondStyle: {
+        stroke: '#ffffff',
+        fill: '#ffffff',
+        strokeWidth: 1,
+    },
 };
