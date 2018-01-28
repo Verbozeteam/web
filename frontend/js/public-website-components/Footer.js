@@ -58,15 +58,15 @@ export default class Footer extends Component<PropsType, StateType> {
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/enhancing-hotels'>
-                                            Enhancing Hotels
+                                        <Link className="footer-link" to='/reimagining-hotels'>
+                                            Reimagining Hotels
                                         </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/choosing-verboze'>
-                                            Choosing Verboze
+                                        <Link className="footer-link" to='/adopting-verboze'>
+                                            Adopting Verboze
                                         </Link>
                                     </div>
                                 </div>
@@ -83,17 +83,23 @@ export default class Footer extends Component<PropsType, StateType> {
                                 <hr style={ styles.hrStyle }/>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        Vision
+                                        <Link className="footer-link" to='/company'>
+                                            Vision
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        Executive Team
+                                        <HashLink className="footer-link" to='/company#executive-team'>
+                                            Executive Team
+                                        </HashLink>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        Office Location
+                                        <HashLink className="footer-link" to='/company#office-location'>
+                                            Office Location
+                                        </HashLink>
                                     </div>
                                 </div>
                             </div>

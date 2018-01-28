@@ -10,8 +10,8 @@ import Contact from './Contact';
 // Features
 import ModernizingControl from './features/ModernizingControl';
 import EmpoweringGuests from './features/EmpoweringGuests';
-import EnhancingHotels from './features/EnhancingHotels';
-import ChoosingVerboze from './features/ChoosingVerboze';
+import ReImaginingHotels from './features/ReImaginingHotels';
+import AdoptingVerboze from './features/AdoptingVerboze';
 
 
 const Content = () => (
@@ -20,8 +20,8 @@ const Content = () => (
       <Route path='/contact' component={Contact}/>
       <Route path='/modernizing-control' component={ModernizingControl}/>
       <Route path='/empowering-guests' component={EmpoweringGuests}/>
-      <Route path='/enhancing-hotels' component={EnhancingHotels}/>
-      <Route path='/choosing-verboze' component={ChoosingVerboze}/>
+      <Route path='/reimagining-hotels' component={ReImaginingHotels}/>
+      <Route path='/adopting-verboze' component={AdoptingVerboze}/>
       <Route exact path='/' component={Home}/>
     </Switch>
 )

@@ -6,6 +6,7 @@ import { connect as ReduxConnect } from 'react-redux';
 
 const QRCode = require('qrcode.react');
 
+import { SquareButton } from './SquareButton';
 import { RoomTablet } from './RoomTablet';
 
 function mapStateToProps(state) {
@@ -58,9 +59,9 @@ class RoomDemoControls extends React.Component<PropsType, StateType> {
                         <img src={require('../../assets/images/play_store.png')} style={styles.store_icon} />
                         <img src={require('../../assets/images/app_store.png')} style={styles.store_icon} />
 
-                        {/*<Button primary fade='true' vertical='true' size='small' style={styles.button} onClick={(() => this.setState({curPage: 1})).bind(this)}>
-                            {"Use the app"}
-                        </Button>*/}
+                        <SquareButton onClick={(() => this.setState({curPage: 1})).bind(this)} extraStyle={styles.button}>
+                            Use the App
+                        </SquareButton>
                     </div>
                 );
             } else if (curPage === 1) {
@@ -70,6 +71,10 @@ class RoomDemoControls extends React.Component<PropsType, StateType> {
                         <div style={styles.qr_code}>
                             <QRCode value={this.props.connectionURL} size={105} />
                         </div>
+
+                        <SquareButton onClick={(() => this.setState({curPage: 0})).bind(this)} extraStyle={styles.button}>
+                            Get the App
+                        </SquareButton>
                     </div>
                 );
             }
@@ -160,6 +165,8 @@ const styles = {
         bottom: 46,
         height: 30,
         width: 110,
+        fontSize: 14,
+        padding: 4,
     },
     phoneText: {
         padding: 10,

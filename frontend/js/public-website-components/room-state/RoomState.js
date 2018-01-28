@@ -89,7 +89,7 @@ class RoomState extends React.Component<PropsType, StateType> {
     _images: {
         [string]: {
             image: string,
-            z: number,
+            z?: number,
             texture?: Object,
             material?: Object,
             sprite?: Object,
@@ -244,10 +244,7 @@ class RoomState extends React.Component<PropsType, StateType> {
             setTimeout(() => {
                 RoomStateUpdater.update(store, 'dimmer-1', {intensity: 100}, true);
                 setTimeout(() => {
-                    RoomStateUpdater.update(store, 'lightswitch-2', {intensity: 1}, true);
-                    setTimeout(() => {
-                        RoomStateUpdater.update(store, 'lightswitch-3', {intensity: 1}, true);
-                    }, 1500);
+                    RoomStateUpdater.update(store, 'lightswitch-3', {intensity: 1}, true);
                 }, 1500);
             }, 1500);
         }, 2000);
@@ -455,7 +452,7 @@ class RoomState extends React.Component<PropsType, StateType> {
             return 0;
 
         return (this.state.curtainOpenings['curtain-1']/100) *
-            Math.max((this.state.curtainOpenings['curtain-2']/100), 0.2);
+            (Math.max((this.state.curtainOpenings['curtain-2']/150), 0.2)+0.4);
     }
 
     computeLightBrightness() {

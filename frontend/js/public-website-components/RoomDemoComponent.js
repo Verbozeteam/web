@@ -55,6 +55,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
     };
 
     _isUnmounting = false;
+    _apiTimeout = null;
 
     _logo = require('../../assets/images/verboze_logo_white.png');
 
@@ -145,6 +146,11 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
         const { currentStage, width, height } = this.state;
 
         var dimensions = {width, height};
+
+        if (currentStage === 0)
+            this._apiTimeout = setTimeout(this.startDemo.bind(this), 3000);
+        else
+            clearTimeout(this._apiTimeout);
 
         return (
             <div style={{...styles.roomContainer, ...dimensions}}>

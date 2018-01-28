@@ -16,7 +16,7 @@ type StateType = {
 
 export default class Company extends React.Component<PropsType, StateType> {
   _banner_img = require('../../assets/images/page_top_banners/banner.png');
-  _title: string = 'Verboze is the best company to ever verbose.';
+  _title: string = '';
   _qstp: string = require('../../assets/images/qstp.jpg');
   _google_maps: string = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3606.3732234493864!2d51.435260451148345!3d25.325254183757377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45dc1b48888243%3A0xc99991c5589f3b25!2sQatar+Science+and+Technology+Park!5e0!3m2!1sen!2sus!4v1486423672733';
 
@@ -26,21 +26,21 @@ export default class Company extends React.Component<PropsType, StateType> {
       text: 'Co-Founder | CEO',
       email: 'hbj@verboze.com',
       linkedin: 'https://www.linkedin.com/in/hasan-al-jawaheri/',
-      image: require('../../assets/images/hasan.png')
+      image: require('../../assets/images/hasan.jpg')
     },
     {
       name: 'Mohammed M. Fituri',
       text: 'Co-Founder',
       email: 'mfituri@verboze.com',
       linkedin: 'https://www.linkedin.com/in/mfituri/',
-      image: require('../../assets/images/fituri.png')
+      image: require('../../assets/images/fituri.jpg')
     },
     {
       name: 'Yusuf Musleh',
       text: 'Co-Founder',
       email: 'ymusleh@verboze.com',
       linkedin: 'https://www.linkedin.com/in/yusufmusleh/',
-      image: require('../../assets/images/yusuf.png')
+      image: require('../../assets/images/yusuf.jpg')
     }
   ];
 
@@ -68,7 +68,7 @@ export default class Company extends React.Component<PropsType, StateType> {
     }
 
     return (
-      <div className={'container'} style={styles.section}>
+      <div className={'container'} style={styles.section} id="executive-team">
         <h2 style={styles.header}>Executive Team</h2>
         <div className={'row justify-content-center'}>
           {founders}
@@ -80,7 +80,7 @@ export default class Company extends React.Component<PropsType, StateType> {
   _renderLocationSection() {
 
     return (
-      <div className={'container'} style={styles.section}>
+      <div className={'container'} style={styles.section} id="office-location">
         <h2 style={styles.header}>Office Location</h2>
         <h3 style={styles.sub_header}>Qatar Science & Technology Park</h3>
         <div className={'row justify-content-center'}>

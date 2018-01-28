@@ -55,12 +55,12 @@ export default class NavBar extends Component<PropsType, StateType> {
                                     Empowering Guests
                                 </Link>
                                 <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/enhancing-hotels">
-                                    Enhancing Hotels
+                                <Link className="dropdown-item" to="/reimagining-hotels">
+                                    Reimagining Hotels
                                 </Link>
                                 <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/choosing-verboze">
-                                    Choosing Verboze
+                                <Link className="dropdown-item" to="/adopting-verboze">
+                                    Adopting Verboze
                                 </Link>
                             </div>
                         </li>
