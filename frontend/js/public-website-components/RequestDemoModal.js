@@ -161,8 +161,10 @@ class RequestDemoModal extends React.Component<PropsType, StateType> {
     const body = document.body;
     if (open) {
       body.style.overflowY = 'hidden';
+      container_style.overflowY = 'scroll';
     } else {
       body.style.overflowY = 'scroll';
+      container_style.overflowY = 'hidden';
     }
 
     return (
