@@ -20,25 +20,25 @@ class RoomStacksCanvas extends React.Component<PropsType, StateType> {
     _images = [{
         fillStyle: "red",
     }, {
-        src: require('../../../assets/images/lightbulb3.png'),
+        src: require('../../../assets/images/lights_stack.jpg'),
         offsetX: 0,
         offsetY: 0,
         obj: undefined,
         fillStyle: "red",
     }, {
-        src: require('../../../assets/images/curtain_back.jpg'),
+        src: require('../../../assets/images/curtains_stack.jpg'),
         offsetX: 0,
         offsetY: 0,
         obj: undefined,
         fillStyle: "red",
     }, {
-        src: require('../../../assets/images/snowflake3.png'),
+        src: require('../../../assets/images/thermostat_stack.jpg'),
         offsetX: 0,
         offsetY: 0,
         obj: undefined,
         fillStyle: "red",
     }, {
-        src: require('../../../assets/images/bell3.png'),
+        src: require('../../../assets/images/services_stack.jpg'),
         offsetX: 0,
         offsetY: 0,
         obj: undefined,
