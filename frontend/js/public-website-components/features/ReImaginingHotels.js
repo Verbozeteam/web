@@ -11,7 +11,7 @@ type StateType = {};
 export default class ReImaginingHotels extends Component<PropsType, StateType> {
     _contentProps: {title: string, banner: string, sections:Array<Object>} = {
         title: "A hotel experience like never before",
-        banner: require('../../../assets/images/page_top_banners/banner.png'),
+        banner: require('../../../assets/images/reimagining_hotels.jpg'),
         sections: [{
             name: "Preferences",
             slug: "preferences",

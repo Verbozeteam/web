@@ -11,7 +11,7 @@ type StateType = {};
 export default class EmpoweringGuests extends Component<PropsType, StateType> {
     _contentProps: {title: string, banner: string, sections:Array<Object>} = {
         title: "Empowering Guests to take control of their hotel stay",
-        banner: require('../../../assets/images/page_top_banners/banner.png'),
+        banner: require('../../../assets/images/empowering_guests.jpg'),
         sections: [{
             name: "Reservation Data",
             slug: "reservation-data",
