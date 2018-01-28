@@ -16,6 +16,7 @@ export default class PageTopBanner extends Component<PropsType, StateType> {
 	render() {
 		return (
 			<div className="jumbotron jumbotron-fluid" style={{ backgroundImage: 'url(\'' + this.props.imageUrl + '\')',  ...styles.pageTopBannerDiv }}>
+				<div className='top-banner-overlay'></div>
 				<div className="container" style={ styles.bannerContainer }>
 					<div className="banner-title" style={ styles.bannerTitleStyle }>
 						{ this.props.title }
@@ -32,12 +33,10 @@ const styles = {
         backgroundSize: 'cover',
 		height: 480,
 	},
-
 	bannerContainer: {
 		height: '100%',
 		position: 'relative',
 	},
-
 	bannerTitleStyle: {
 		position: 'absolute',
   		bottom: 0,

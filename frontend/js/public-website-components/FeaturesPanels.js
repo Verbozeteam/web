@@ -37,21 +37,21 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
   _panels: Array<PanelType> = [
     {
         name: 'Modernizing Control',
-        image: require('../../assets/images/iphone_slice.png'),
+        image: require('../../assets/images/modernizing_control_panel.jpg'),
         link: '/modernizing-control'
     },
     {
       name: 'Empowering Guests',
-      image: require('../../assets/images/car_slice.png'),
+      image: require('../../assets/images/empowering_guests_panel.jpg'),
       link: '/empowering-guests'
     },
     {
-      name: 'Enhancing Hotels',
-      image: require('../../assets/images/building_slice.png'),
+      name: 'Reimagining Hotels',
+      image: require('../../assets/images/reimagining_hotels_panel.jpg'),
       link: 'enhancing-hotels'
     },
     {
-      name: 'Choosing Verboze',
+      name: 'Adopting Verboze',
       image: require('../../assets/images/iphone_slice.png'),
       link: 'choosing-verboze'
     }

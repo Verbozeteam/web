@@ -17,7 +17,7 @@ type StateType = {
 
 
 export default class ModernizingControl extends Component<PropsType, StateType> {
-    _banner_img = require('../../../assets/images/page_top_banners/banner.png');
+    _banner_img = require('../../../assets/images/modernizing_control.jpg');
 
     _sections = [
         {

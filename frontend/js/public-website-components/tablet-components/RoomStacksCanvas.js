@@ -20,26 +20,26 @@ class RoomStacksCanvas extends React.Component<PropsType, StateType> {
     _images = [{
         fillStyle: "red",
     }, {
-        src: require('../../../assets/images/lightbulb.jpg'),
-        offsetX: -200,
+        src: require('../../../assets/images/lightbulb3.png'),
+        offsetX: 0,
         offsetY: 0,
         obj: undefined,
         fillStyle: "red",
     }, {
         src: require('../../../assets/images/curtain_back.jpg'),
-        offsetX: -80,
+        offsetX: 0,
         offsetY: 0,
         obj: undefined,
         fillStyle: "red",
     }, {
-        src: require('../../../assets/images/snowflake.jpg'),
-        offsetX: 50,
-        offsetY: -30,
+        src: require('../../../assets/images/snowflake3.png'),
+        offsetX: 0,
+        offsetY: 0,
         obj: undefined,
         fillStyle: "red",
     }, {
-        src: require('../../../assets/images/service_back.jpg'),
-        offsetX: 100,
+        src: require('../../../assets/images/bell3.png'),
+        offsetX: 0,
         offsetY: 0,
         obj: undefined,
         fillStyle: "red",
@@ -99,11 +99,11 @@ class RoomStacksCanvas extends React.Component<PropsType, StateType> {
                 {this._images.map(((img, i) =>
                     img.src ?
                     <img key={"loading-image-"+img.src}
-                        ref={c => this._images[i].obj = c}
-                        src={img.src}
-                        onLoad={this.updateCanvas.bind(this)}
-                        style={{display: 'none'}} />
-                    : <div key={"loading-image-"+i}></div>
+                      ref={c => this._images[i].obj = c}
+                      src={img.src}
+                      onLoad={this.updateCanvas.bind(this)}
+                      style={{display: 'none'}} />
+                        : <div key={"loading-image-"+i}></div>
                 ).bind(this))}
             </div>
         );
