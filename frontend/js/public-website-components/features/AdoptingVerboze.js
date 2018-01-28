@@ -15,15 +15,15 @@ export default class ChoosingVerboze extends Component<PropsType, StateType> {
         sections: [{
             name: "Retrofitting",
             slug: "retrofitting",
-            pageUrl: "/retrofitting"
+            pageUrl: "/adopting-verboze"
         }, {
             name: "Customization",
             slug: "customization",
-            pageUrl: "/customization"
+            pageUrl: "/adopting-verboze"
         }, {
             name: "Demo",
             slug: "demo",
-            pageUrl: "/demo"
+            pageUrl: "/adopting-verboze"
         }]
     };
 

@@ -68,7 +68,7 @@ export default class Company extends React.Component<PropsType, StateType> {
     }
 
     return (
-      <div className={'container'} style={styles.section}>
+      <div className={'container'} style={styles.section} id="executive-team">
         <h2 style={styles.header}>Executive Team</h2>
         <div className={'row justify-content-center'}>
           {founders}
@@ -80,7 +80,7 @@ export default class Company extends React.Component<PropsType, StateType> {
   _renderLocationSection() {
 
     return (
-      <div className={'container'} style={styles.section}>
+      <div className={'container'} style={styles.section} id="office-location">
         <h2 style={styles.header}>Office Location</h2>
         <h3 style={styles.sub_header}>Qatar Science & Technology Park</h3>
         <div className={'row justify-content-center'}>

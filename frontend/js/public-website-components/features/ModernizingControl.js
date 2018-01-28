@@ -21,13 +21,13 @@ export default class ModernizingControl extends Component<PropsType, StateType> 
             slug: "tablet",
             pageUrl: "/modernizing-control"
         }, {
-            name: "Guest's Smartphone",
-            slug: "smartphone",
+            name: "Guest App",
+            slug: "app",
             pageUrl: "/modernizing-control"
         }, {
             name: "Voice Controls",
             slug: "voice-controls",
-            pageUrl: "/voice",
+            pageUrl: "/modernizing-control",
         }],
     };
 
@@ -60,7 +60,7 @@ export default class ModernizingControl extends Component<PropsType, StateType> 
                         The primary control device that is installed in every room is a touchscreen that we provide, either portable or mounted on a wall. You may choose to have several touchscreen devices for different arrangements of your rooms or suites.
                     </p>
                 </div>
-                <div id="smartphone-info" style={ styles.textDivStyle }>
+                <div id="app-info" style={ styles.textDivStyle }>
                     <div style={styles.header}>Guest App</div>
                     <br />
                     <p>

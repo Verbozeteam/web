@@ -15,15 +15,15 @@ export default class EmpoweringGuests extends Component<PropsType, StateType> {
         sections: [{
             name: "Reservation Data",
             slug: "reservation-data",
-            pageUrl: "/reservation-data"
+            pageUrl: "/empowering-guests"
         }, {
             name: "Room Services",
             slug: "room-services",
-            pageUrl: "/room-services"
+            pageUrl: "/empowering-guests"
         }, {
             name: "Feedback",
             slug: "feedback",
-            pageUrl: "/feedback"
+            pageUrl: "/empowering-guests"
         }, {
             name: "Keyless Entry",
             slug: "keyless-entry",
