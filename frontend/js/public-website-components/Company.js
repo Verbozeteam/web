@@ -26,21 +26,21 @@ export default class Company extends React.Component<PropsType, StateType> {
       text: 'Co-Founder | CEO',
       email: 'hbj@verboze.com',
       linkedin: 'https://www.linkedin.com/in/hasan-al-jawaheri/',
-      image: require('../../assets/images/hasan.png')
+      image: require('../../assets/images/hasan.jpg')
     },
     {
       name: 'Mohammed M. Fituri',
       text: 'Co-Founder',
       email: 'mfituri@verboze.com',
       linkedin: 'https://www.linkedin.com/in/mfituri/',
-      image: require('../../assets/images/fituri.png')
+      image: require('../../assets/images/fituri.jpg')
     },
     {
       name: 'Yusuf Musleh',
       text: 'Co-Founder',
       email: 'ymusleh@verboze.com',
       linkedin: 'https://www.linkedin.com/in/yusufmusleh/',
-      image: require('../../assets/images/yusuf.png')
+      image: require('../../assets/images/yusuf.jpg')
     }
   ];
 
