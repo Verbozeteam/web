@@ -244,10 +244,7 @@ class RoomState extends React.Component<PropsType, StateType> {
             setTimeout(() => {
                 RoomStateUpdater.update(store, 'dimmer-1', {intensity: 100}, true);
                 setTimeout(() => {
-                    RoomStateUpdater.update(store, 'lightswitch-2', {intensity: 1}, true);
-                    setTimeout(() => {
-                        RoomStateUpdater.update(store, 'lightswitch-3', {intensity: 1}, true);
-                    }, 1500);
+                    RoomStateUpdater.update(store, 'lightswitch-3', {intensity: 1}, true);
                 }, 1500);
             }, 1500);
         }, 2000);
