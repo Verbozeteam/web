@@ -35,7 +35,8 @@ export default class ModernizingControl extends Component<PropsType, StateType> 
         return (
             <ContentPage {...this._contentProps} >
                 <div id="modernizing-control-info" style={ styles.textDivStyle }>
-                    <h1>Modernizing Control</h1>
+                    <div style={styles.header}>Modernizing Control</div>
+                    <br />
                     <p>
                         The Verboze system is installed in each of your hotel rooms allowing them to be automated and easily controlled. The system supports automating the following components:
                     </p>
@@ -53,19 +54,22 @@ export default class ModernizingControl extends Component<PropsType, StateType> 
                     </p>
                 </div>
                 <div id="tablet-info" style={ styles.textDivStyle }>
-                    <h1>In-room Touchscreen</h1>
+                    <div style={styles.header}>In-room Touchscreen</div>
+                    <br />
                     <p>
                         The primary control device that is installed in every room is a touchscreen that we provide, either portable or mounted on a wall. You may choose to have several touchscreen devices for different arrangements of your rooms or suites.
                     </p>
                 </div>
                 <div id="app-info" style={ styles.textDivStyle }>
-                    <h1>Guest App</h1>
+                    <div style={styles.header}>Guest App</div>
+                    <br />
                     <p>
                         Guests will have access to an app on their own smartphones which can connect to their booked rooms and give them control of the room for the duration of their stay.
                     </p>
                 </div>
                 <div id="voice-controls-info" style={ styles.textDivStyle }>
-                    <h1>Voice Controls</h1>
+                    <div style={styles.header}>Voice Controls</div>
+                    <br />
                     <p>
                         Voice assistants can be installed in the rooms to enable voice-activated commands to control the room.
                     </p>
@@ -76,6 +80,9 @@ export default class ModernizingControl extends Component<PropsType, StateType> 
 };
 
 const styles = {
+    header: {
+        fontSize: 34,
+    },
     textDivStyle: {
         fontWeight: 'lighter',
         paddingTop: 60,
