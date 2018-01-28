@@ -10,8 +10,8 @@ type StateType = {};
 
 export default class ChoosingVerboze extends Component<PropsType, StateType> {
     _contentProps: {title: string, banner: string, sections:Array<Object>} = {
-        title: "Carving the path to the seamless future",
-        banner: require('../../../assets/images/page_top_banners/banner.png'),
+        title: "Carving the path to a seamless future",
+        banner: require('../../../assets/images/adopting_verboze.jpg'),
         sections: [{
             name: "Retrofitting",
             slug: "retrofitting",

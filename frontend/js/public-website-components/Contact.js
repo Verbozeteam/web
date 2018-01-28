@@ -32,7 +32,7 @@ type FormData = {
 };
 
 export default class Contact extends Component<PropsType, StateType> {
-    _banner_img = require('../../assets/images/page_top_banners/banner.png');
+    _banner_img = require('../../assets/images/contact_banner.jpg');
 
     state = {
         submitStage: 0,
@@ -72,7 +72,7 @@ export default class Contact extends Component<PropsType, StateType> {
     render() {
         return (
             <div style={styles.contactDiv}>
-                <PageTopBanner title="Get in Touch" imageUrl={ this._banner_img } />
+                <PageTopBanner title="Get in touch" imageUrl={ this._banner_img } />
                 <div className="container" style={{ paddingTop: 50 }}>
                     <h5 style={{ fontWeight: 'lighter' }}>Reach out to us for any questions or enquiries, we're eager to hear from you:</h5>
                     <br/>

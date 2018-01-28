@@ -52,7 +52,7 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
     },
     {
       name: 'Adopting Verboze',
-      image: require('../../assets/images/iphone_slice.png'),
+      image: require('../../assets/images/adopting_verboze_panel.jpg'),
       link: '/adopting-verboze'
     }
   ];

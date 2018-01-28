@@ -10,7 +10,7 @@ type StateType = {};
 
 export default class ModernizingControl extends Component<PropsType, StateType> {
     _contentProps: {title: string, banner: string, sections:Array<Object>} = {
-        title: "Introducing the Hospitality Industry to the 21st Century",
+        title: "Introducing the hospitality industry to the 21st century",
         banner: require('../../../assets/images/modernizing_control.jpg'),
         sections: [{
             name: "Modernizing Control",

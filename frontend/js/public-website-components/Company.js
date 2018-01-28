@@ -15,7 +15,7 @@ type StateType = {
 };
 
 export default class Company extends React.Component<PropsType, StateType> {
-  _banner_img = require('../../assets/images/page_top_banners/banner.png');
+  _banner_img = require('../../assets/images/company_banner.jpg');
   _title: string = '';
   _qstp: string = require('../../assets/images/qstp.jpg');
   _google_maps: string = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3606.3732234493864!2d51.435260451148345!3d25.325254183757377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45dc1b48888243%3A0xc99991c5589f3b25!2sQatar+Science+and+Technology+Park!5e0!3m2!1sen!2sus!4v1486423672733';
