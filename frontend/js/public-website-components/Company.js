@@ -22,7 +22,7 @@ export default class Company extends React.Component<PropsType, StateType> {
 
   _founders: Array<Object> = [
     {
-      name: 'Hasan AlJawaheri',
+      name: 'Hasan Al-Jawaheri',
       text: 'Co-Founder | CEO',
       email: 'hbj@verboze.com',
       linkedin: 'https://www.linkedin.com/in/hasan-al-jawaheri/',

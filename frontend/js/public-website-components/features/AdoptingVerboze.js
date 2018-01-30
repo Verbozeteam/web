@@ -42,10 +42,10 @@ export default class ChoosingVerboze extends Component<PropsType, StateType> {
                         <div style={styles.header}>Customization</div>
                         <br />
                         <p>
-                            Each hotel brand is different, there is no one-size-fits-all in this business. With that in mind, you can pick and choose the features that are most important to your hotel. We also customize the user interface to match the image and feel of your brand so things do not feel out of place.
+                            Each hotel brand is different, there is no one-size-fits-all in this business. With that in mind, you can pick and choose the features that are most important to your hotel. We also customize the user interface to match the image of your brand so things do not feel out of place.
                         </p>
                         <p>
-                            This is just the tip of the iceberg, we are sure that there are somethings that you would love to have but we currently do not provide, in that case we are more than happy to listen to your needs and implement new features.
+                            This is just the tip of the iceberg as we are sure that there are some things that you would love to have but we currently do not provide. We are more than happy to listen to your needs and implement any custom new features.
                         </p>
                     </div>
                     <div id="demo-info" style={ styles.textDivStyle }>

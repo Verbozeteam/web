@@ -145,7 +145,7 @@ export default class ContactOrDemoForm extends React.Component<PropsType, StateT
                             </div>
                         </div>
                         <div className="form-group">
-                            <textarea type="text" className="form-control" id="inputAdditionalInfo" placeholder="Tell us a little bit more about your meeds" name="inputAdditionalInfo" required />
+                            <textarea type="text" className="form-control" id="inputAdditionalInfo" placeholder="Tell us a little bit more about your needs" name="inputAdditionalInfo" required />
                         </div>
                         <button type="submit" id="submit-form-button" style={{ display: "none"}}></button>
                     </form>

@@ -24,7 +24,7 @@ class RequestDemoBanner extends React.Component<PropsType, StateType> {
         <div className='container container-fluid'>
           <div className='row justify-content-around' style={styles.container}>
             <div className='col-lg-6 col-md-8 col-12'>
-              <h2 style={styles.header}>See Verboze in action at your Hotel</h2>
+              <h2 style={styles.header}>See Verboze in action at your hotel</h2>
             </div>
             <div className='col-lg-4 col-md-4 col-12'>
               <SquareButton onClick={toggleModal} extraStyle={{height: 45, width: 220}}>
