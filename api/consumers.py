@@ -46,7 +46,7 @@ def on_message_from_hub(sender_token, message_dict):
 def on_message_from_dashboard(sender_token, message_dict):
 	# message_dict["__room_id"] = sender_token.content_object.identifier
 	message_dict["__reply_target"] = "dashboard"
-	message_json["text"] = json.dumps(message_dict)
+	message_json = {"text": json.dumps(message_dict)}
 	# forward message to hotel's hub
 	hotel_hub = sender_token.content_object.hubs.first()
 	hotel_hub.ws_send_message(message_json)
@@ -54,7 +54,7 @@ def on_message_from_dashboard(sender_token, message_dict):
 def on_message_from_phone(sender_token, message_dict):
 	message_dict["__room_id"] = sender_token.content_object.identifier
 	message_dict["__reply_target"] = sender_token.content_object.identifier
-	message_json["text"] = json.dumps(message_dict)
+	message_json = {"text": json.dumps(message_dict)}
 	hotel_hub = sender_token.content_object.hotel.hubs.first()
 	# forward message to guest room's hotel's hub
 	hotel_hub.ws_send_message(message_json)
