@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dj_database_url
+from verboze.whitenoise_utils import add_gzip_encoding
 
 DB_NAME = os.environ.get('DB_NAME', '')
 DB_USER = os.environ.get('DB_USER', '')
 DB_PASS = os.environ.get('DB_PASS', '')
+VERBOZE_EMAIL_PASSWORD = os.environ.get('VERBOZE_EMAIL_PASSWORD', '')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,7 +37,7 @@ if os.environ.get('ON_HEROKU', False):
     #SECURE_SSL_REDIRECT = True
 else:
     DEBUG = True
-    ALLOWED_HOSTS = ['local.com', 'www.local.com', 'dashboard.local.com', 'localhost']
+    ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -56,6 +58,9 @@ INSTALLED_APPS = [
     # packages
     'webpack_loader',
     'channels',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +75,10 @@ MIDDLEWARE = [
     # WHITENOISE STATICFILE SERVING
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+
+WHITENOISE_ADD_HEADERS_FUNCTION = add_gzip_encoding
+
 
 ROOT_URLCONF = 'verboze.urls'
 
@@ -160,9 +169,46 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'frontend'),
 )
 
+
+WEBPACK_STATS_FILE = 'webpack-dev-stats.json'
+if not DEBUG:
+    WEBPACK_STATS_FILE = 'webpack-prod-stats.json'
+
+
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json')
+        'STATS_FILE': os.path.join(BASE_DIR, WEBPACK_STATS_FILE)
     }
 }
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework.authentication.TokenAuthentication',
+        'api.authentication.ExpiringTokenAuthentication',
+    )
+}
+
+
+# EMAIL SETTINGS
+
+if os.environ.get('ON_HEROKU', False):
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+else:
+    # Don't actually send emails when testing locally
+    # Print to STDOUT instead
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'mail.privateemail.com'
+EMAIL_HOST_USER = 'contact@verboze.com'
+EMAIL_HOST_PASSWORD = VERBOZE_EMAIL_PASSWORD
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+# SPECIFIED TO DETERMINE IF DEBUG OR PRODUCTION IN DJANGO TEMPLATES
+INTERNAL_IPS = (
+    '127.0.0.1',
+)
