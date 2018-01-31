@@ -32,15 +32,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: "style-loader"
-            },
-            {
-                test: /\.css$/,
-                loader: "css-loader",
-                query: {
-                    modules: true,
-                    localIdentNames: '[name]__[local]__[hash:base64:5]'
-                }
+                use: [ 'style-loader', 'css-loader' ]
             },
         ]
     },

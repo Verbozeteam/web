@@ -6,9 +6,12 @@ from rest_framework.views import APIView
 
 import threading
 
-def send_contact_us_email(name, email, hotel, role, additional_info):
+def send_contact_us_email(name, email, hotel, role, additional_info, request_demo):
     subject = 'Message from {}'.format(name)
-    message = 'Reach out to {}, {} at {}, through {}. Additional Info: {}'.format(name, role, hotel, email, additional_info)
+    contact_reason = "Reach out to"
+    if request_demo:
+        contact_reason = "Demo Request from"
+    message = '{} {}, {} at {}, through {}. Additional Info: {}'.format(contact_reason, name, role, hotel, email, additional_info)
 
     send_mail(
         subject,
@@ -31,10 +34,11 @@ class ContactUs(APIView):
         hotel = request.data.get('hotel', None)
         role = request.data.get('role', None)
         additional_info = request.data.get('additionalInfo', None)
+        request_demo = request.data.get('requestDemo', None)
 
         if name and email and hotel and role:
             try:
-                thread = threading.Thread(target=send_contact_us_email, args=(name, email, hotel, role, additional_info))
+                thread = threading.Thread(target=send_contact_us_email, args=(name, email, hotel, role, additional_info, request_demo))
                 thread.start()
                 return Response({}, status=status.HTTP_200_OK)
             except Exception as e:

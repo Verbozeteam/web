@@ -1,0 +1,107 @@
+
+@media (max-width: 767px) {
+	.side-nav-bar {
+		display: none;
+	}
+}
+
+@media (max-width: 1199px) {
+	.side-nav-bar-container {
+		width: 21.5% !important;
+	}
+}
+
+@media (max-width: 991px) {
+	.side-nav-bar-container {
+		width: 29% !important;
+	}
+}
+
+.side-nav-bar-container {
+	float: right;
+	width: 18%;
+}
+
+.side-nav-bar {
+	width: 200px;
+  float: right;
+  line-height: 50px;
+  position: relative;
+  padding-top: 45px;
+  font-weight: lighter;
+}
+
+.sticky-side-nav-bar {
+	position: fixed;
+	top: 82px;
+}
+
+.sticky-side-nav-bar-bottom {
+	position: relative;
+}
+
+.side-nav-bar-content {
+	position: relative;
+	z-index: 2;
+}
+
+.side-nav-bar-content:after {
+  content:"";
+  background: #BA3737;
+  position: absolute;
+  bottom: 25px;
+  left: -15px;
+  height: 75%;
+  width: 2px;
+  z-index: -1;
+}
+
+.diamond-selector {
+	width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-bottom-color: white;
+  position: relative;
+  top: -13px;
+  left: -19px;
+}
+
+.diamond-selector:after {
+	content: '';
+  position: absolute;
+  left: -5px;
+  top: 21px;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-top-color: white;
+}
+
+.selected-diamond {
+	border: 10px solid transparent;
+  border-bottom-color: #BA3737;
+  left: -24px;
+  top: -18px;
+}
+
+.selected-diamond:after {
+	border: 10px solid transparent;
+  border-top-color: #BA3737;
+  left: -10px;
+  top: 26px;
+}
+
+.anchor-links {
+	color: white;
+	text-decoration: none;
+}
+
+.anchor-links:hover {
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.selected-anchor {
+	font-weight: bold;
+}

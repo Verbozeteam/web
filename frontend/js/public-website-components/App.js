@@ -1,10 +1,6 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import {
-    Segment,
-    Visibility,
-} from 'semantic-ui-react';
 
 import { withRouter } from 'react-router-dom'
 import { connect as ReduxConnect } from 'react-redux';
@@ -12,33 +8,22 @@ import { AppWrapper } from "./redux/store";
 
 import NavBar from './NavBar';
 import Content from './Content';
-import { Footer } from './Footer';
+import Footer from './Footer';
 
-type PropsType = {
-    ...any,
-};
+import css from '../../css/public_website/App.css';
 
-type StateType = {
-    ...any,
-};
+type PropsType = {};
+
+type StateType = {};
 
 
 class App extends Component<PropsType, StateType> {
 
-    state = {}
-
-    hideStickyMenu = () => this.setState({ visible: false })
-    showStickyMenu = () => this.setState({ visible: true })
-
     render() {
-        const { visible } = this.state
-
         return (
             <div>
-                { visible ? <NavBar sticky={true}  /> : null }
-
+                <NavBar />
                 <Content />
-
                 <Footer />
             </div>
         );

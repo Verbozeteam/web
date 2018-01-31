@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  {% if not debug %}
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112092965-1"></script>
   <script>
@@ -13,8 +15,11 @@
 
     gtag('config', 'UA-112092965-1');
   </script>
+  {% endif %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'public_website/css/video-react.css' %}"></link>
   <title>Verboze</title>
 
@@ -22,13 +27,14 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'public_website/favicons/favicon-32x32.png' %}">
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'public_website/favicons/favicon-16x16.png' %}">
   <link rel="manifest" href="{% static 'public_website/favicons/manifest.json' %}">
-  <link rel="mask-icon" href="{% static 'public_website/favicons/safari-pinned-tab.svg' %}" color="#1d397b">
+  <link rel="mask-icon" href="{% static 'public_website/favicons/safari-pinned-tab.svg' %}" color="#181818">
   <meta name="apple-mobile-web-app-title" content="Verboze">
   <meta name="application-name" content="Verboze">
-  <meta name="theme-color" content="#ffffff">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <meta name="theme-color" content="#181818">
 
 </head>
-<body>
+<body style='background-color: #000000; background-image: url({% static "public_website/images/pattern.png" %}); background-repeat: repeat;'>
   <div id="react-app" style="height: 100%; width: 100%"></div>
 
   {% if debug %}
@@ -37,5 +43,10 @@
     {% render_bundle 'public_website' 'js.jgz' %}
   {% endif %}
 
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
 </body>
 </html>

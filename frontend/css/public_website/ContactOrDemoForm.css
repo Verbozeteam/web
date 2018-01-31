@@ -1,0 +1,83 @@
+
+.form-group {
+    padding-bottom: 10px;
+}
+
+.form-control {
+    border-radius: 0;
+    font-weight: lighter;
+}
+
+.form-control:focus {
+  border-color: #BA3737;
+  box-shadow: 0 0 0 0.2rem rgba(186,55,55,.25);
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+textarea.form-control {
+    height: 100px;
+    max-height: 100px;
+}
+
+.submit-button {
+    width: 400px;
+    border-radius: 0px;
+    border-width: 1px;
+    margin-right: 10px;
+    background-color: transparent;
+    border-color: #BA3737;
+    font-weight: lighter;
+}
+
+.submit-button:hover {
+    background-color: #BA3737;
+    color: white;
+}
+
+.contact-submit-button {
+    color: white;
+    margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+    .submit-button {
+        width: 177px;
+    }
+}
+
+.submitting-form {
+    background-color: #BA3737;
+    color: white;
+}
+
+.cancel-button {
+    background-color: transparent;
+    font-weight: lighter;
+}
+
+.cancel-button:hover {
+    color: #BA3737;
+}
+
+.form-buttons {
+    float: right;
+}
+
+.request-demo-container {
+    margin-top: 40px;
+    width: 850px;
+}
+
+@media (max-width: 600px) {
+    .request-demo-container{
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+.contact-container {
+
+}

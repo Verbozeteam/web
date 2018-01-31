@@ -2,10 +2,7 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {
-    Button,
-    Header,
-} from 'semantic-ui-react';
+
 import { connect as ReduxConnect } from 'react-redux';
 
 import * as APITypes from '../js-api-utils/APITypes';
@@ -18,7 +15,6 @@ import { WebSocketCommunication } from '../js-api-utils/WebSocketCommunication';
 import * as tabletActions from './redux/actions/tabletstate';
 import * as connectionActions from './redux/actions/connection';
 
-import { RoomDemoControls } from './RoomDemoControls';
 import { RoomState } from './room-state/RoomState';
 
 function mapStateToProps(state) {
@@ -59,6 +55,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
     };
 
     _isUnmounting = false;
+    _apiTimeout = null;
 
     _logo = require('../../assets/images/verboze_logo_white.png');
 
@@ -96,7 +93,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
     }
 
     updateWindowDimensions() {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
+        this.setState({ width: document.documentElement.clientWidth, height: window.innerHeight });
     }
 
     /* websocket callback on connect event */
@@ -148,12 +145,16 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
     render() {
         const { currentStage, width, height } = this.state;
 
-        var dimensions = {width, height: height};
+        var dimensions = {width, height};
+
+        if (currentStage === 0)
+            this._apiTimeout = setTimeout(this.startDemo.bind(this), 3000);
+        else
+            clearTimeout(this._apiTimeout);
 
         return (
             <div style={{...styles.roomContainer, ...dimensions}}>
-                <RoomState navbarHeight={100} opacity={currentStage === 3 ? 1.0 : 0.2} dimensions={dimensions} />
-                <RoomDemoControls dimensions={dimensions} />
+                <RoomState navbarHeight={66} opacity={currentStage === 3 ? 1.0 : 0.2} dimensions={dimensions} />
             </div>
         );
     }
@@ -167,8 +168,6 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#1b1c1d',
-
-
         MozUserSelect: '-moz-none',
         KhtmlUserSelect: 'none',
         UebkitUserSelect: 'none',

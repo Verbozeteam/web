@@ -1,14 +1,8 @@
 /* @flow */
 
-import React, { Component } from 'react';
-import {
-    Segment,
-    Container,
-    Grid,
-    Header,
-    List,
-    Image
-} from 'semantic-ui-react'
+import React, { Component, Fragment } from 'react';
+
+import css from '../../css/public_website/Footer.css';
 
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
@@ -16,45 +10,163 @@ import { HashLink } from 'react-router-hash-link';
 // Use it just like a RRv4 link (to can be a string or an object, see RRv4 api for details):
 // <HashLink to="/some/path#with-hash-fragment">Link to Hash Fragment</HashLink>
 
-import verboze_logo from '../../assets/images/logo_symbol.png';
+type PropsType = {};
 
-export const Footer = () => (
+type StateType = {};
 
-    <Segment inverted vertical style={{ padding: '5em 0em' }}>
-        <Container>
-            <Grid inverted stackable>
-                <Grid.Row>
-                    <Grid.Column width={2}>
-                        <Header inverted as='h4' content='Verboze' />
-                        <Image as={ Link } to='/' style={{ width: 50 }} src={ verboze_logo } />
 
-                    </Grid.Column>
-                    <Grid.Column width={3}>
-                        <Header inverted as='h4' content='Features' />
-                        <List link inverted>
-                            <List.Item as={ HashLink } to='/features#retrofitting'>Retrofitting</List.Item>
-                            <List.Item as={ HashLink } to='/features#control'>Control</List.Item>
-                            <List.Item as={ HashLink } to='/features#monitoring'>Monitoring</List.Item>
-                        </List>
-                    </Grid.Column>
-                    <Grid.Column width={3}>
-                        <Header inverted as='h4' content='About' />
-                        <List link inverted>
-                            <List.Item as={ HashLink } to='/about-us#vision'>Vision</List.Item>
-                            <List.Item as={ HashLink } to='/about-us#team'>Team</List.Item>
-                            <List.Item as={ HashLink } to='/about-us#location'>Location</List.Item>
-                        </List>
-                    </Grid.Column>
+export default class Footer extends Component<PropsType, StateType> {
 
-                    <Grid.Column width={5} floated='right' textAlign='right' >
-                        <Header inverted as='h5'>
-                            © { new Date().getFullYear() } Verboze. All rights reserved.
-                        </Header>
-                    </Grid.Column>
+    _verboze_white = require('../../assets/images/verboze_white.png');
 
-                </Grid.Row>
-            </Grid>
-        </Container>
-    </Segment>
+    render() {
+        return (
+            <Fragment>
+                <footer className="footer" style={ styles.footerStyle }>
+                    <div className="container">
 
-);
+                        <div className="row" style={ styles.footerRowStyle }>
+                            <div className="col-md-2 footer-col-md-2">
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link to={'/'}>
+                                          <img src={ this._verboze_white } className="d-inline-block align-top" alt="" style={ styles.logoStyle }/>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2 footer-col-md-2">
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        FEATURES
+                                    </div>
+                                </div>
+                                <hr style={ styles.hrStyle }/>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/modernizing-control'>
+                                            Modernizing Control
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/empowering-guests'>
+                                            Empowering Guests
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/reimagining-hotels'>
+                                            Reimagining Hotels
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/adopting-verboze'>
+                                            Adopting Verboze
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2 footer-col-md-2">
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/company'>
+                                            COMPANY
+                                        </Link>
+
+                                    </div>
+                                </div>
+                                <hr style={ styles.hrStyle }/>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/company'>
+                                            Vision
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <HashLink className="footer-link" to='/company#executive-team'>
+                                            Executive Team
+                                        </HashLink>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <HashLink className="footer-link" to='/company#office-location'>
+                                            Office Location
+                                        </HashLink>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3 footer-col-md-2">
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/contact'>
+                                            CONTACT
+                                        </Link>
+                                    </div>
+                                </div>
+                                <hr style={ styles.hrStyle }/>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <a href="mailto:contact@verboze.com" className="footer-link" style={ styles.contactLinkStyle }>
+                                          <i className={'fa fa-envelope'}>&nbsp;&nbsp;</i>contact@verboze.com
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <a href={'https://www.linkedin.com/company/verboze'} className={'footer-link'}>
+                                          <i className={'fa fa-linkedin'}></i>&nbsp;&nbsp;LinkedIn
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <span className="float-right">2018 Verboze. All Rights Reserved.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </footer>
+            </Fragment>
+        );
+    }
+}
+
+
+const styles = {
+    footerStyle: {
+        borderTop: '#444444 1px solid',
+        padding: 30,
+        color: 'white',
+        fontWeight: 'lighter',
+    },
+
+    hrStyle: {
+        borderTop: 0,
+    },
+
+    logoStyle: {
+        height: 70,
+
+    },
+
+    footerRowStyle: {
+        paddingTop: 25,
+    },
+
+    contactLinkStyle: {
+        color: '#D04F4C',
+    }
+
+};

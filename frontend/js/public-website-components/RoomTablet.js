@@ -3,7 +3,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { RoomGrid } from './tablet-components/RoomGrid';
+import { RoomStacks } from './tablet-components/RoomStacks';
 
 type PropsType = {
 };
@@ -16,7 +16,7 @@ class RoomTablet extends React.Component<PropsType, StateType> {
         return (
             <div style={styles.tabletContainer}>
                 <div style={styles.bezel}>
-                    <RoomGrid width={styles.bezel.width} height={styles.bezel.height} />
+                    <RoomStacks width={styles.bezel.width} height={styles.bezel.height} />
                 </div>
             </div>
         );
@@ -38,11 +38,11 @@ const styles = {
         position: 'relative',
     },
     bezel: {
-        top: 20,
-        left: 20,
+        top: 10,
+        left: 10,
         position: 'absolute',
-        width: 460,
-        height: 260,
+        width: 480,
+        height: 280,
         backgroundColor: '#111111',
         display: "flex",
         flexDirection: 'column',
