@@ -23,84 +23,77 @@ const defaultState: StateType = {
     roomConfig: {
         "id": "1",
         "rooms": [{
-            "detail": {"ratio": 4, "side": "left"},
-            "grid": [{
-                "panels": [{
-                    "name": {"en": "Lighting"},
-                    "presets": [{
-                            "dimmer-1": {"intensity": 0},
-                            "lightswitch-1": {"intensity": 0},
-                            "lightswitch-2": {"intensity": 0},
-                            "lightswitch-3": {"intensity": 0}
-                        }, {
-                            "dimmer-1": {"intensity": 50},
-                            "lightswitch-1": {"intensity": 0},
-                            "lightswitch-2": {"intensity": 1},
-                            "lightswitch-3": {"intensity": 1}
-                        }, {
-                            "dimmer-1": {"intensity": 100},
-                            "lightswitch-1": {"intensity": 1},
-                            "lightswitch-2": {"intensity": 1},
-                            "lightswitch-3": {"intensity": 1}
-                        }
-                    ],
-                    "ratio": 5,
-                    "things": [{
-                        "category": "dimmers",
-                        "id": "dimmer-1",
-                        "name": {"en": "Bedside Light"}
+            "name": "Verboze.com",
+            "id": "room-1",
+            "groups": [{
+                "id": "group-1",
+                "name": "Lighting",
+                "presets": [{
+                        "dimmer-1": {"intensity": 0},
+                        "lightswitch-1": {"intensity": 0},
+                        "lightswitch-2": {"intensity": 0},
+                        "lightswitch-3": {"intensity": 0}
                     }, {
-                        "category": "light_switches",
-                        "id": "lightswitch-1",
-                        "name": {"en": "Ceiling Light"}
+                        "dimmer-1": {"intensity": 50},
+                        "lightswitch-1": {"intensity": 0},
+                        "lightswitch-2": {"intensity": 1},
+                        "lightswitch-3": {"intensity": 1}
                     }, {
-                        "category": "light_switches",
-                        "id": "lightswitch-2",
-                        "name": {"en": "Spot Light"}
-                    }, {
-                        "category": "light_switches",
-                        "id": "lightswitch-3",
-                        "name": {"en": "Reading Light"}
-                    }]
+                        "dimmer-1": {"intensity": 100},
+                        "lightswitch-1": {"intensity": 1},
+                        "lightswitch-2": {"intensity": 1},
+                        "lightswitch-3": {"intensity": 1}
+                    }
+                ],
+                "things": [{
+                    "category": "dimmers",
+                    "id": "dimmer-1",
+                    "name": "Bedside Light"
                 }, {
-                    "name": {"en": "Curtains"},
-                    "ratio": 3,
-                    "things": [{
-                            "category": "curtains",
-                            "id": "curtain-1",
-                            "name": {"en": "Curtain"}
-                        }, {
-                            "category": "curtains",
-                            "id": "curtain-2",
-                            "name": {"en": "Shade"}
-                        }
-                    ]
-                }],
-                "ratio": 3
+                    "category": "light_switches",
+                    "id": "lightswitch-1",
+                    "name": "Ceiling Light"
+                }, {
+                    "category": "light_switches",
+                    "id": "lightswitch-2",
+                    "name": "Spot Light"
+                }, {
+                    "category": "light_switches",
+                    "id": "lightswitch-3",
+                    "name": "Reading Light"
+                }]
             }, {
-                "panels": [{
-                    "name": {"en": "Air Conditioning"},
-                    "ratio": 5,
-                    "things": [{
-                            "category": "central_acs",
-                            "id": "central-ac-v0-d50",
-                            "name": {"en": "Air Conditioning"}
-                        }
-                    ]
-                }, {
-                    "name": {"en": "Room Service"},
-                    "ratio": 5,
-                    "things": [{
-                            "category": "hotel_controls",
-                            "id": "hotel-controls",
-                            "name": {"en": "Room Service"}
-                        }
-                    ]
-                }],
-                "ratio": 2
-            }],
-            "layout": {"margin": 2},
-            "name": {"en": "QSTP 1"}
+                "id": "group-2",
+                "name": "Curtains",
+                "things": [{
+                        "category": "curtains",
+                        "id": "curtain-1",
+                        "name": "Curtain"
+                    }, {
+                        "category": "curtains",
+                        "id": "curtain-2",
+                        "name": "Shade"
+                    }
+                ]
+            }, {
+                "id": "group-3",
+                "name": "Air Conditioning",
+                "things": [{
+                        "category": "central_acs",
+                        "id": "central-ac-v0-d50",
+                        "name": "Air Conditioning"
+                    }
+                ]
+            }, {
+                "id": "group-4",
+                "name": "Room Service",
+                "things": [{
+                        "category": "hotel_controls",
+                        "id": "hotel-controls",
+                        "name": "Room Service"
+                    }
+                ]
+            }]
         }]
     },
     roomState: {
