@@ -2,8 +2,10 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Home from './Home';
 
+import { URLMap, ComponentPaths } from './URLMap';
+
+import Home from './Home';
 import Company from './Company';
 import Contact from './Contact';
 
@@ -13,17 +15,23 @@ import EmpoweringGuests from './features/EmpoweringGuests';
 import ReImaginingHotels from './features/ReImaginingHotels';
 import AdoptingVerboze from './features/AdoptingVerboze';
 
+var keys = Object.keys(URLMap);
+var routes = Object.keys(URLMap).map((urlName: string, index: number) => {
+  return {
+    component: require('./'+ComponentPaths[urlName]).default,
+    name: urlName,
+    url: URLMap[urlName],
+    index: index,
+  };
+});
 
 const Content = () => (
-    <Switch>
-      <Route path='/company' component={Company}/>
-      <Route path='/contact' component={Contact}/>
-      <Route path='/modernizing-control' component={ModernizingControl}/>
-      <Route path='/empowering-guests' component={EmpoweringGuests}/>
-      <Route path='/reimagining-hotels' component={ReImaginingHotels}/>
-      <Route path='/adopting-verboze' component={AdoptingVerboze}/>
-      <Route exact path='/' component={Home}/>
-    </Switch>
-)
+  <Switch>
+    {routes.map(module => <Route key={"route-"+module.url} path={module.url} component={module.component} exact={module.url === '/'} />)}
+  </Switch>
+);
 
-export default Content
+module.exports = {
+  Content,
+};
+

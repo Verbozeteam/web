@@ -7,7 +7,7 @@ import { connect as ReduxConnect } from 'react-redux';
 import { AppWrapper } from "./redux/store";
 
 import NavBar from './NavBar';
-import Content from './Content';
+import { Content } from './Content';
 import Footer from './Footer';
 
 import css from '../../css/public_website/App.css';

@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 
 import ContentPage from './components/ContentPage';
 
+import { URLMap } from '../URLMap';
+
 type PropsType = {};
 
 type StateType = {};
@@ -15,19 +17,19 @@ export default class ModernizingControl extends Component<PropsType, StateType> 
         sections: [{
             name: "Modernizing Control",
             slug: "modernizing-control",
-            pageUrl: "/modernizing-control"
+            pageUrl: URLMap.ModernizingControl,
         }, {
             name: "In-room Touchscreen",
             slug: "tablet",
-            pageUrl: "/modernizing-control"
+            pageUrl: URLMap.ModernizingControl,
         }, {
             name: "Guest App",
             slug: "app",
-            pageUrl: "/modernizing-control"
+            pageUrl: URLMap.ModernizingControl,
         }, {
             name: "Voice Controls",
             slug: "voice-controls",
-            pageUrl: "/modernizing-control",
+            pageUrl: URLMap.ModernizingControl,
         }],
     };
 

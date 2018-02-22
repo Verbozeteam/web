@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 
 import ContentPage from './components/ContentPage';
 
+import { URLMap } from '../URLMap';
+
 type PropsType = {};
 
 type StateType = {};
@@ -15,15 +17,15 @@ export default class ChoosingVerboze extends Component<PropsType, StateType> {
         sections: [{
             name: "Retrofitting",
             slug: "retrofitting",
-            pageUrl: "/adopting-verboze"
+            pageUrl: URLMap.AdoptingVerboze,
         }, {
             name: "Customization",
             slug: "customization",
-            pageUrl: "/adopting-verboze"
+            pageUrl: URLMap.AdoptingVerboze,
         }, {
             name: "Demo",
             slug: "demo",
-            pageUrl: "/adopting-verboze"
+            pageUrl: URLMap.AdoptingVerboze,
         }]
     };
 

@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 
 import ContentPage from './components/ContentPage';
 
+import { URLMap } from '../URLMap';
+
 type PropsType = {};
 
 type StateType = {};
@@ -15,19 +17,19 @@ export default class EmpoweringGuests extends Component<PropsType, StateType> {
         sections: [{
             name: "Reservation Data",
             slug: "reservation-data",
-            pageUrl: "/empowering-guests"
+            pageUrl: URLMap.EmpoweringGuests,
         }, {
             name: "Room Services",
             slug: "room-services",
-            pageUrl: "/empowering-guests"
+            pageUrl: URLMap.EmpoweringGuests,
         }, {
             name: "Feedback",
             slug: "feedback",
-            pageUrl: "/empowering-guests"
+            pageUrl: URLMap.EmpoweringGuests,
         }, {
             name: "Keyless Entry",
             slug: "keyless-entry",
-            pageUrl: "/empowering-guests"
+            pageUrl: URLMap.EmpoweringGuests,
         }],
     };
 

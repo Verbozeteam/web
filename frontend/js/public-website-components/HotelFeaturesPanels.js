@@ -2,6 +2,8 @@ import React from 'react';
 import FeaturesPanels from './FeaturesPanels';
 import type PanelType from './FeaturesPanels';
 
+import { URLMap } from './URLMap';
+
 type PropsType = {
     expanded?: boolean,
 };
@@ -13,22 +15,22 @@ export default class HotelFeaturesPanels extends React.Component<PropsType, Stat
       {
           name: 'Modernizing Control',
           image: require('../../assets/images/modernizing_control_panel.jpg'),
-          link: '/modernizing-control'
+          link: URLMap.ModernizingControl,
       },
       {
         name: 'Empowering Guests',
         image: require('../../assets/images/empowering_guests_panel.jpg'),
-        link: '/empowering-guests'
+        link: URLMap.EmpoweringGuests,
       },
       {
         name: 'Reimagining Hotels',
         image: require('../../assets/images/reimagining_hotels_panel.jpg'),
-        link: '/reimagining-hotels'
+        link: URLMap.ReImaginingHotels,
       },
       {
         name: 'Adopting Verboze',
         image: require('../../assets/images/adopting_verboze_panel.jpg'),
-        link: '/adopting-verboze'
+        link: URLMap.AdoptingVerboze
       }
     ];
 

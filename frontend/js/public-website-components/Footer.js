@@ -7,6 +7,8 @@ import css from '../../css/public_website/Footer.css';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
+import { URLMap } from './URLMap';
+
 // Use it just like a RRv4 link (to can be a string or an object, see RRv4 api for details):
 // <HashLink to="/some/path#with-hash-fragment">Link to Hash Fragment</HashLink>
 
@@ -29,7 +31,7 @@ export default class Footer extends Component<PropsType, StateType> {
                             <div className="col-md-3 footer-col-md-3">
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link to={'/'}>
+                                        <Link to={URLMap.Home}>
                                           <img src={ this._verboze_white } className="d-inline-block align-top" alt="" style={ styles.logoStyle }/>
                                         </Link>
                                     </div>
@@ -44,28 +46,28 @@ export default class Footer extends Component<PropsType, StateType> {
                                 <hr style={ styles.hrStyle }/>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/modernizing-control'>
+                                        <Link className="footer-link" to={URLMap.ModernizingControl}>
                                             Modernizing Control
                                         </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/empowering-guests'>
+                                        <Link className="footer-link" to={URLMap.EmpoweringGuests}>
                                             Empowering Guests
                                         </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/reimagining-hotels'>
+                                        <Link className="footer-link" to={URLMap.ReImaginingHotels}>
                                             Reimagining Hotels
                                         </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/adopting-verboze'>
+                                        <Link className="footer-link" to={URLMap.AdoptingVerboze}>
                                             Adopting Verboze
                                         </Link>
                                     </div>
@@ -80,28 +82,28 @@ export default class Footer extends Component<PropsType, StateType> {
                                 <hr style={ styles.hrStyle }/>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/modernizing-control'>
+                                        <Link className="footer-link" to={URLMap.ModernizingControl}>
                                             Modernizing Control
                                         </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/empowering-guests'>
+                                        <Link className="footer-link" to={URLMap.EmpoweringGuests}>
                                             Empowering Guests
                                         </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/reimagining-hotels'>
+                                        <Link className="footer-link" to={URLMap.ReImaginingHotels}>
                                             Reimagining Hotels
                                         </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/adopting-verboze'>
+                                        <Link className="footer-link" to={URLMap.AdoptingVerboze}>
                                             Adopting Verboze
                                         </Link>
                                     </div>
@@ -110,7 +112,7 @@ export default class Footer extends Component<PropsType, StateType> {
                             <div className="col-md-2 footer-col-md-2">
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/company'>
+                                        <Link className="footer-link" to={URLMap.Company}>
                                             COMPANY
                                         </Link>
 
@@ -119,21 +121,21 @@ export default class Footer extends Component<PropsType, StateType> {
                                 <hr style={ styles.hrStyle }/>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/company'>
+                                        <Link className="footer-link" to={URLMap.Company}>
                                             Vision
                                         </Link>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <HashLink className="footer-link" to='/company#executive-team'>
+                                        <HashLink className="footer-link" to={URLMap.Company+'#executive-team'}>
                                             Executive Team
                                         </HashLink>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <HashLink className="footer-link" to='/company#office-location'>
+                                        <HashLink className="footer-link" to={URLMap.Company+'#office-location'}>
                                             Office Location
                                         </HashLink>
                                     </div>
@@ -142,7 +144,7 @@ export default class Footer extends Component<PropsType, StateType> {
                             <div className="col-md-3 footer-col-md-3">
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <Link className="footer-link" to='/contact'>
+                                        <Link className="footer-link" to={URLMap.Contact}>
                                             CONTACT
                                         </Link>
                                     </div>

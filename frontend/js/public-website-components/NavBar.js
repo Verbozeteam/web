@@ -9,6 +9,7 @@ import {
   Link
 } from 'react-router-dom';
 
+import { URLMap } from './URLMap';
 
 type PropsType = {};
 
@@ -30,7 +31,7 @@ export default class NavBar extends Component<PropsType, StateType> {
     renderNavbarContent(navbarTogglerId: string, navbarDropdownId: string, sticky: boolean) {
         return (
             <div className="container">
-                <NavLink className="navbar-brand" exact to="/">
+                <NavLink className="navbar-brand" exact to={URLMap.Home}>
                     <img src={ (sticky) ? this._verboze_black : this._verboze_white } height="30" className="d-inline-block align-top" alt="" id="navbarLogo"/>
                     VERBOZE
                 </NavLink>
@@ -47,19 +48,19 @@ export default class NavBar extends Component<PropsType, StateType> {
                                 FEATURES
                             </a>
                             <div className="dropdown-menu" aria-labelledby="${navbarDropdownId}">
-                                <Link className="dropdown-item" to="/modernizing-control">
+                                <Link className="dropdown-item" to={URLMap.ModernizingControl}>
                                     Modernizing Control
                                 </Link>
                                 <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/empowering-guests">
+                                <Link className="dropdown-item" to={URLMap.EmpoweringGuests}>
                                     Empowering Guests
                                 </Link>
                                 <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/reimagining-hotels">
+                                <Link className="dropdown-item" to={URLMap.ReImaginingHotels}>
                                     Reimagining Hotels
                                 </Link>
                                 <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/adopting-verboze">
+                                <Link className="dropdown-item" to={URLMap.AdoptingVerboze}>
                                     Adopting Verboze
                                 </Link>
                             </div>

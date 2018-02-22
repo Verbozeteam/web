@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 
 import ContentPage from './components/ContentPage';
 
+import { URLMap } from '../URLMap';
+
 type PropsType = {};
 
 type StateType = {};
@@ -15,11 +17,11 @@ export default class ReImaginingHotels extends Component<PropsType, StateType> {
         sections: [{
             name: "Preferences",
             slug: "preferences",
-            pageUrl: "/preferences"
+            pageUrl: URLMap.ReImaginingHotels,
         }, {
             name: "Automation",
             slug: "automation",
-            pageUrl: "/automation"
+            pageUrl: URLMap.ReImaginingHotels,
         }],
     }
 
