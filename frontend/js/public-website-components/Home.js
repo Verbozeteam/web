@@ -6,7 +6,7 @@ import { RoomDemoComponent } from './RoomDemoComponent';
 const RequestDemoModal = require('./RequestDemoModal');
 const RequestDemoBanner = require('./RequestDemoBanner');
 
-const FeaturesPanels = require('./FeaturesPanels');
+import HotelFeaturesPanels from './HotelFeaturesPanels';
 
 import { Link } from 'react-router-dom';
 
@@ -44,9 +44,28 @@ export default class Home extends Component<PropsType, StateType> {
               <RequestDemoModal open={modal_open}
                 toggle={this.toggleModal.bind(this)} />
               <RoomDemoComponent />
+
               <RequestDemoBanner toggleModal={this.toggleModal.bind(this)} />
-              <FeaturesPanels expanded={true} />
+
+              <div style={styles.featuresHeader}>For Hotels</div>
+              <HotelFeaturesPanels expanded={true} />
+
+              <br />
+              <br />
+              <br />
+              <div style={styles.featuresHeader}>For Homes</div>
+              <HotelFeaturesPanels expanded={true} />
             </div>
         )
     };
+};
+
+const styles = {
+  featuresHeader: {
+    fontSize: 60,
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontWeight: 'lighter',
+    margin: 30,
+  }
 };

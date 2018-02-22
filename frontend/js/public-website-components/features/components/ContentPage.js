@@ -6,7 +6,7 @@ import SideNavBar from './SideNavBar';
 import PageTopBanner from '../../PageTopBanner';
 const RequestDemoModal = require('../../RequestDemoModal');
 const RequestDemoBanner = require('../../RequestDemoBanner');
-const FeaturesPanels = require('../../FeaturesPanels');
+import HotelFeaturesPanels from '../../HotelFeaturesPanels';
 
 type SectionType = {
     name: string,
@@ -86,7 +86,7 @@ export default class ContentPage extends Component<PropsType, StateType> {
                 </div>
                 <div style={{minHeight: 92}} />
                 <RequestDemoBanner toggleModal={this.toggleModal.bind(this)} />
-                <FeaturesPanels expanded={false} />
+                <HotelFeaturesPanels expanded={false} />
             </div>
         );
     };

@@ -26,7 +26,7 @@ export default class Footer extends Component<PropsType, StateType> {
                     <div className="container">
 
                         <div className="row" style={ styles.footerRowStyle }>
-                            <div className="col-md-2 footer-col-md-2">
+                            <div className="col-md-3 footer-col-md-3">
                                 <div className="row">
                                     <div className="col footer-col">
                                         <Link to={'/'}>
@@ -38,7 +38,43 @@ export default class Footer extends Component<PropsType, StateType> {
                             <div className="col-md-2 footer-col-md-2">
                                 <div className="row">
                                     <div className="col footer-col">
-                                        FEATURES
+                                        For Hotels
+                                    </div>
+                                </div>
+                                <hr style={ styles.hrStyle }/>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/modernizing-control'>
+                                            Modernizing Control
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/empowering-guests'>
+                                            Empowering Guests
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/reimagining-hotels'>
+                                            Reimagining Hotels
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        <Link className="footer-link" to='/adopting-verboze'>
+                                            Adopting Verboze
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2 footer-col-md-2">
+                                <div className="row">
+                                    <div className="col footer-col">
+                                        For Homes
                                     </div>
                                 </div>
                                 <hr style={ styles.hrStyle }/>
@@ -103,7 +139,7 @@ export default class Footer extends Component<PropsType, StateType> {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-3 footer-col-md-2">
+                            <div className="col-md-3 footer-col-md-3">
                                 <div className="row">
                                     <div className="col footer-col">
                                         <Link className="footer-link" to='/contact'>
@@ -127,12 +163,11 @@ export default class Footer extends Component<PropsType, StateType> {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-3">
-                                <div className="row">
-                                    <div className="col footer-col">
-                                        <span className="float-right">2018 Verboze. All Rights Reserved.</span>
-                                    </div>
-                                </div>
+                        </div>
+                        <br />
+                        <div className="row">
+                            <div className="col-md-12">
+                                <span className="float-right">2018 Verboze. All Rights Reserved.</span>
                             </div>
                         </div>
 

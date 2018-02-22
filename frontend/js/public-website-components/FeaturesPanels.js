@@ -7,19 +7,20 @@ import { Link } from 'react-router-dom';
 
 import css from '../../css/public_website/FeaturesPanels.css';
 
-type PropsType = {
-  expanded?: boolean,
-};
-
-type StateType = {};
-
-type PanelType = {
+export type PanelType = {
   name: string,
   image: number,
   link: string
 };
 
-class FeaturesPanels extends React.Component<PropsType, StateType> {
+type PropsType = {
+  panels: Array<PanelType>,
+  expanded?: boolean,
+};
+
+type StateType = {};
+
+export default class FeaturesPanels extends React.Component<PropsType, StateType> {
 
   static defaultProps = {
     expanded: true,
@@ -33,29 +34,6 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
   _parallax_objects = [];
 
   _bound_handleScroll = (e: Event): null => this.handleScroll(e);
-
-  _panels: Array<PanelType> = [
-    {
-        name: 'Modernizing Control',
-        image: require('../../assets/images/modernizing_control_panel.jpg'),
-        link: '/modernizing-control'
-    },
-    {
-      name: 'Empowering Guests',
-      image: require('../../assets/images/empowering_guests_panel.jpg'),
-      link: '/empowering-guests'
-    },
-    {
-      name: 'Reimagining Hotels',
-      image: require('../../assets/images/reimagining_hotels_panel.jpg'),
-      link: '/reimagining-hotels'
-    },
-    {
-      name: 'Adopting Verboze',
-      image: require('../../assets/images/adopting_verboze_panel.jpg'),
-      link: '/adopting-verboze'
-    }
-  ];
 
   componentDidMount() {
     window.addEventListener('scroll', this._bound_handleScroll);
@@ -154,13 +132,7 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
   }
 
   render() {
-    const { expanded } = this.props;
-
-    const panels = [];
-    const x_offset = 1 / this._panels.length * 100;
-    for (var i = 0; i < this._panels.length; i++) {
-      panels.push(this._renderPanel(i, this._panels[i]));
-    }
+    const { expanded, panels } = this.props;
 
     /* create container style */
     var container_style = {};
@@ -173,7 +145,7 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
     return (
       <div className={'panels-container'}
         style={{...styles.container, ...container_style}}>
-        {panels}
+        {panels.map((p, i) => this._renderPanel(i, p))}
       </div>
     );
   }
@@ -185,4 +157,3 @@ const styles = {
   }
 };
 
-module.exports = FeaturesPanels;
