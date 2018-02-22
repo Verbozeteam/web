@@ -58,10 +58,10 @@ class CurtainsStack extends React.Component<PropsType, StateType> {
 
         if (reduxState && reduxState.connection && reduxState.connection.roomState) {
             if (Object.keys(idToName).length === 0) {
-                var tings = reduxState.connection.roomConfig.rooms[0].grid[0].panels[1].things; // HACK
+                var tings = reduxState.connection.roomConfig.rooms[0].groups[1].things; // HACK
                 stateUpdate.idToName = {};
                 for (var t in tings)
-                    stateUpdate.idToName[tings[t].id] = tings[t].name.en;
+                    stateUpdate.idToName[tings[t].id] = tings[t].name;
             }
 
             var my_things = [];

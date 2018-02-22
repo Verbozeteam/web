@@ -21,7 +21,7 @@ class RoomStateUpdaterImpl {
                 ...store.getState().connection.roomState[id],
                 ...partialUpdate
             }
-        });
+        }, true);
         store.dispatch(connectionActions.setThingPartialState(id, partialUpdate));
     }
 
@@ -39,7 +39,7 @@ class RoomStateUpdaterImpl {
             };
         }
 
-        WebSocketCommunication.sendMessage(ws_msg);
+        WebSocketCommunication.sendMessage(ws_msg, true);
         store.dispatch(connectionActions.setThingsPartialStates(partialUpdate));
     }
 };

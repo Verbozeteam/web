@@ -55,10 +55,10 @@ class LightsStack extends React.Component<PropsType, StateType> {
 
         if (reduxState && reduxState.connection && reduxState.connection.roomState) {
             if (Object.keys(idToName).length === 0) {
-                var tings = reduxState.connection.roomConfig.rooms[0].grid[0].panels[0].things; // HACK
+                var tings = reduxState.connection.roomConfig.rooms[0].groups[0].things; // HACK
                 stateUpdate.idToName = {};
                 for (var t in tings)
-                    stateUpdate.idToName[tings[t].id] = tings[t].name.en;
+                    stateUpdate.idToName[tings[t].id] = tings[t].name;
             }
 
             var my_things = [];
@@ -72,7 +72,7 @@ class LightsStack extends React.Component<PropsType, StateType> {
         }
 
         if (reduxState && reduxState.connection && reduxState.connection.roomConfig) {
-            var reduxPresets = reduxState.connection.roomConfig.rooms[0].grid[0].panels[0].presets; // HACK
+            var reduxPresets = reduxState.connection.roomConfig.rooms[0].groups[0].presets; // HACK
             if (JSON.stringify(reduxPresets) !== JSON.stringify(presets)) {
                 stateUpdate = {...stateUpdate, presets: reduxPresets};
                 presets = reduxPresets;
