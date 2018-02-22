@@ -45,7 +45,29 @@ export default class NavBar extends Component<PropsType, StateType> {
                     <ul className="navbar-nav mt-2 mt-lg-0">
                         <li className="nav-item dropdown">
                             <a className={"nav-link dropdown-toggle" + (sticky ? ' sticky' : '')} href="#" id="${navbarDropdownId}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                FEATURES
+                                FOR HOTELS
+                            </a>
+                            <div className="dropdown-menu" aria-labelledby="${navbarDropdownId}">
+                                <Link className="dropdown-item" to={URLMap.ModernizingControl}>
+                                    Modernizing Control
+                                </Link>
+                                <div className="dropdown-divider"></div>
+                                <Link className="dropdown-item" to={URLMap.EmpoweringGuests}>
+                                    Empowering Guests
+                                </Link>
+                                <div className="dropdown-divider"></div>
+                                <Link className="dropdown-item" to={URLMap.ReImaginingHotels}>
+                                    Reimagining Hotels
+                                </Link>
+                                <div className="dropdown-divider"></div>
+                                <Link className="dropdown-item" to={URLMap.AdoptingVerboze}>
+                                    Adopting Verboze
+                                </Link>
+                            </div>
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a className={"nav-link dropdown-toggle" + (sticky ? ' sticky' : '')} href="#" id="${navbarDropdownId}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                FOR HOMES
                             </a>
                             <div className="dropdown-menu" aria-labelledby="${navbarDropdownId}">
                                 <Link className="dropdown-item" to={URLMap.ModernizingControl}>
