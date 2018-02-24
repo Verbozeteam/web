@@ -21,7 +21,7 @@ export default class Footer extends Component<PropsType, StateType> {
 
     render() {
         return (
-            <Fragment>
+            <div>
                 <footer className="footer" style={ styles.footerStyle }>
                     <div className="container">
 
@@ -138,7 +138,7 @@ export default class Footer extends Component<PropsType, StateType> {
 
                     </div>
                 </footer>
-            </Fragment>
+            </div>
         );
     }
 }

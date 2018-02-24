@@ -181,7 +181,20 @@ class RoomState extends React.Component<PropsType, StateType> {
         renderBuffer: undefined,
     };
 
+    _supportsWebGL: boolean;
+
+    _fallbackRoomImage: string = require('../../../assets/images/room_state/image_fallback.jpg');
+
+    componentWillMount() {
+        this._supportsWebGL = this.detectWebGLContext();
+    }
+
     componentDidMount() {
+
+        if (!this._supportsWebGL) {
+            return null;
+        }
+
         const width = this.mount.clientWidth;
         const height = this.mount.clientHeight;
 
@@ -680,6 +693,59 @@ class RoomState extends React.Component<PropsType, StateType> {
             this.setState(totalUpdate);
     }
 
+    detectWebGLContext() {
+        //
+        // detecting WebGL Context to determine if browser support WebGL or not
+        //
+        var webgl = !!window.WebGLRenderingContext;
+        return webgl;
+    }
+
+    renderImageOrWebGL(dimensions, curOpacity, loadedDemo, loadingProgress) {
+        if (this._supportsWebGL) {
+            return (
+                <div style={{...styles.container, ...dimensions}}>
+                    <div
+                        style={{...styles.canvas, opacity: curOpacity}}
+                        ref={(mount: any) => { this.mount = mount }}>
+                        <ReactResizeDetector handleWidth handleHeight onResize={this.renderLayers.bind(this)} />
+                    </div>
+
+                    <div style={{...styles.loadingContainer, opacity: loadedDemo ? 0 : 1}}>
+                        <div style={styles.loadingText}>{"Loading..."}</div>
+                        <DimmerSlider width={300}
+                                      height={10}
+                                      value={loadingProgress}
+                                      maxValue={1}
+                                      glowColor={this._accentColor}
+                                      disabled={true}
+                                      showKnob={false}
+                                      animateSliding={true} />
+                    </div>
+
+                    <div style={{...styles.canvas, opacity: curOpacity}}>
+                        <RoomDemoControls dimensions={dimensions} />
+                    </div>
+                </div>
+            )
+        }
+
+        else { // show a fallback image of room incase browser does not support WebGL
+            return (
+                <div style={{
+                    ...styles.container,
+                    ...dimensions,
+                    background: 'transparent',
+                    backgroundImage: 'url(' + this._fallbackRoomImage + ')',
+                    overflow: 'hidden',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}>
+                </div>
+            )
+        }
+    }
+
     render() {
         var { loadingProgress, loadedDemo } = this.state;
         var { opacity, dimensions } = this.props;
@@ -695,29 +761,7 @@ class RoomState extends React.Component<PropsType, StateType> {
             this.renderLayers();
 
         return (
-            <div style={{...styles.container, ...dimensions}}>
-                <div
-                    style={{...styles.canvas, opacity: curOpacity}}
-                    ref={(mount: any) => { this.mount = mount }}>
-                    <ReactResizeDetector handleWidth handleHeight onResize={this.renderLayers.bind(this)} />
-                </div>
-
-                <div style={{...styles.loadingContainer, opacity: loadedDemo ? 0 : 1}}>
-                    <div style={styles.loadingText}>{"Loading..."}</div>
-                    <DimmerSlider width={300}
-                                  height={10}
-                                  value={loadingProgress}
-                                  maxValue={1}
-                                  glowColor={this._accentColor}
-                                  disabled={true}
-                                  showKnob={false}
-                                  animateSliding={true} />
-                </div>
-
-                <div style={{...styles.canvas, opacity: curOpacity}}>
-                    <RoomDemoControls dimensions={dimensions} />
-                </div>
-            </div>
+            this.renderImageOrWebGL(dimensions, curOpacity, loadedDemo, loadingProgress)
         )
     }
 }
