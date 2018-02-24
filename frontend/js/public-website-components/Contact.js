@@ -73,7 +73,7 @@ export default class Contact extends Component<PropsType, StateType> {
         return (
             <div style={styles.contactDiv}>
                 <PageTopBanner title="Get in touch" imageUrl={ this._banner_img } />
-                <div className="container" style={{ paddingTop: 50 }}>
+                <div className="container" style={{ paddingTop: 50, paddingBottom: 115 }}>
                     <h5 style={{ fontWeight: 'lighter' }}>Reach out to us for any questions or enquiries, we're eager to hear from you:</h5>
                     <br/>
                     <ContactOrDemoForm  requestDemo={ false } />
@@ -86,7 +86,7 @@ export default class Contact extends Component<PropsType, StateType> {
 
 const styles = {
     contactDiv: {
-        minHeight: '100vh',
+        height: '100%',
         color: 'white',
     }
 };
