@@ -10,6 +10,8 @@ const FeaturesPanels = require('./FeaturesPanels');
 
 import { Link } from 'react-router-dom';
 
+import { Helmet } from 'react-helmet';
+
 type PropsType = {
 };
 
@@ -41,6 +43,11 @@ export default class Home extends Component<PropsType, StateType> {
 
         return (
             <div style={{height: '100%'}}>
+              <Helmet>
+                <title>Home | Verboze</title>
+                <meta name="description" content="Verboze is an advance smart phone activated automation system for hotels. Providing them and their guests a seamless means of control, access and communication." />
+                <meta name="path" content="/" />
+              </Helmet>
               <RequestDemoModal open={modal_open}
                 toggle={this.toggleModal.bind(this)} />
               <RoomDemoComponent />

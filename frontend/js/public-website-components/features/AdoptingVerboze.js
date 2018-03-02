@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 
 import ContentPage from './components/ContentPage';
 
+import { Helmet } from 'react-helmet';
+
 type PropsType = {};
 
 type StateType = {};
@@ -30,6 +32,13 @@ export default class ChoosingVerboze extends Component<PropsType, StateType> {
     render() {
         return (
             <ContentPage {...this._contentProps} >
+
+                <Helmet>
+                  <title>Adopting Verboze | Verboze</title>
+                  <meta name="description" content="Carving the path to a seamless future." />
+                  <meta name="path" content="/adopting-verboze" />
+                </Helmet>
+
                 <div className="container" id="choosing-verboze-container">
                     <div id="retrofitting-info" style={ styles.textDivStyle }>
                         <div style={styles.header}>Retrofitting</div>

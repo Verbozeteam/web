@@ -10,6 +10,8 @@ import * as Cookies from 'js-cookie';
 import PageTopBanner from './PageTopBanner';
 import ContactOrDemoForm from './ContactOrDemoForm';
 
+import { Helmet } from 'react-helmet';
+
 type PropsType = {};
 
 type StateType = {
@@ -72,6 +74,11 @@ export default class Contact extends Component<PropsType, StateType> {
     render() {
         return (
             <div style={styles.contactDiv}>
+                <Helmet>
+                  <title>Contact | Verboze</title>
+                  <meta name="description" content="Reach out to us for any questions or enquiries, we're eager to hear from you." />
+                  <meta name="path" content="/contact" />
+                </Helmet>
                 <PageTopBanner title="Get in touch" imageUrl={ this._banner_img } />
                 <div className="container" style={{ paddingTop: 50, paddingBottom: 115 }}>
                     <h5 style={{ fontWeight: 'lighter' }}>Reach out to us for any questions or enquiries, we're eager to hear from you:</h5>

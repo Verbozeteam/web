@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 
 import ContentPage from './components/ContentPage';
 
+import { Helmet } from 'react-helmet';
+
 type PropsType = {};
 
 type StateType = {};
@@ -34,6 +36,12 @@ export default class ModernizingControl extends Component<PropsType, StateType> 
     render() {
         return (
             <ContentPage {...this._contentProps} >
+                <Helmet>
+                  <title>Modernizing Control | Verboze</title>
+                  <meta name="description" content="Introducing the hospitality industry to the 21st century." />
+                  <meta name="path" content="/modernizing-control" />
+                </Helmet>
+
                 <div id="modernizing-control-info" style={ styles.textDivStyle }>
                     <div style={styles.header}>Modernizing Control</div>
                     <br />

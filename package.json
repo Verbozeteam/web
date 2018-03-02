@@ -45,6 +45,7 @@
     "radium": "^0.21.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-helmet": "^5.2.0",
     "react-native-web": "^0.1.16",
     "react-redux": "^5.0.6",
     "react-resize-detector": "^1.1.0",
