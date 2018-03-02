@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 
 import ContentPage from './components/ContentPage';
 
+import { Helmet } from 'react-helmet';
+
 type PropsType = {};
 
 type StateType = {};
@@ -15,17 +17,24 @@ export default class ReImaginingHotels extends Component<PropsType, StateType> {
         sections: [{
             name: "Preferences",
             slug: "preferences",
-            pageUrl: "/preferences"
+            pageUrl: "/reimagining-hotels"
         }, {
             name: "Automation",
             slug: "automation",
-            pageUrl: "/automation"
+            pageUrl: "/reimagining-hotels"
         }],
     }
 
     render() {
         return (
             <ContentPage {...this._contentProps} >
+
+                <Helmet>
+                  <title>Reimagining Hotels | Verboze</title>
+                  <meta name="description" content="A hotel experience like never before." />
+                  <meta name="path" content="/reimagining-hotels" />
+                </Helmet>
+
                 <div id="preferences-info" style={ styles.textDivStyle }>
                     <div style={styles.header}>Preferences</div>
                     <br />

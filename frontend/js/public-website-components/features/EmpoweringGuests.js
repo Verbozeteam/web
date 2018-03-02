@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 
 import ContentPage from './components/ContentPage';
 
+import { Helmet } from 'react-helmet';
+
 type PropsType = {};
 
 type StateType = {};
@@ -34,6 +36,13 @@ export default class EmpoweringGuests extends Component<PropsType, StateType> {
     render() {
         return (
             <ContentPage {...this._contentProps} >
+
+                <Helmet>
+                  <title>Empowering Guests | Verboze</title>
+                  <meta name="description" content="Empowering guests to take control of their hotel stay." />
+                  <meta name="path" content="/empowering-guests" />
+                </Helmet>
+
                 <div id="reservation-data-info" style={ styles.textDivStyle }>
                     <div style={styles.header}>Reservation Data</div>
                     <br />

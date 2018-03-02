@@ -9,6 +9,8 @@ const FounderCard = require('./FounderCard');
 
 import { Link } from 'react-router-dom';
 
+import { Helmet } from 'react-helmet';
+
 type PropsType = {};
 type StateType = {
   modal_open: boolean
@@ -101,6 +103,11 @@ export default class Company extends React.Component<PropsType, StateType> {
 
     return (
       <div style={styles.contentDiv}>
+        <Helmet>
+          <title>Company | Verboze</title>
+          <meta name="description" content="Meet the extraordinary team that's behind Verboze." />
+          <meta name="path" content="/company" />
+        </Helmet>
         <RequestDemoModal open={modal_open}
           toggle={this.toggleModal.bind(this)} />
         <PageTopBanner title={this._title}

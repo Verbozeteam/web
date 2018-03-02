@@ -11,3 +11,6 @@ class SitemapView(TemplateView):
     def get(self, request, *args, **kwargs):
         return HttpResponse(open('public_website/templates/sitemap.xml').read(), content_type='text/xml')
 
+class RobotsView(TemplateView):
+	def get(self, request, *args, **kwargs):
+		return HttpResponse(open('public_website/templates/robots.txt').read(), content_type='text/txt')
