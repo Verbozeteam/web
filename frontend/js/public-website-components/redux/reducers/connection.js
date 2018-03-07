@@ -81,7 +81,8 @@ const defaultState: StateType = {
                 "things": [{
                         "category": "central_acs",
                         "id": "central-ac-v0-d50",
-                        "name": "Air Conditioning"
+                        "name": "Air Conditioning",
+                        "fan_speeds": ["Lo", "Hi"]
                     }
                 ]
             }, {
