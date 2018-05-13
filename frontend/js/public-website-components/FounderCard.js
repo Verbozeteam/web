@@ -21,7 +21,7 @@ class FounderCard extends React.Component<PropsType, StateType> {
     const { founder } = this.props;
 
     return (
-      <div className={'col-lg-4 col-md-6 col-8'} style={styles.container}>
+      <div className={'col-lg-3 col-md-6 col-8'} style={styles.container}>
         <div styles={styles.card}>
           <img src={founder.image} alt={founder.name} style={styles.image}/>
           <div style={styles.details}>
@@ -42,8 +42,7 @@ class FounderCard extends React.Component<PropsType, StateType> {
 
 const styles = {
   container: {
-    textAlign: 'center',
-    padding: 30
+    padding: 10
   },
   image: {
     width: '100%'
@@ -63,7 +62,7 @@ const styles = {
   email: {
     color: '#D04F4C',
     fontWeight: 'lighter',
-    textAlign: 'center',
+    textAlign: 'left',
     ':hover': {
       textDecoration: 'none',
       fontWeight: 'normal'
@@ -72,7 +71,7 @@ const styles = {
   linkedin: {
     color: '#D04F4C',
     fontWeight: 'lighter',
-    textAlign: 'center',
+    textAlign: 'left',
     ':hover': {
       textDecoration: 'none',
       fontWeight: 'normal'

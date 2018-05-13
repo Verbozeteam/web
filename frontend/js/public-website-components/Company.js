@@ -25,24 +25,31 @@ export default class Company extends React.Component<PropsType, StateType> {
   _founders: Array<Object> = [
     {
       name: 'Hasan Al-Jawaheri',
-      text: 'Co-Founder | CEO',
+      text: 'CEO | Systems Engineer',
       email: 'hbj@verboze.com',
       linkedin: 'https://www.linkedin.com/in/hasan-al-jawaheri/',
       image: require('../../assets/images/hasan.jpg')
     },
     {
       name: 'Mohammed M. Fituri',
-      text: 'Co-Founder',
+      text: 'Software Engineer',
       email: 'mfituri@verboze.com',
       linkedin: 'https://www.linkedin.com/in/mfituri/',
       image: require('../../assets/images/fituri.jpg')
     },
     {
       name: 'Yusuf Musleh',
-      text: 'Co-Founder',
+      text: 'Software Engineer',
       email: 'ymusleh@verboze.com',
       linkedin: 'https://www.linkedin.com/in/yusufmusleh/',
       image: require('../../assets/images/yusuf.jpg')
+    },
+    {
+      name: 'Yahya Alhomsi',
+      text: 'Electrical Engineer',
+      email: 'yalhomsi@vebroze.com',
+      linkedin: 'https://www.linkedin.com/in/yahya-alhomsi-81687914a/',
+      image: require('../../assets/images/yahya.jpg')
     }
   ];
 
@@ -70,8 +77,8 @@ export default class Company extends React.Component<PropsType, StateType> {
     }
 
     return (
-      <div className={'container'} style={styles.section} id="executive-team">
-        <h2 style={styles.header}>Executive Team</h2>
+      <div className={'container'} style={styles.section} id="founders">
+        <h2 style={styles.header}>Founders</h2>
         <div className={'row justify-content-center'}>
           {founders}
         </div>

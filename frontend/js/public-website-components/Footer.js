@@ -81,17 +81,17 @@ export default class Footer extends Component<PropsType, StateType> {
                                     </div>
                                 </div>
                                 <hr style={ styles.hrStyle }/>
-                                <div className="row">
+                                {/* <div className="row">
                                     <div className="col footer-col">
                                         <Link className="footer-link" to='/company'>
                                             Vision
                                         </Link>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="row">
                                     <div className="col footer-col">
-                                        <HashLink className="footer-link" to='/company#executive-team'>
-                                            Executive Team
+                                        <HashLink className="footer-link" to='/company#founders'>
+                                            Founders
                                         </HashLink>
                                     </div>
                                 </div>
