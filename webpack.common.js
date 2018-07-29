@@ -7,6 +7,7 @@ module.exports = {
     entry: {
         dashboard: "./frontend/js/DashboardApp",
         public_website: "./frontend/js/PublicWebsiteApp",
+        deployment_manager: "./frontend/js/DeploymentManagerApp"
     },
 
     output: {

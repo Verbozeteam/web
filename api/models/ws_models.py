@@ -24,10 +24,10 @@ class Token(models.Model):
         return "Token id={}".format(self.id)
 
     def get_hotel(self):
-        if isinstance(self.content_object, Hub):
+        if isinstance(self.content_object, HubUser):
+            return self.content_object.hub.hotel
+        elif isinstance(self.content_object, HotelUser):
             return self.content_object.hotel
-        elif isinstance(self.content_object, Hotel):
-            return self.content_object
         elif isinstance(self.content_object, Room):
             self.content_object.hotel
         return None

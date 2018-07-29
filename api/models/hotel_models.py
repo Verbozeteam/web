@@ -6,8 +6,8 @@ from channels import Group
 # Hotel room
 class Room(models.Model):
     tokens = GenericRelation('Token', related_query_name='rooms')
-    name = models.CharField(max_length=128)
-    floor = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, default="")
+    floor = models.CharField(max_length=128, default="")
     hotel = models.ForeignKey(
         'Hotel',
         on_delete=models.CASCADE,

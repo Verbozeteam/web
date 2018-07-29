@@ -9,7 +9,6 @@ router.register(r'hotels', views.HotelViewSet)
 router.register(r'hubs', views.HubViewSet)
 
 urlpatterns = [
-    url(r'^token-auth/', views.ObtainExpiringAuthToken.as_view()),
     url(r'^contact-us/', views.ContactUs.as_view()),
     url(r'^', include(router.urls)),
 ]

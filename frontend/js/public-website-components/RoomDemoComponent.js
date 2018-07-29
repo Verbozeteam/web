@@ -17,6 +17,8 @@ import * as connectionActions from './redux/actions/connection';
 
 import { RoomState } from './room-state/RoomState';
 
+import * as Cookies from 'js-cookie';
+
 function mapStateToProps(state) {
     return {
     };
@@ -75,7 +77,6 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
         /* bind websocket callbacks */
         WebSocketCommunication.setOnConnected(this.onConnected.bind(this));
-        WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
         WebSocketCommunication.setOnMessage(this.onMessage.bind(this));
 
         this.startDemo();
@@ -104,8 +105,11 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
     /* websocket callback on disconnect event */
     onDisconnected() : any {
-        if (!this._isUnmounting)
+        if (!this._isUnmounting) {
+            WebSocketCommunication.setOnDisconnected(() => null);
+            WebSocketCommunication.reset();
             this.setState({currentStage: 0});
+        }
     }
 
     /* websocket callback on message event */
@@ -133,8 +137,12 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
         if (this.state.currentStage === 0) {
             this.setState({currentStage: 1});
+
+            var csrftoken = Cookies.get('csrftoken');
+            PublicWebsiteAPICaller.setCSRFToken(csrftoken);
             PublicWebsiteAPICaller.createToken(((token: APITypes.CreatedToken) => {
                 setConnectionURL(this.createWebsocketURL(token.id));
+                WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
                 WebSocketCommunication.connect(this.createWebsocketURL(token.id));
             }).bind(this), ((error: APITypes.ErrorType) => {
                 this.setState({currentStage: 0});

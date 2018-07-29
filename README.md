@@ -41,6 +41,7 @@ export SECRET_KEY='##############' # Get django key from Yusuf
 export DB_NAME='name' # name of your psql db
 export DB_USER='db_name' # name of your psql user
 export DB_PASS='' # password is blank by default if not set
+export IFTTT_KEY='' # key for IFTTT
 ```
 Then we simply source this file:
 ```sh

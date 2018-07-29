@@ -12,12 +12,16 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dj_database_url
+import raven
 from verboze.whitenoise_utils import add_gzip_encoding
 
 DB_NAME = os.environ.get('DB_NAME', '')
 DB_USER = os.environ.get('DB_USER', '')
 DB_PASS = os.environ.get('DB_PASS', '')
 VERBOZE_EMAIL_PASSWORD = os.environ.get('VERBOZE_EMAIL_PASSWORD', '')
+RAVEN_DSN = os.environ.get('RAVEN_DSN', '')
+IFTTT_KEY = os.environ.get('IFTTT_KEY', '')
+USE_SQLITE = os.environ.get('USE_SQLITE', '')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,6 +39,12 @@ if os.environ.get('ON_HEROKU', False):
     ALLOWED_HOSTS = ['verboze.herokuapp.com', 'www.verboze.com']
     # Redirect all non HTTPS requests to HTTPS
     #SECURE_SSL_REDIRECT = True
+
+    # RAVEN CONFIG FOR SETTING UP SENTRY WHEN ON PRODUCTION
+    RAVEN_CONFIG = {
+        'dsn': RAVEN_DSN,
+        'release': raven.fetch_git_sha(os.path.abspath(os.curdir)),
+    }
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['*']
@@ -54,6 +64,8 @@ INSTALLED_APPS = [
     'public_website',
     'api',
     'dashboard',
+    'deployment_manager',
+    'ifttt',
 
     # packages
     'webpack_loader',
@@ -61,6 +73,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_extensions',
+    'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -108,9 +121,14 @@ AUTH_USER_MODEL = 'api.User'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(default="postgres://{}:{}@localhost/{}".format(DB_USER, DB_PASS, DB_NAME), conn_max_age=500)
-}
+if not USE_SQLITE:
+    DATABASES = {
+        'default': dj_database_url.config(default="postgres://{}:{}@localhost/{}".format(DB_USER, DB_PASS, DB_NAME), conn_max_age=500)
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.config(default="sqlite:///db.sqlite")
+    }
 
 
 # Channel layer definitions
@@ -185,8 +203,7 @@ WEBPACK_LOADER = {
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.TokenAuthentication',
-        'api.authentication.ExpiringTokenAuthentication',
+        'api.authentication.VerbozeTokenAuthentication',
     )
 }
 
@@ -206,9 +223,4 @@ EMAIL_HOST_PASSWORD = VERBOZE_EMAIL_PASSWORD
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-
-# SPECIFIED TO DETERMINE IF DEBUG OR PRODUCTION IN DJANGO TEMPLATES
-INTERNAL_IPS = (
-    '127.0.0.1',
-)
+APPEND_SLASH = True
