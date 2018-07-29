@@ -23,6 +23,9 @@ RAVEN_DSN = os.environ.get('RAVEN_DSN', '')
 IFTTT_KEY = os.environ.get('IFTTT_KEY', '')
 USE_SQLITE = os.environ.get('USE_SQLITE', '')
 
+# This is provided to us from runtime-dyno-metadata enabled for verboze app on heroku
+HEROKU_SLUG_COMMIT = os.environ.get('HEROKU_SLUG_COMMIT', 'master')
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -43,7 +46,7 @@ if os.environ.get('ON_HEROKU', False):
     # RAVEN CONFIG FOR SETTING UP SENTRY WHEN ON PRODUCTION
     RAVEN_CONFIG = {
         'dsn': RAVEN_DSN,
-        'release': raven.fetch_git_sha(os.path.abspath(os.curdir)),
+        'release': HEROKU_SLUG_COMMIT,
     }
 else:
     DEBUG = True
