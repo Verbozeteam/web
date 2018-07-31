@@ -43,13 +43,15 @@ class RoomViewSet(viewsets.ModelViewSet):
             room = self.queryset.get(identifier=request_data['identifier'], hotel=hotel)
             serializer = self.serializer_class(room, data=request_data)
         except:
+            room = None
             serializer = self.serializer_class(data=request_data)
         serializer.hotel_object = hotel
 
-        tokens = room.tokens.all()
-
         if serializer.is_valid():
             serializer.save()
+            if room == None:
+                room = self.queryset.get(identifier=request_data['identifier'], hotel=hotel)
+            tokens = room.tokens.all()
             if len(tokens) > 0:
                 request.user.hub_user.hub.ws_send_message({"text": json.dumps({"__room_id": room.identifier, "code": 4, "qr-code": str(tokens[0].id)})})
             return Response(serializer.data, status=status.HTTP_200_OK)
