@@ -10,7 +10,7 @@ dj-database-url==0.4.2
 Django==1.11.7
 django-extensions==1.9.8
 django-user-agents==0.3.2
--e git+http://github.com/Verbozeteam/django-webpack-loader.git@67a11e314b2df0d8780cb37f01f47ecfb5fd37bc#egg=django_webpack_loader
+-e git+http://github.com/Verbozeteam/django-webpack-loader.git@master#egg=django_webpack_loader
 djangorestframework==3.7.3
 gunicorn==19.7.1
 hyperlink==17.3.1
