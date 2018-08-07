@@ -7,7 +7,14 @@ import os
 
 class IndexPageView(TemplateView):
     def get(self, request, *args, **kwargs):
-        return render(request, 'index.html', {"DEBUG": settings.DEBUG})
+        app_store_link = os.environ.get('APP_STORE_LINK', '/')
+        play_store_link = os.environ.get('PLAY_STORE_LINK', '/')
+
+        return render(request, 'index.html', {
+            'app_store_link': app_store_link,
+            'play_store_link': play_store_link,
+            'DEBUG': settings.DEBUG
+        })
 
 def qrcode(request, token=''):
     device_os = request.user_agent.os.family

@@ -57,9 +57,12 @@ class RoomDemoControls extends React.Component<PropsType, StateType> {
                 contents = (
                     <div style={styles.phone_instructions}>
                         <div style={styles.header}>Get the App</div>
-                        <img src={require('../../assets/images/play_store.png')} style={styles.store_icon} />
-                        <img src={require('../../assets/images/app_store.png')} style={styles.store_icon} />
-
+                        <a href={APP_STORE_LINK}>
+                            <img src={require('../../assets/images/app_store.png')} style={styles.store_icon} />
+                        </a>
+                        <a href={PLAY_STORE_LINK}>
+                            <img src={require('../../assets/images/play_store.png')} style={styles.store_icon} />
+                        </a>
                         <SquareButton onClick={(() => this.setState({curPage: 1})).bind(this)} extraStyle={styles.button}>
                             Use the App
                         </SquareButton>

@@ -37,6 +37,11 @@
 
 </head>
 <body style='background-color: #000000; background-image: url({% static "public_website/images/pattern.png" %}); background-repeat: repeat;'>
+  <script>
+    const APP_STORE_LINK = '{{app_store_link|safe}}';
+    const PLAY_STORE_LINK = '{{play_store_link|safe}}';
+  </script>
+
   <div id="react-app" style="height: 100%; width: 100%"></div>
 
   {% if DEBUG %}
