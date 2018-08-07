@@ -27,12 +27,14 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         setConnectionURL: u => dispatch(tabletActions.setCurrentConnectionURL(u)),
+        setQrcodeURL: u => dispatch(tabletActions.setCurrentQrcodeURL(u)),
         setThingPartialState: (t, s) => dispatch(connectionActions.setThingPartialState(t, s)),
     };
 }
 
 type PropsType = {
     setConnectionURL: (string) => null,
+    setQrcodeURL: (string) => null,
     setThingPartialState: (string, Object) => null,
 };
 
@@ -66,6 +68,10 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
         if (location.protocol === 'https:')
             protocol = "wss://";
         return protocol + location.host + "/stream/" + token + '/';
+    }
+
+    createQrcodeURL(token: string): string {
+      return `${location.protocol}//${location.host}/qrcode/${token}/`;
     }
 
     constructor(props) {
@@ -133,7 +139,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
     }
 
     startDemo() {
-        const { setConnectionURL } = this.props;
+        const { setConnectionURL, setQrcodeURL } = this.props;
 
         if (this.state.currentStage === 0) {
             this.setState({currentStage: 1});
@@ -142,6 +148,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
             PublicWebsiteAPICaller.setCSRFToken(csrftoken);
             PublicWebsiteAPICaller.createToken(((token: APITypes.CreatedToken) => {
                 setConnectionURL(this.createWebsocketURL(token.id));
+                setQrcodeURL(this.createQrcodeURL(token.id));
                 WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
                 WebSocketCommunication.connect(this.createWebsocketURL(token.id));
             }).bind(this), ((error: APITypes.ErrorType) => {

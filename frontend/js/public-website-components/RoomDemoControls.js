@@ -12,6 +12,7 @@ import { RoomTablet } from './RoomTablet';
 function mapStateToProps(state) {
     return {
         connectionURL: state.tabletstate.connectionURL,
+        qrcodeURL: state.tabletstate.qrcodeURL
     };
 }
 
@@ -69,7 +70,7 @@ class RoomDemoControls extends React.Component<PropsType, StateType> {
                     <div style={styles.phone_instructions}>
                         <div style={styles.header}>Scan this code</div>
                         <div style={styles.qr_code}>
-                            <QRCode value={this.props.connectionURL} size={105} />
+                            <QRCode value={this.props.qrcodeURL} size={105} />
                         </div>
 
                         <SquareButton onClick={(() => this.setState({curPage: 0})).bind(this)} extraStyle={styles.button}>

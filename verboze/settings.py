@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'raven.contrib.django.raven_compat',
+    'django_user_agents'
 ]
 
 MIDDLEWARE = [
@@ -90,6 +91,8 @@ MIDDLEWARE = [
 
     # WHITENOISE STATICFILE SERVING
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
+    'django_user_agents.middleware.UserAgentMiddleware'
 ]
 
 

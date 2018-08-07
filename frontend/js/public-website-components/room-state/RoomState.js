@@ -26,11 +26,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         setConnectionURL: u => dispatch(tabletActions.setCurrentConnectionURL(u)),
+        setQrcodeURL: u => dispatch(tabletActions.setCurrentQrcodeURL(u))
     };
 }
 
 type PropsType = {
     setConnectionURL: (string) => null,
+    setQrcodeURL: (string) => null,
 
     roomState: Object,
     dimensions: {width: number, height: number},
@@ -456,6 +458,7 @@ class RoomState extends React.Component<PropsType, StateType> {
         }).bind(this)).catch(((reason) => {
             console.log(reason);
             this.props.setConnectionURL("");
+            this.props.setQrcodeURL(`${location.protocol}//${location.host}/qrcode/`);
             WebSocketCommunication.disconnect();
         }).bind(this));
     }
