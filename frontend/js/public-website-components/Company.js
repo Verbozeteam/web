@@ -47,7 +47,7 @@ export default class Company extends React.Component<PropsType, StateType> {
     {
       name: 'Yahya Alhomsi',
       text: 'Electrical Engineer',
-      email: 'yalhomsi@vebroze.com',
+      email: 'yalhomsi@verboze.com',
       linkedin: 'https://www.linkedin.com/in/yahya-alhomsi-81687914a/',
       image: require('../../assets/images/yahya.jpg')
     }
