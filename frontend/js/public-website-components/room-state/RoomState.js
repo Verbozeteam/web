@@ -38,6 +38,7 @@ type PropsType = {
     dimensions: {width: number, height: number},
     opacity?: number,
     navbarHeight?: number,
+    showControls: boolean
 };
 
 type StateType = {
@@ -56,6 +57,7 @@ class RoomState extends React.Component<PropsType, StateType> {
     static defaultProps = {
         opacity: 1.0,
         navbarHeight: 0,
+        showControls: true
     };
 
     state = {
@@ -551,13 +553,15 @@ class RoomState extends React.Component<PropsType, StateType> {
     }
 
     renderLayers() {
+        const { showControls } = this.props;
+
         if (this.composer && this.renderer) {
             const width = this.mount.clientWidth;
             const height = this.mount.clientHeight;
 
             if (width > 1 && height > 1) {
                 const maxRenderedLayerWidth = Math.min(this._imageInnerDimensions.width, width);
-                const maxRenderedLayerHeight = Math.min(this._imageInnerDimensions.height, height - this.props.navbarHeight - 50);
+                const maxRenderedLayerHeight = Math.min(this._imageInnerDimensions.height, height - this.props.navbarHeight - ((showControls) ? 50 : 0));
 
                 var scaler = Math.min(maxRenderedLayerWidth / this._imageInnerDimensions.width,
                                       maxRenderedLayerHeight / this._imageInnerDimensions.height);
@@ -612,6 +616,8 @@ class RoomState extends React.Component<PropsType, StateType> {
                     var topOffset = this.props.navbarHeight;
                     if (width <= 992)
                         topOffset = Math.max(topOffset, (height - 100)/2 - renderedLayerHeight/2);
+                    if (!showControls)
+                        topOffset = (height / 2) - (renderedLayerHeight / 2);
 
                     var yOffset = (height-renderedLayerHeight) / 2.0 - topOffset;
                     var scaler = Math.max(width / renderedLayerWidth, height / renderedLayerHeight);
@@ -705,6 +711,18 @@ class RoomState extends React.Component<PropsType, StateType> {
     }
 
     renderImageOrWebGL(dimensions, curOpacity, loadedDemo, loadingProgress) {
+        const { showControls } = this.props;
+
+
+        var room_controls = null;
+        if (showControls) {
+            room_controls = (
+                <div style={{...styles.canvas, opacity: curOpacity}}>
+                    <RoomDemoControls dimensions={dimensions} />
+                </div>
+            );
+        }
+
         if (this._supportsWebGL) {
             return (
                 <div style={{...styles.container, ...dimensions}}>
@@ -725,10 +743,7 @@ class RoomState extends React.Component<PropsType, StateType> {
                                       showKnob={false}
                                       animateSliding={true} />
                     </div>
-
-                    <div style={{...styles.canvas, opacity: curOpacity}}>
-                        <RoomDemoControls dimensions={dimensions} />
-                    </div>
+                    {room_controls}
                 </div>
             )
         }

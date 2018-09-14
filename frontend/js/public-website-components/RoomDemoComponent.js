@@ -36,6 +36,7 @@ type PropsType = {
     setConnectionURL: (string) => null,
     setQrcodeURL: (string) => null,
     setThingPartialState: (string, Object) => null,
+    showControls: boolean
 };
 
 type StateType = {
@@ -52,6 +53,11 @@ type StateType = {
 };
 
 class RoomDemoComponent extends React.Component<PropsType, StateType> {
+
+    static defaultProps = {
+        showControls: true
+    };
+
     state = {
         currentStage: 0,
         width: 1,
@@ -60,6 +66,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
     _isUnmounting = false;
     _apiTimeout = null;
+    _navbar_height = 66;
 
     _logo = require('../../assets/images/verboze_logo_white.png');
 
@@ -158,6 +165,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
     }
 
     render() {
+        const { showControls } = this.props;
         const { currentStage, width, height } = this.state;
 
         var dimensions = {width, height};
@@ -169,7 +177,10 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
         return (
             <div style={{...styles.roomContainer, ...dimensions}}>
-                <RoomState navbarHeight={66} opacity={currentStage === 3 ? 1.0 : 0.2} dimensions={dimensions} />
+                <RoomState navbarHeight={(showControls) ? this._navbar_height : 0}
+                    opacity={currentStage === 3 ? 1.0 : 0.2}
+                    dimensions={dimensions}
+                    showControls={showControls}/>
             </div>
         );
     }
