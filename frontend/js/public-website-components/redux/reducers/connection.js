@@ -68,20 +68,22 @@ const defaultState: StateType = {
                 "things": [{
                         "category": "curtains",
                         "id": "curtain-1",
-                        "name": "Curtain"
+                        "name": "Curtain",
+                        "max_move_time": 6000
                     }, {
                         "category": "curtains",
                         "id": "curtain-2",
-                        "name": "Shade"
+                        "name": "Shade",
+                        "max_move_time": 6000
                     }
                 ]
             }, {
                 "id": "group-3",
-                "name": "Air Conditioning",
+                "name": "Thermostat",
                 "things": [{
                         "category": "central_acs",
                         "id": "central-ac-v0-d50",
-                        "name": "Air Conditioning",
+                        "name": "Thermostat",
                         "fan_speeds": ["Lo", "Hi"]
                     }
                 ]

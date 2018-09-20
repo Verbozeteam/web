@@ -23,7 +23,7 @@ class TechCrunchBattlefield extends Component<PropsType, StateType> {
         <Helmet>
           <title>Verboze | TechCrunch Battlefield</title>
         </Helmet>
-        <RoomDemoComponent showControls={false} />
+        <RoomDemoComponent showControls={false} techCrunch={true} />
       </div>
     );
   }

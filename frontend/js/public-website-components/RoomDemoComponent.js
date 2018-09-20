@@ -36,7 +36,8 @@ type PropsType = {
     setConnectionURL: (string) => null,
     setQrcodeURL: (string) => null,
     setThingPartialState: (string, Object) => null,
-    showControls: boolean
+    showControls: boolean,
+    techCrunch: boolean
 };
 
 type StateType = {
@@ -55,7 +56,8 @@ type StateType = {
 class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
     static defaultProps = {
-        showControls: true
+        showControls: true,
+        techCrunch: false,
     };
 
     state = {
@@ -141,12 +143,24 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
             // we have a command
             var thing_id = data.thing;
             delete data.thing;
+            WebSocketCommunication.sendMessage({
+                [thing_id]: data
+            });
             setThingPartialState(thing_id, data);
         }
     }
 
     startDemo() {
-        const { setConnectionURL, setQrcodeURL } = this.props;
+        const { setConnectionURL, setQrcodeURL, techCrunch } = this.props;
+
+        if (techCrunch) {
+            var token = 'd039cb83-bd55-4474-90c4-9646ce6e6bd2';
+            setConnectionURL(this.createWebsocketURL(token));
+            setQrcodeURL(this.createQrcodeURL(token));
+            WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
+            WebSocketCommunication.connect(this.createWebsocketURL(token));
+            return;
+        }
 
         if (this.state.currentStage === 0) {
             this.setState({currentStage: 1});
