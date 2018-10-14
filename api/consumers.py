@@ -81,8 +81,8 @@ def ws_connect(message, token):
 	if token_object:
 		# valid token, accept connection
 		message.reply_channel.send({"accept": True})
-		# add reply_channel to Hub/Hotel/Room group
-		if token_object.content_object and not isinstance(token_object.content_object, get_user_model()):
+		# add reply_channel to AdminUser/HubUser/HotelUser/GuestUser/Room group
+		if token_object.content_object and (hasattr(token_object.content_object, 'user') or isinstance(token_object.content_object, Room)):
 			group = token_object.content_object.websocket_group
 		else:
 			group = "temp-token-"+str(token_object.id)
@@ -119,7 +119,8 @@ def ws_disconnect(message, token):
 	token_object = get_valid_token(token)
 	if token_object:
 		# valid token
-		if token_object.content_object and not isinstance(token_object.content_object, get_user_model()):
+		# Check if token belongs to a type of user or room
+		if token_object.content_object and (hasattr(token_object.content_object, 'user') or isinstance(token_object.content_object, Room)):
 			group = token_object.content_object.websocket_group
 		else:
 			group = "temp-token-"+str(token_object.id)

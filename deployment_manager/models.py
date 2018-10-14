@@ -1,6 +1,7 @@
 from django.db import models
 from channels import Channel
 from django.contrib.auth import get_user_model
+from api.models import AdminUser
 
 class Repository(models.Model):
     """
@@ -184,8 +185,8 @@ class RemoteDeploymentMachine(models.Model):
     """
     channel_name = models.CharField(max_length=128, default="", blank=True)
     name = models.CharField(max_length=128, default="", unique=True)
-    user = models.ForeignKey(
-        get_user_model(),
+    admin_user = models.ForeignKey(
+        AdminUser,
         default=None,
         on_delete=models.CASCADE,
         related_name="remote_deployment_machines",

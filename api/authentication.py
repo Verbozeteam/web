@@ -14,7 +14,7 @@ class VerbozeTokenAuthentication(TokenAuthentication):
         except (Token.DoesNotExist, ValidationError):
             raise exceptions.AuthenticationFailed('Invalid Auth Token')
 
-        if not isinstance(auth_token.content_object.user, get_user_model()):
+        if not hasattr(auth_token.content_object, 'user'):
             raise exceptions.AuthenticationFailed('Token is not associated with a user (maybe temporary?)')
 
         if not auth_token.content_object.user.is_active:

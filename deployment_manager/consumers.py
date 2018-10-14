@@ -7,7 +7,7 @@ from django.db import transaction
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth import get_user_model
+from api.models import AdminUser
 
 from raven.contrib.django.models import get_client
 client = get_client()
@@ -25,9 +25,9 @@ def get_valid_token(token):
     return token_object
 
 def get_rdm_from_token(token):
-    if token and isinstance(token.content_object, get_user_model()):
+    if token and isinstance(token.content_object, AdminUser):
         try:
-            return RemoteDeploymentMachine.objects.get(user=token.content_object)
+            return RemoteDeploymentMachine.objects.get(admin_user=token.content_object)
         except:
             return None
     return None
@@ -110,9 +110,9 @@ def ws_connect(message, token, deployment_manager=None):
         # save channel name to be able to communicate with
         rdm.channel_name = message.reply_channel
         rdm.save()
-    elif token_object and isinstance(token_object.content_object, get_user_model()):
-        # only accept connections from superusers
-        if token_object.content_object.is_superuser:
+    elif token_object and isinstance(token_object.content_object, AdminUser):
+        # make sure User associated with AdminUser is a superuser (should always be the case)
+        if token_object.content_object.user.is_superuser:
             message.reply_channel.send({"accept": True})
 
             # create Channel Group for updates to be sent

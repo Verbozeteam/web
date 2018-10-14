@@ -21,6 +21,8 @@ class TokenViewSet(viewsets.ViewSet):
     authentication_classes = ()
     permission_classes = ()
 
+    VALID_TOKEN_TYPES = ['anonymous_user', 'admin_user', 'hub_user', 'hotel_user', 'guest_user']
+
     def determine_token_params(self, request, user):
         # If token is created for an anonymous user (such as website demo), keep those defaults
         error = None
@@ -29,44 +31,77 @@ class TokenViewSet(viewsets.ViewSet):
         object_id = None
 
         if user:
-            if 'deployment_manager' in request.data and user.is_superuser:
+            if 'deployment_manager' in request.data and request.data['requested_token_type'] == 'admin_user' and hasattr(user, 'admin_user'):
                 # Token is created for deployment manager front-end (to create a deployment)
                 # Logged in by an admin
                 expiry = timezone.now() + timedelta(hours=24)
-                content_type = ContentType.objects.get(model='user')
-                object_id = user.id
-            elif 'machine' in request.data and user.is_superuser:
+                content_type = ContentType.objects.get(model='adminuser')
+                object_id = user.admin_user.id
+            elif 'machine' in request.data and request.data['requested_token_type'] == 'admin_user' and hasattr(user, 'admin_user'):
                 # Token is created for remote deployment machine (deployment script)
                 # Logged in by an admin user
                 machine = request.data.get('machine')
                 expiry = timezone.now() + timedelta(hours=24)
-                content_type = ContentType.objects.get(model='user')
-                object_id = user.id
+                content_type = ContentType.objects.get(model='adminuser')
+                object_id = user.admin_user.id
                 try:
-                    rdm = RemoteDeploymentMachine.objects.create(name=machine, user=user)
+                    rdm = RemoteDeploymentMachine.objects.create(name=machine, admin_user=user.admin_user)
                 except:
                     error = 'Machine already logged in'
             else:
                 # Its a general user login
                 # @TODO: different cases for different user types
                 expiry = timezone.now() + timedelta(hours=24)
-                if hasattr(user, 'hub_user'):
+                requested_token_type = request.data['requested_token_type']
+
+                # Handle Admin (user) requesting token
+                if requested_token_type == 'admin_user' and hasattr(user, 'admin_user'):
+                    content_type = ContentType.objects.get(model='adminuser')
+                    object_id = user.admin_user.id
+                    # Any additional logic for admin users
+                    # ...
+
+                # Handle Hub (user) requesting token (should not happen according to Hasan)
+                elif requested_token_type == 'hub_user' and hasattr(user, 'hub_user'):
                     # Aggregator user trying to log in - this should never happen
                     error = 'Testa3bat yabni?'
-                elif hasattr(user, 'hotel_user'):
-                    # @TODO: Handle hotel (user) requesting token
-                    pass
-                elif hasattr(user, 'guest_user'):
-                    # @TODO Handle Guest (user) requesting token
-                    pass
+                    # Any additional logic for hub users
+                    # ...
+
+                # Handle Hotel (user) requesting token
+                elif requested_token_type == 'hotel_user' and hasattr(user, 'hotel_user'):
+                    content_type = ContentType.objects.get(model='hoteluser')
+                    object_id = user.hotel_user.id
+                    # Any additional logic for hotel users
+                    # ...
+
+                # Handle Guest (user) requesting token
+                elif requested_token_type == 'guest_user' and hasattr(user, 'guest_user'):
+                    content_type = ContentType.objects.get(model='guestuser')
+                    object_id = user.guest_user.id
+                    # Any additional logic for guest users
+                    # ...
+
                 else:
-                    # This is where a user (most likely admin) visits homepage
-                    pass # @TODO: ...
+                    # Invalid permissions for requested token
+                    error = 'You do not have permissions to request such token'
 
         return error, expiry, content_type, object_id
 
     def validate_user(self, request):
         User = get_user_model()
+
+        # check if 'requested_token_type' is provided otherwise we cannot give a token
+        if not 'requested_token_type' in request.data:
+            return Response({'error': 'No \'requested_token_type\' provided'}, status.HTTP_400_BAD_REQUEST), None
+
+        # check if 'requested_token_type' is a valid token type
+        if request.data['requested_token_type'] not in TokenViewSet.VALID_TOKEN_TYPES:
+            return Response({'error': 'Invalid requested_token_type provided'}, status.HTTP_400_BAD_REQUEST), None
+
+        # requested temp token with minimal access
+        if request.data['requested_token_type'] == 'anonymous_user':
+            return None, None
 
         # attempt to authenticate user with provided username & password
         if 'username' in request.data and 'password' in request.data:
@@ -86,8 +121,9 @@ class TokenViewSet(viewsets.ViewSet):
 
             # session matching the query does not exist, check if anonymous user
             except Session.DoesNotExist:
-                if request.user.is_anonymous:
-                    return None, None
+                # if request.user.is_anonymous:
+                #     print('could be returning from here??')
+                #     return None, None
                 return Response({'error': 'No user credentials and session does not exist'}, status=status.HTTP_400_BAD_REQUEST), None
 
 
@@ -100,7 +136,10 @@ class TokenViewSet(viewsets.ViewSet):
             err, expiry, user_contenttype, object_id = self.determine_token_params(request, user)
             if err:
                 return Response({'error': err}, status=status.HTTP_400_BAD_REQUEST)
-            token = Token.objects.create(expiry=expiry, content_object=user if user else None)
+            if user: # ever django user must be associated with one of our 'custom' users
+                token = Token.objects.create(expiry=expiry, content_type=user_contenttype, object_id=object_id)
+            else:
+                token = Token.objects.create(expiry=expiry, content_object=None)
             return Response({'id': token.id}, status=status.HTTP_200_OK)
         except Exception as e:
             print (e)

@@ -45,7 +45,8 @@ export default class App extends React.Component {
         }).bind(this), ((error) => {
             console.log('Could not fetch WS Token');
         }).bind(this), {
-            deployment_manager: true /* sending data to api */
+            deployment_manager: true, /* sending data to api */
+            requested_token_type: 'admin_user'
         });
     }
 

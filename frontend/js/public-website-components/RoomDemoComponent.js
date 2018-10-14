@@ -174,7 +174,9 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
                 WebSocketCommunication.connect(this.createWebsocketURL(token.id));
             }).bind(this), ((error: APITypes.ErrorType) => {
                 this.setState({currentStage: 0});
-            }).bind(this));
+            }).bind(this), {
+                'requested_token_type': 'anonymous_user'
+            });
         }
     }
 
