@@ -56,10 +56,10 @@ class RoomViewSet(viewsets.ModelViewSet):
             tokens = room.tokens.all()
             if len(tokens) == 0:
                 tokens = [VerbozeToken.objects.create(content_object=room)]
-            
+
             # send over the token's QR code to the hub who will send it to middlewares and then to tablets
             request.user.hub_user.hub.ws_send_message({"text": json.dumps({"__room_id": room.identifier, "code": 4, "qr-code": str(tokens[0].id)})})
-            
+
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)

@@ -56,7 +56,7 @@ class RoomSerializer(serializers.ModelSerializer):
         # if this serializer has hotel_object set to the hotel, it will use it instead of
         # looking up the hotel object in the DB (twice)
         if not hasattr(self, 'hotel_object'):
-            self.hotel_object = Hotel.objects.get(pk=obj['hotel'])
+            self.hotel_object = obj.hotel
 
         ret = super(RoomSerializer, self).to_representation(obj)
         ret['hotel'] = HotelSerializer(self.hotel_object).data

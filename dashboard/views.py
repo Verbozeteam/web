@@ -11,6 +11,8 @@ class IndexPageView(TemplateView):
 
 class LoginPageView(TemplateView):
     def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated() and hasattr(request.user, 'hotel_user'):
+            return redirect('dashboard_index')
         return render(request, 'dashboard_login.html', {})
 
     def post(self, request, *args, **kwargs):
