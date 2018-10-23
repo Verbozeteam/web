@@ -4,7 +4,7 @@ import ConfigEditor from './ConfigEditor';
 import DataManager from './DataManager';
 import Status from './Status';
 
-import { PublicWebsiteAPICaller } from '../js-api-utils/PublicWebsiteAPI';
+import { DeploymentManagerAPICaller } from '../js-api-utils/DeploymentManagerAPI';
 import { WebSocketCommunication } from '../js-api-utils/WebSocketCommunication';
 
 import * as Cookies from 'js-cookie';
@@ -39,8 +39,8 @@ export default class App extends React.Component {
         WebSocketCommunication.setOnMessage((data) => this.onMessage(data));
 
         var csrftoken = Cookies.get('csrftoken');
-        PublicWebsiteAPICaller.setCSRFToken(csrftoken);
-        PublicWebsiteAPICaller.createToken(((token) => {
+        DeploymentManagerAPICaller.setCSRFToken(csrftoken);
+        DeploymentManagerAPICaller.requestToken(((token) => {
             WebSocketCommunication.connect(this.createWebsocketURL(token.id));
         }).bind(this), ((error) => {
             console.log('Could not fetch WS Token');

@@ -167,7 +167,7 @@ class RoomDemoComponent extends React.Component<PropsType, StateType> {
 
             var csrftoken = Cookies.get('csrftoken');
             PublicWebsiteAPICaller.setCSRFToken(csrftoken);
-            PublicWebsiteAPICaller.createToken(((token: APITypes.CreatedToken) => {
+            PublicWebsiteAPICaller.requestToken(((token: APITypes.CreatedToken) => {
                 setConnectionURL(this.createWebsocketURL(token.id));
                 setQrcodeURL(this.createQrcodeURL(token.id));
                 WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
