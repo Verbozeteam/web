@@ -23,7 +23,7 @@ function mapDispatchToProps(dispatch) {
 
 type PropsType = {
     room: APITypes.Room,
-    ...any,
+    setCurrentRoom: (roomId: string) => {}
 };
 
 type StateType = {

@@ -2,9 +2,11 @@
 
 import * as APITypes from '../../../js-api-utils/APITypes';
 import * as ConnectionTypes from '../../../js-api-utils/ConnectionTypes';
+import type { GroupType } from '../../../js-api-utils/ConfigManager';
 
 export const SET_CONNECTION_STATE = 'SET_CONNECTION_STATE';
 export const SET_ROOMS = 'SET_ROOMS';
+export const SET_ROOMS_GROUPS = 'SET_ROOMS_GROUPS';
 export const SET_ROOM_CONFIG = 'SET_ROOM_CONFIG';
 
 export const SET_ROOM_THING_STATE = 'SET_ROOM_THING_STATE';
@@ -23,6 +25,13 @@ export function setRooms(rooms: Array<APITypes.Room>) {
     return {
         type: SET_ROOMS,
         rooms,
+    };
+};
+
+export function setRoomsGroups(roomsGroups: {[roomId: string]: Array<GroupType>}) {
+    return {
+        type: SET_ROOMS_GROUPS,
+        roomsGroups,
     };
 };
 

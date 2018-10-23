@@ -8,4 +8,3 @@ export function setCurrentRoom(room_index: string) {
     room_index
   };
 };
-

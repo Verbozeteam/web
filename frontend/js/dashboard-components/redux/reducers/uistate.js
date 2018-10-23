@@ -7,7 +7,7 @@ type StateType = {
 };
 
 const defaultState: StateType = {
-    selectedRoomId: "",
+    selectedRoomId: '',
 };
 
 module.exports = (state: StateType = defaultState, action: Object) => {

@@ -10,6 +10,14 @@ import * as APITypes from '../js-api-utils/APITypes';
 
 import { RoomView } from './RoomView';
 
+import { RoomConfigManager } from '../js-api-utils/RoomsConfigManager';
+import type { GroupType } from '../js-api-utils/ConfigManager'
+
+import type {
+    ThingMetadataType,
+    ThingStateType,
+} from '../js-api-utils/ConfigManager';
+
 function mapStateToProps(state) {
     return {};
 }
@@ -22,19 +30,22 @@ function mapDispatchToProps(dispatch) {
 
 type PropsType = {
     room: APITypes.Room,
-    ...any,
+    roomGroups: Array<GroupType>,
+    setCurrentRoom: (roomId: string) => {}
 };
 
 type StateType = {
 };
 
 class RoomCardBase extends React.Component<PropsType, StateType> {
+    _unsubscribe: () => any = () => null;
+
     onClick() {
         this.props.setCurrentRoom(this.props.room.id);
     }
 
     render() {
-        const { room } = this.props;
+        const { room, roomGroups} = this.props;
 
         return (
             <div style={styles.roomContainer}>
@@ -45,7 +56,7 @@ class RoomCardBase extends React.Component<PropsType, StateType> {
                     </div>
                     <div style={styles.roomCardTitle}>
                         <div style={styles.roomCardSeparator}></div>
-                        <h3>{room.name}</h3>
+                        <h3>Room {room.name}</h3>
                     </div>
                 </div>
             </div>
@@ -67,9 +78,8 @@ const styles = {
     roomCard: {
         width: 200,
         height: 200,
-        borderRadius: 20,
+        borderRadius: 15,
         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
         display: 'flex',
         flexDirection: 'column',
     },
@@ -78,11 +88,11 @@ const styles = {
         flexDirection: 'column',
         flex: 3,
 
-        borderRadius: 20,
+        borderRadius: 15,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
 
-        backgroundColor: 'rgba(250, 250, 250, 255)',
+        backgroundColor: 'rgba(250, 250, 250, 0.4)',
         padding: 10,
     },
     roomCardTitle: {
@@ -90,17 +100,13 @@ const styles = {
         flexDirection: 'column',
         flex: 1,
 
-        borderRadius: 20,
+        borderRadius: 15,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
 
         alignItems: 'center',
         justifyContent: 'center',
-
-        background: '-webkit-linear-gradient(rgba(220, 220, 220, 255), rgba(230, 230, 230, 255))', /* For Safari 5.1 to 6.0 */
-        background: '-o-linear-gradient(rgba(220, 220, 220, 255), rgba(230, 230, 230, 255))', /* For Opera 11.1 to 12.0 */
-        background: '-moz-linear-gradient(rgba(220, 220, 220, 255), rgba(230, 230, 230, 255))', /* For Firefox 3.6 to 15 */
-        background: 'linear-gradient(rgba(220, 220, 220, 255), rgba(230, 230, 230, 255))', /* Standard syntax */
+        backgroundColor: 'rgba(250, 250, 250, 0.4)',
     },
     roomCardSeparator: {
         width: '80%',
