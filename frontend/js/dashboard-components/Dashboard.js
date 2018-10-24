@@ -188,6 +188,8 @@ const styles = {
     },
     ordersContainer: {
         overflowY: 'scroll',
+        padding: 0,
+        margin: 0,
     },
     roomsContainer: {
         overflowY: 'scroll',

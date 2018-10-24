@@ -2,26 +2,29 @@
 
 import * as React from 'react';
 import { connect as ReduxConnect } from 'react-redux';
+import * as connectionActions from './redux/actions/connection';
 
 import { RoomConfigManager } from '../js-api-utils/RoomsConfigManager';
+import { RoomOrders } from './RoomOrders';
 
 import type { ThingMetadataType, ThingStateType, GroupType, OrderType } from '../js-api-utils/ConfigManager';
 
 import type { Room } from '../js-api-utils/APITypes';
 
+import { Colors } from '../constants/Styles';
+
+
 type PropsType = {
     id: string,
     roomId: string,
-    rooms: {[roomId: string]: Room},
 };
+
 type StateType = {
     orders: Array<OrderType>
 };
 
 function mapStateToProps(state) {
-    return {
-        rooms: state.connection.rooms
-    };
+    return {};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -31,7 +34,7 @@ function mapDispatchToProps(dispatch) {
 class HotelOrdersBase extends React.Component<PropsType, StateType> {
     _unsubscribe: () => any = () => null;
 
-    state = {
+    state: StateType = {
         orders: []
     };
 
@@ -53,6 +56,8 @@ class HotelOrdersBase extends React.Component<PropsType, StateType> {
     }
 
     onRoomOrdersChanged(meta: ThingMetadataType, roomOrdersState: ThingStateType) {
+        const { roomId, setRoomOrders } = this.props;
+
         console.log('meta:', meta);
         console.log('roomOrdersState:', roomOrdersState);
 
@@ -64,35 +69,15 @@ class HotelOrdersBase extends React.Component<PropsType, StateType> {
 
         this.setState({
             orders: roomOrdersState.orders
-        })
-    }
-
-    dismissOrder(orderId) {
-        const { roomId } = this.props;
-
-        RoomConfigManager.getConfigManager(roomId).setThingState('hotel_orders', {
-            'resolve_order': orderId
-        }, true);
-    }
-
-    renderOrders() {
-        const { id, roomId, rooms } = this.props;
-        const { orders } = this.state;
-
-        return (
-            <div>
-                <h3>Room: { rooms[roomId].name }</h3>
-                { orders.map(o => <div key={'order-'+o.id} onClick={() => this.dismissOrder(o.id)}><h4>{o.name}</h4></div>) }
-            </div>
-        );
+        });
     }
 
     render() {
+        const { roomId } = this.props;
         const { orders } = this.state;
 
-        return (
-            orders.length > 0 ? this.renderOrders() : null
-        );
+        return <RoomOrders roomId={roomId}
+            orders={orders}/>
     }
 }
 
