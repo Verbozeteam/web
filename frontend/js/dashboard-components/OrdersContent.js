@@ -9,6 +9,9 @@ import type { GroupType } from '../js-api-utils/ConfigManager';
 
 import { HotelOrders } from './HotelOrders';
 
+import { Colors } from '../constants/Styles';
+
+
 type PropsType = {
     rooms: {[roomId: string]: Room},
     roomsGroups: {[roomId: string]: Array<GroupType>},
@@ -46,7 +49,43 @@ class OrdersContentBase extends React.Component<PropsType, StateType> {
                 }
             }
         }
+
         return roomThings;
+    }
+
+    renderHeader(num_room_orders: number) {
+        num_room_orders = 0;
+
+        if (num_room_orders > 99) {
+            num_room_orders = '99+'
+        }
+
+        return (
+            <div style={styles.headerContainer}>
+                {(num_room_orders) ?
+                    <React.Fragment>
+                        <span style={styles.headerNumber}>{`${num_room_orders}`}</span>
+                        <span style={styles.header}>&nbsp;Room Orders</span>
+                    </React.Fragment>
+                : <React.Fragment>
+                    <span style={styles.headerNumber}>&nbsp;</span>
+                    <span style={styles.header}>Room Orders</span>
+                </React.Fragment>}
+            </div>
+        );
+    }
+
+    renderNoRoomOrdersMessage() {
+        return (
+            <div style={styles.messageContainer}>
+                <p style={styles.messageHeader}>
+                    No Room Orders
+                </p>
+                <p style={styles.messageText}>
+                    New room orders will appear here
+                </p>
+            </div>
+        );
     }
 
     render() {
@@ -60,14 +99,22 @@ class OrdersContentBase extends React.Component<PropsType, StateType> {
         }
 
         return (
-            <div>
-                { allRoomThings }
+            <div style={styles.container}>
+                {this.renderHeader(allRoomThings.length)}
+                {allRoomThings}
             </div>
         );
     }
 };
 
 const styles = {
+    container: {
+        paddingLeft: 40,
+        paddingRight: 40,
+        display: 'flex',
+        flexDirection: 'column',
+        // height: '100%'
+    },
     ordersRow: {
         display: 'flex',
         flex: 1,
@@ -75,6 +122,48 @@ const styles = {
         maxHeight: 260,
         minHeight: 230,
     },
+    headerContainer: {
+        padding: 0,
+        margin: 0,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        marginBottom: 30,
+    },
+    header: {
+        padding: 0,
+        margin: 0,
+        color: Colors.white,
+        fontSize: 42,
+    },
+    headerNumber: {
+        padding: 0,
+        margin: 0,
+        color: Colors.white,
+        fontSize: 60,
+    },
+    messageContainer: {
+        padding: 0,
+        margin: 0,
+        display: 'flex',
+        flex: 1,
+        marginBottom: 40,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    messageHeader: {
+        color: Colors.not_so_light_gray,
+        fontSize: 36,
+        fontWeight: 'medium',
+        fontStyle: 'italic',
+    },
+    messageText: {
+        color: Colors.not_so_light_gray,
+        fontSize: 22,
+        fontWeight: 'medium',
+        fontStyle: 'italic'
+    }
 }
 
 export const OrdersContent = ReduxConnect(mapStateToProps, mapDispatchToProps) (OrdersContentBase);
