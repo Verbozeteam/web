@@ -22,6 +22,7 @@ function mapStateToProps(state) {
     return {
         rooms: state.connection.rooms,
         roomsGroups: state.connection.roomsGroups,
+        roomsOrders: state.connection.roomsOrders
     };
 }
 
@@ -54,8 +55,6 @@ class OrdersContentBase extends React.Component<PropsType, StateType> {
     }
 
     renderHeader(num_room_orders: number) {
-        num_room_orders = 0;
-
         if (num_room_orders > 99) {
             num_room_orders = '99+'
         }
@@ -89,19 +88,28 @@ class OrdersContentBase extends React.Component<PropsType, StateType> {
     }
 
     render() {
-        const { rooms, roomsGroups } = this.props;
+        const { roomsOrders, roomsGroups } = this.props;
 
-        var allRoomThings = [];
+        const allRoomThings = [];
         for (var property in roomsGroups) {
             if (roomsGroups.hasOwnProperty(property)) {
                 allRoomThings.push(this.renderGroups(roomsGroups[property], property))
             }
         }
 
+        const num_room_orders = Object.values(roomsOrders).map(
+            orders => orders.length).reduce((a, b) => a + b, 0);
+
+        const container_style = {...styles.container};
+        if (num_room_orders == 0) {
+            container_style.height = '100%';
+        }
+
         return (
-            <div style={styles.container}>
-                {this.renderHeader(allRoomThings.length)}
+            <div style={container_style}>
+                {this.renderHeader(num_room_orders)}
                 {allRoomThings}
+                {(num_room_orders == 0) ? this.renderNoRoomOrdersMessage() : null}
             </div>
         );
     }

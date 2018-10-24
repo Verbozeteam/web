@@ -8,6 +8,7 @@ export const SET_CONNECTION_STATE = 'SET_CONNECTION_STATE';
 export const SET_ROOMS = 'SET_ROOMS';
 export const SET_ROOMS_GROUPS = 'SET_ROOMS_GROUPS';
 export const SET_ROOM_CONFIG = 'SET_ROOM_CONFIG';
+export const SET_ROOM_ORDERS = 'SET_ROOM_ORDERS';
 
 export const SET_ROOM_THING_STATE = 'SET_ROOM_THING_STATE';
 export const SET_ROOM_THINGS_STATES = 'SET_ROOM_THINGS_STATES';
@@ -40,6 +41,14 @@ export function setRoomConfig(roomId: string, config: ConnectionTypes.ConfigType
         type: SET_ROOM_CONFIG,
         roomId,
         config,
+    };
+}
+
+export function setRoomOrders(roomId: string, orders: Array<OrderType>) {
+    return {
+        type: SET_ROOM_ORDERS,
+        roomId,
+        orders
     };
 }
 

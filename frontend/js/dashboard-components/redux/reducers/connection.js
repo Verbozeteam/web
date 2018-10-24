@@ -5,6 +5,7 @@ import {
     SET_ROOMS,
     SET_ROOMS_GROUPS,
     SET_ROOM_CONFIG,
+    SET_ROOM_ORDERS,
     SET_ROOM_THINGS_STATES,
     SET_ROOM_THING_STATE,
     SET_ROOM_THINGS_PARTIAL_STATES,
@@ -21,6 +22,7 @@ type StateType = {
     roomsGroups: {[roomId: string]: Array<GroupType>},
     roomConfigs: {[string]: ConnectionTypes.ConfigType},
     roomStates: {[string]: Object},
+    roomsOrders: {[roomId: string]: Array<OrderType>}
 };
 
 const defaultState: StateType = {
@@ -30,6 +32,7 @@ const defaultState: StateType = {
     roomsGroups: {},
     roomConfigs: {},
     roomStates: {},
+    roomsOrders: {}
 };
 
 module.exports = (state: StateType = defaultState, action: Object) => {
@@ -88,6 +91,10 @@ module.exports = (state: StateType = defaultState, action: Object) => {
                     ...new_state.roomStates[action.roomId][k],
                     ...action.thingToPartialState[k]
                 };
+
+        case SET_ROOM_ORDERS:
+            new_state.roomsOrders[action.roomId] = action.orders;
+            break;
 
         default:
             break;
