@@ -19,6 +19,7 @@ type PropsType = {
 type StateType = {
     doNotDisturb: boolean,
     housekeeping: boolean,
+    cardIn: boolean
 };
 
 
@@ -27,7 +28,8 @@ export default class HotelControls extends React.Component<PropsType, StateType>
 
     state = {
         doNotDisturb: false,
-        housekeeping: false
+        housekeeping: false,
+        cardIn: false,
     }
 
     componentWillMount() {
@@ -48,7 +50,7 @@ export default class HotelControls extends React.Component<PropsType, StateType>
     }
 
     onRoomStatusChanged(meta: ThingMetadataType, roomStatusState: ThingStateType) {
-        const { doNotDisturb, housekeeping } = this.state;
+        const { doNotDisturb, housekeeping, cardIn } = this.state;
 
         if (roomStatusState.room_service == 1 && roomStatusState.do_not_disturb == 0) {
             this.setState({
@@ -68,16 +70,51 @@ export default class HotelControls extends React.Component<PropsType, StateType>
                 housekeeping: false,
             })
         }
+
+        /* setting state of room to occupied or not based on card information */
+        this.setState({
+            cardIn: roomStatusState.card == 1 ? true : false,
+        })
+
+    }
+
+    renderStatusIndicators() {
+        const { doNotDisturb, housekeeping, cardIn } = this.state;
+
+        const _occupied = require('../../assets/dashboard_images/occupied.png');
+        const _dnd = require('../../assets/dashboard_images/DND.png');
+        const _housekeeping = require('../../assets/dashboard_images/housekeeping.png');
+
+        return (
+            <div className={'row'} style={ styles.statusIndicators }>
+                <div className={'col'}>
+                    <img src={ _occupied } style={{ opacity: cardIn ? '1' : '0.15' }} />
+                </div>
+                <div className={'col'}>
+                    <img src={ _dnd } style={{ opacity: doNotDisturb ? '1' : '0.15' }} />
+                </div>
+                <div className={'col'}>
+                    <img src={ _housekeeping } style={{ opacity: housekeeping ? '1' : '0.15' }} />
+                </div>
+                <div className={'col'}>
+                </div>
+            </div>
+        );
     }
 
     render(){
         const { id } = this.props;
-        const { doNotDisturb, housekeeping } = this.state;
 
         return (
             <div>
-                Room Status: { doNotDisturb ? 'DND' : housekeeping ? 'HK' : 'None'}
+                { this.renderStatusIndicators() }
             </div>
         )
     }
 }
+
+const styles = {
+    statusIndicators: {
+        paddingTop: '20px'
+    }
+};
