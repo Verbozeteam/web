@@ -107,33 +107,18 @@ class RoomsContentBase extends React.Component<PropsType, StateType> {
                     />
             );
         } else {
-            var columns_per_row = 4;
-            var rows = [];
-            var room_views = [];
-
+            var roomCards = [];
             var roomsIds = Object.keys(rooms);
             for (var i = 0; i < roomsIds.length; i++) {
                 var room = rooms[roomsIds[i]];
-
-                room_views.push(
+                roomCards.push(
                     <RoomCard
                         key={'room-view-'+i}
                         room={room}
                         />
                 );
-
-                if (room_views.length == columns_per_row || i == roomsIds.length - 1) {
-                    rows.push(
-                        <div
-                            key={'rooms-row-'+rows.length}
-                            style={styles.roomsRow}>
-                            {room_views}
-                        </div>
-                    );
-                    room_views = [];
-                }
             }
-            roomsContent = rows;
+            roomsContent = <div className={'row'}>{roomCards}</div>
         }
         return roomsContent;
     }

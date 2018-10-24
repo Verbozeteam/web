@@ -49,10 +49,10 @@ class RoomViewBase extends React.Component<PropsType, StateType> {
                         );
                         break;
                     case 'hotel_orders':
-                        roomThings.push(<div key={'hotel-orders-'+i} >{thing.name}</div>);
+                        // roomThings.push(<div key={'hotel-orders-'+i} >{thing.name}</div>);
                         break;
                     case 'hotel_diagnostics':
-                        roomThings.push(<div key={'hotel-diagnostics-'+i}>{thing.id}</div>);
+                        // roomThings.push(<div key={'hotel-diagnostics-'+i}>{thing.id}</div>);
                         break;
                 }
             }
@@ -65,7 +65,6 @@ class RoomViewBase extends React.Component<PropsType, StateType> {
 
         return (
             <div>
-                <h4>Summary</h4>
                 { roomsGroups && roomsGroups[room.identifier] ? this.renderGroupsSummary(roomsGroups[room.identifier]) : null }
             </div>
         );

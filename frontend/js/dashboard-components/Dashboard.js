@@ -3,6 +3,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import * as Styles from '../constants/Styles';
 import { connect as ReduxConnect } from 'react-redux';
 import { STORE, AppWrapper } from "./redux/store";
 import * as connectionActions from './redux/actions/connection';
@@ -12,6 +13,8 @@ import * as ConnectionTypes from '../js-api-utils/ConnectionTypes';
 import { DashboardAPICaller } from '../js-api-utils/DashboardAPI';
 
 import { WebSocketCommunication } from '../js-api-utils/WebSocketCommunication';
+
+import TopBar from './TopBar';
 
 import { RoomsContent } from './RoomsContent';
 
@@ -153,13 +156,12 @@ class DashboardBase extends React.Component<PropsType, StateType> {
 
         return (
             <div style={styles.mainContainer}>
-                <div style={styles.fakeTopBar}>
-                </div>
-                <div style={styles.ContentContainer}>
-                    <div style={styles.ordersContainer}>
+                <TopBar />
+                <div className={'row align-self-center'} style={styles.contentContainer}>
+                    <div className={'col-12 col-md-4'} style={styles.ordersContainer}>
                         <OrdersContent />
                     </div>
-                    <div style={styles.roomsContainer}>
+                    <div className={'col col-md-8'} style={styles.roomsContainer}>
                         <RoomsContent rooms={rooms} />
                     </div>
                 </div>
@@ -173,35 +175,24 @@ DashboardBase.contextTypes = {
 
 const styles = {
     mainContainer: {
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+    },
+    contentContainer: {
         width: '100%',
         height: '100%',
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-    },
-    fakeTopBar: {
-        height: 60,
-        backgroundColor: 'rgb(46, 46, 46)',
-    },
-    ContentContainer: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'row',
+        backgroundImage: 'linear-gradient(124deg, ' + Styles.Gradients.background_dashboard[0] + ',' + Styles.Gradients.background_dashboard[1] + ')'
     },
     ordersContainer: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
         overflowY: 'scroll',
-        backgroundColor: 'rgb(86, 86, 86)',
     },
     roomsContainer: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
         overflowY: 'scroll',
         overflowX: 'hidden',
-        backgroundColor: 'rgb(126, 126, 126)',
+        backgroundColor: Styles.Colors.background_rooms_container
     },
 }
 
