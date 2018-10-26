@@ -80,7 +80,8 @@ const styles = {
         borderRadius: '5px',
         backgroundColor: Styles.Colors.dark_gray,
         borderBottom: '4px solid',
-        borderBottomColor: Styles.Colors.red
+        borderBottomColor: Styles.Colors.red,
+        boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.25)',
     },
     roomName: {
         fontSize: '22px',

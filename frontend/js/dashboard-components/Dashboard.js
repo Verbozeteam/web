@@ -194,7 +194,9 @@ const styles = {
     roomsContainer: {
         overflowY: 'scroll',
         overflowX: 'hidden',
-        backgroundColor: Styles.Colors.background_rooms_container
+        backgroundColor: Styles.Colors.background_rooms_container,
+        padding: 0,
+        margin: 0,
     },
 }
 

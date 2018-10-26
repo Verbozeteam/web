@@ -51,7 +51,7 @@ const styles = {
     divider: {
         padding: 0,
         margin: 0,
-        color: Colors.light_gray,
+        backgroundColor: Colors.light_gray,
         marginTop: 10,
         marginBottom: 10
     },
