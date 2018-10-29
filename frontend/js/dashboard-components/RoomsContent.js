@@ -14,7 +14,7 @@ import type { GroupType, ConfigType } from '../js-api-utils/ConfigManager'
 
 import { Colors } from '../constants/Styles';
 
-import css from '../../assets/dashboard_css/RoomsContent.css';
+import css from '../../css/dashboard/RoomsContent.css';
 
 type PropsType = {
     rooms: {[roomId: string]: Room},
@@ -188,6 +188,7 @@ class RoomsContentBase extends React.Component<PropsType, StateType> {
 
         return (
             <React.Fragment>
+                {this.renderSearchBar()}
                 {rendered_floors}
             </React.Fragment>
         );
@@ -220,7 +221,6 @@ class RoomsContentBase extends React.Component<PropsType, StateType> {
 
         return (
             <div style={styles.container}>
-                {this.renderSearchBar()}
                 {rooms_content}
             </div>
         );
@@ -229,9 +229,8 @@ class RoomsContentBase extends React.Component<PropsType, StateType> {
 
 const styles = {
     container: {
-        paddingRight: 40,
-        paddingLeft: 40,
-        paddingTop: 40
+        padding: 40,
+        height: '100%'
     },
     roomsRow: {
         display: 'flex',
