@@ -5,6 +5,8 @@ from channels import Group
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
+from channels.sessions import enforce_ordering
+
 from raven.contrib.django.models import get_client
 client = get_client()
 
@@ -76,6 +78,7 @@ def on_message_from_phone(sender_token, message_dict):
 
 
 @client.capture_exceptions
+@enforce_ordering
 def ws_connect(message, token):
 	token_object = get_valid_token(token)
 	if token_object:
@@ -93,6 +96,7 @@ def ws_connect(message, token):
 
 
 @client.capture_exceptions
+@enforce_ordering
 def ws_receive(message, token):
 	token_object = get_valid_token(token)
 	message_text = message.content.get("text")
