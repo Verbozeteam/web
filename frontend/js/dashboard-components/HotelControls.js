@@ -2,7 +2,11 @@
 
 import * as React from 'react';
 
+import * as Styles from '../constants/Styles';
+
 import { RoomConfigManager } from '../js-api-utils/RoomsConfigManager';
+
+import RoomDiagnostics from './RoomDiagnostics';
 
 import type {
     GroupType,
@@ -13,7 +17,8 @@ import type {
 
 type PropsType = {
     id: string,
-    roomId: string
+    roomId: string,
+    isSummary: boolean
 };
 
 type StateType = {
@@ -86,7 +91,45 @@ export default class HotelControls extends React.Component<PropsType, StateType>
         const _housekeeping = require('../../assets/dashboard_images/housekeeping.png');
 
         return (
-            <div className={'row'} style={ styles.statusIndicators }>
+            <React.Fragment>
+                <hr style={styles.separator} />
+                <div className={'row'} style={ styles.statusIndicators }>
+                    <div className={'col'}>
+                        <img src={ _occupied } style={{ opacity: cardIn ? 1 : 0.15 }} />
+                        <span style={{ ...styles.indicatorNames, opacity: cardIn ? 1 : 0.15 }}>Occupied</span>
+                    </div>
+                    <div className={'col'}>
+                        <img src={ _dnd } style={{ opacity: doNotDisturb ? 1 : 0.15 }} />
+                        <span style={{ ...styles.indicatorNames, opacity: doNotDisturb ? 1 : 0.15 }}>Do Not Disturb</span>
+                    </div>
+                    <div className={'col'}>
+                        <img src={ _housekeeping } style={{ opacity: housekeeping ? 1 : 0.15 }} />
+                        <span style={{ ...styles.indicatorNames, opacity: housekeeping ? 1 : 0.15 }}>Housekeeping</span>
+                    </div>
+                </div>
+                <hr style={styles.separator} />
+            </React.Fragment>
+        );
+    }
+
+    renderHotelControls() {
+        return (
+            <React.Fragment>
+                { this.renderStatusIndicators() }
+                {/*<RoomDiagnostics />*/}
+            </React.Fragment>
+        );
+    }
+
+    renderSummaryStatusIndicators() {
+        const { doNotDisturb, housekeeping, cardIn } = this.state;
+
+        const _occupied = require('../../assets/dashboard_images/occupied.png');
+        const _dnd = require('../../assets/dashboard_images/DND.png');
+        const _housekeeping = require('../../assets/dashboard_images/housekeeping.png');
+
+        return (
+            <div className={'row'} style={ styles.statusSummaryIndicators }>
                 <div className={'col'}>
                     <img src={ _occupied } style={{ opacity: cardIn ? '1' : '0.15' }} />
                 </div>
@@ -102,19 +145,44 @@ export default class HotelControls extends React.Component<PropsType, StateType>
         );
     }
 
+    renderSummaryHotelControls() {
+        return (
+            this.renderSummaryStatusIndicators()
+        );
+    }
+
     render(){
-        const { id } = this.props;
+        const { id, isSummary } = this.props;
 
         return (
             <div>
-                { this.renderStatusIndicators() }
+                { isSummary ? this.renderSummaryHotelControls() : this.renderHotelControls() }
             </div>
         )
     }
 }
 
 const styles = {
-    statusIndicators: {
+    statusSummaryIndicators: {
         paddingTop: '20px'
-    }
+    },
+    statusIndicators: {
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    indicatorNames: {
+        color: Styles.Colors.off_white,
+        fontSize: 26,
+        fontWeight: 500,
+        fontStyle: 'normal',
+        fontStretch: 'normal',
+        lineHeight: 'normal',
+        letterSpacing: 'normal',
+        display: 'inline',
+        verticalAlign: 'middle',
+        paddingLeft: 12
+    },
+    separator: {
+        backgroundColor: Styles.Colors.gray,
+    },
 };

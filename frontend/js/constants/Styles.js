@@ -19,6 +19,8 @@ export const Colors = {
 
   /* dashboard colors */
   background_rooms_container: 'rgba(216,216,216, 0.15)',
+  background_close_button: 'rgba(186,55,55, 0.2)',
+  background_run_diagnostics_button: 'rgba(74,144,226, 0.2)'
 };
 
 export const Gradients = {

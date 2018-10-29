@@ -9,6 +9,7 @@ import * as APITypes from '../js-api-utils/APITypes';
 import type { GroupType } from '../js-api-utils/ConfigManager'
 
 import HotelControls from './HotelControls';
+import RoomDiagnostics from './RoomDiagnostics';
 
 function mapStateToProps(state) {
     return {
@@ -31,13 +32,14 @@ type StateType = {
 
 class RoomViewBase extends React.Component<PropsType, StateType> {
 
-    renderGroupsFull(groups: Array<GroupType>) {
-        return groups.map((g, i) => <p key={'group-'+i}>{ g.name }</p> );
-    }
+    renderRoomThings() {
+        const { room, roomsGroups, isSummary } = this.props;
 
-    renderGroupsSummary(groups: Array<GroupType>) {
-        const { room } = this.props;
+        if (!(roomsGroups && roomsGroups[room.identifier]))
+            return null
+
         var roomId = room.identifier;
+        var groups = roomsGroups[roomId];
         var roomThings = [];
         for (var i = 0; i < groups.length; i++) {
             for (var j = 0; j < groups[i].things.length; j++) {
@@ -45,59 +47,26 @@ class RoomViewBase extends React.Component<PropsType, StateType> {
                 switch (thing.category) {
                     case 'hotel_controls':
                         roomThings.push(
-                            <HotelControls id={thing.id} room={room} roomId={roomId} key={'hotel-controls-'+i} />
+                            <HotelControls id={thing.id} room={room} isSummary={isSummary} roomId={roomId} key={'hotel-controls-'+i} />
                         );
                         break;
-                    case 'hotel_orders':
-                        // roomThings.push(<div key={'hotel-orders-'+i} >{thing.name}</div>);
-                        break;
-                    case 'hotel_diagnostics':
-                        // roomThings.push(<div key={'hotel-diagnostics-'+i}>{thing.id}</div>);
+                    case 'room_diagnostics':
+                        roomThings.push(
+                            <RoomDiagnostics id={thing.id} roomId={roomId} isSummary={isSummary} key={'room-diagnositcs-'+i} />
+                        );
                         break;
                 }
             }
         }
         return roomThings;
-    }
 
-    renderSummary() {
-        const { room, roomsGroups } = this.props;
-
-        return (
-            <div>
-                { roomsGroups && roomsGroups[room.identifier] ? this.renderGroupsSummary(roomsGroups[room.identifier]) : null }
-            </div>
-        );
-    }
-
-    renderFull() {
-        const { room, roomsGroups } = this.props;
-
-        return (
-            <div>
-                <h4>Full</h4>
-                { roomsGroups && roomsGroups[room.identifier] ? this.renderGroupsFull(roomsGroups[room.identifier]) : null }
-            </div>
-        );
     }
 
     render() {
-        return this.props.isSummary ? this.renderSummary() : this.renderFull();
+        return (
+            this.renderRoomThings()
+        );
     }
 };
-
-const styles = {
-    container: {
-        display: 'flex',
-        flex: 1,
-    },
-    subroom: {
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-    }
-};
-
-
 
 export const RoomView = ReduxConnect(mapStateToProps, mapDispatchToProps) (RoomViewBase);

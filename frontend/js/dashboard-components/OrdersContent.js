@@ -38,14 +38,10 @@ class OrdersContentBase extends React.Component<PropsType, StateType> {
             for (var j = 0; j < groups[i].things.length; j++) {
                 const thing = groups[i].things[j];
                 switch (thing.category) {
-                    case 'hotel_controls':
-                        break;
                     case 'hotel_orders':
                         roomThings.push(
                             <HotelOrders id={thing.id} roomId={roomId} key={'hotel-controls-'+i} />
                         );
-                        break;
-                    case 'hotel_diagnostics':
                         break;
                 }
             }
