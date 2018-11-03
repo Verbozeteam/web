@@ -9,6 +9,8 @@ import {
   Link
 } from 'react-router-dom';
 
+import { ProductList } from './products/Products';
+
 
 type PropsType = {};
 
@@ -44,24 +46,17 @@ export default class NavBar extends Component<PropsType, StateType> {
                     <ul className="navbar-nav mt-2 mt-lg-0">
                         <li className="nav-item dropdown">
                             <a className={"nav-link dropdown-toggle" + (sticky ? ' sticky' : '')} href="#" id="${navbarDropdownId}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                FEATURES
+                                PRODUCTS
                             </a>
                             <div className="dropdown-menu" aria-labelledby="${navbarDropdownId}">
-                                <Link className="dropdown-item" to="/modernizing-control">
-                                    Modernizing Control
-                                </Link>
-                                <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/empowering-guests">
-                                    Empowering Guests
-                                </Link>
-                                <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/reimagining-hotels">
-                                    Reimagining Hotels
-                                </Link>
-                                <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/adopting-verboze">
-                                    Adopting Verboze
-                                </Link>
+                                {ProductList.map((product, i) =>
+                                    <React.Fragment key={'navbar-'+product.name}>
+                                        <Link className="dropdown-item" to={product.link}>
+                                            {product.name}
+                                        </Link>
+                                        {i < ProductList.length - 1 ? <div className="dropdown-divider" /> : null}
+                                    </React.Fragment>
+                                )}
                             </div>
                         </li>
                         <NavLink className="nav-item" activeClassName="active" to='/company'>
