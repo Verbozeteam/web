@@ -1,0 +1,21 @@
+.search-input {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: medium;
+}
+
+.search-input::placeholder {
+  color: #DDDDDD;
+  opacity: 1;
+}
+
+.search-input:hover,
+.search-input:active,
+.search-input:focus {
+  border: none;
+  outline-color: transparent;
+  outline-style: none;
+}

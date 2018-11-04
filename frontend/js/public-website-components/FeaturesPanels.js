@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 
 import css from '../../css/public_website/FeaturesPanels.css';
 
+import { ProductList } from './products/Products';
+import type { ProductType } from './products/Products';
+
 type PropsType = {
   expanded?: boolean,
 };
@@ -25,7 +28,7 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
     expanded: true,
   };
 
-  _expanded_height: string = 600;
+  _expanded_height: number = 600;
   _collapsed_height: number = 150;
   _collapsed_parallax_offset: number = -150;
 
@@ -33,29 +36,6 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
   _parallax_objects = [];
 
   _bound_handleScroll = (e: Event): null => this.handleScroll(e);
-
-  _panels: Array<PanelType> = [
-    {
-        name: 'Modernizing Control',
-        image: require('../../assets/images/modernizing_control_panel.jpg'),
-        link: '/modernizing-control'
-    },
-    {
-      name: 'Empowering Guests',
-      image: require('../../assets/images/empowering_guests_panel.jpg'),
-      link: '/empowering-guests'
-    },
-    {
-      name: 'Reimagining Hotels',
-      image: require('../../assets/images/reimagining_hotels_panel.jpg'),
-      link: '/reimagining-hotels'
-    },
-    {
-      name: 'Adopting Verboze',
-      image: require('../../assets/images/adopting_verboze_panel.jpg'),
-      link: '/adopting-verboze'
-    }
-  ];
 
   componentDidMount() {
     window.addEventListener('scroll', this._bound_handleScroll);
@@ -131,7 +111,7 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
     );
   }
 
-  _renderPanel(id: number, panel: PanelType) {
+  _renderPanel(id: number, product: ProductType) {
     const { expanded } = this.props;
 
     var class_name = 'panel ';
@@ -143,24 +123,18 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
 
     return (
       <Link key={'panel-' + id}
-        to={panel.link}
+        to={product.link}
         className={class_name}>
         <img ref={(element) => (element) ? this._parallax_objects.push(element) : null}
-          className={'panel-image'} src={panel.image} />
+          className={'panel-image'} src={product.image} />
         <div className={'overlay'}></div>
-        {this._renderHeader(panel.name)}
+        {this._renderHeader(product.name)}
       </Link>
     );
   }
 
   render() {
     const { expanded } = this.props;
-
-    const panels = [];
-    const x_offset = 1 / this._panels.length * 100;
-    for (var i = 0; i < this._panels.length; i++) {
-      panels.push(this._renderPanel(i, this._panels[i]));
-    }
 
     /* create container style */
     var container_style = {};
@@ -173,7 +147,7 @@ class FeaturesPanels extends React.Component<PropsType, StateType> {
     return (
       <div className={'panels-container'}
         style={{...styles.container, ...container_style}}>
-        {panels}
+        {ProductList.map((product, i) => this._renderPanel(i, product))}
       </div>
     );
   }

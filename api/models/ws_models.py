@@ -21,7 +21,7 @@ class Token(models.Model):
     content_object = GenericForeignKey('content_type', 'object_id') # Hub/Hotel/Room object
 
     def __str__(self):
-        return "Token id={}".format(self.id)
+        return "Token id={} ({})".format(self.id, self.content_object)
 
     def get_hotel(self):
         if isinstance(self.content_object, HubUser):

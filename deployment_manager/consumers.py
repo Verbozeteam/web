@@ -9,6 +9,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.contenttypes.models import ContentType
 from api.models import AdminUser
 
+from channels.sessions import enforce_ordering
+
 from raven.contrib.django.models import get_client
 client = get_client()
 
@@ -96,6 +98,7 @@ def update_running_deployment_target_stdout(rdm, message_content):
             pass
 
 @client.capture_exceptions
+@enforce_ordering
 def ws_connect(message, token, deployment_manager=None):
     token_object = get_valid_token(token)
     rdm = get_rdm_from_token(token_object)
@@ -125,6 +128,7 @@ def ws_connect(message, token, deployment_manager=None):
         message.reply_channel.send({"accept": False})
 
 @client.capture_exceptions
+@enforce_ordering
 def ws_receive(message, token, deployment_manager=None):
     token_object = get_valid_token(token)
     message_text = message.content.get("text")

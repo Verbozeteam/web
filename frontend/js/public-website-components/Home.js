@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 
 import { RoomDemoComponent } from './RoomDemoComponent';
+import InformationBanner from './InformationBanner';
+
 const RequestDemoModal = require('./RequestDemoModal');
 const RequestDemoBanner = require('./RequestDemoBanner');
 
@@ -52,6 +54,7 @@ export default class Home extends Component<PropsType, StateType> {
                 toggle={this.toggleModal.bind(this)} />
               <RoomDemoComponent />
               <RequestDemoBanner toggleModal={this.toggleModal.bind(this)} />
+              <InformationBanner />
               <FeaturesPanels expanded={true} />
             </div>
         )

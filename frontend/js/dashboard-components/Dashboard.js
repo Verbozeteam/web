@@ -3,6 +3,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import * as Styles from '../constants/Styles';
 import { connect as ReduxConnect } from 'react-redux';
 import { STORE, AppWrapper } from "./redux/store";
 import * as connectionActions from './redux/actions/connection';
@@ -13,8 +14,14 @@ import { DashboardAPICaller } from '../js-api-utils/DashboardAPI';
 
 import { WebSocketCommunication } from '../js-api-utils/WebSocketCommunication';
 
-import { RoomCard } from './RoomCard';
-import { RoomWindow } from './RoomWindow';
+import TopBar from './TopBar';
+
+import { RoomsContent } from './RoomsContent';
+
+import { OrdersContent } from './OrdersContent';
+
+import { RoomConfigManager } from '../js-api-utils/RoomsConfigManager';
+
 
 function mapStateToProps(state) {
     return {
@@ -25,189 +32,172 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-    	setRooms: (r: Array<APITypes.Room>) => dispatch(connectionActions.setRooms(r)),
-	    setConnectionState: (cs: number) => dispatch(connectionActions.setConnectionState(cs)),
-	    setConfig: (r: string, c: ConnectionTypes.ConfigType) => dispatch(connectionActions.setRoomConfig(r, c)),
-	    setThingsStates: (r: string, s: Object) => dispatch(connectionActions.setRoomThingsStates(r, s)),
+        setRooms: (r: Array<APITypes.Room>) => dispatch(connectionActions.setRooms(r)),
+        setConnectionState: (cs: number) => dispatch(connectionActions.setConnectionState(cs)),
+        setConfig: (r: string, c: ConnectionTypes.ConfigType) => dispatch(connectionActions.setRoomConfig(r, c)),
+        setThingsStates: (r: string, s: Object) => dispatch(connectionActions.setRoomThingsStates(r, s)),
     };
 }
 
 type PropsType = {
-	...any,
+    ...any,
 };
 
 type StateType = {
-	...any,
+    ...any,
 };
 
 class DashboardBase extends React.Component<PropsType, StateType> {
-	_ws_url: string = 'ws://localhost:8000/stream/';
-	_ws_token: string = '345413a3c8ae4647ae0d7c8ac264ac49'; /** @TODO: FETCH FROM VERBOZE! */
+
+    createWebsocketURL(token: string): string {
+        var protocol = "ws://";
+        if (location.protocol === 'https:')
+            protocol = "wss://";
+        return protocol + location.host + "/stream/" + token + '/';
+    }
+
+    fetchRoomsConfigs() {
+        const { rooms } = this.props;
+
+        /* @TODO: SEND CODE 0 FOR ALL ROOMS IDS IN A WAY THAT DOESNT SPAM OUR SERVER
+        /* ...
+        */
+
+        var roomsIds = Object.keys(rooms);
+        for (var i = 0; i < roomsIds.length; i++) {
+            var room = rooms[roomsIds[i]];
+            console.log('sending code 0 to', room);
+            WebSocketCommunication.sendMessage({
+                code: 0,
+                __room_id: room.identifier,
+            });
+        }
+    }
+
+    fetchRooms(token: string) {
+        /* Fetch the rooms */
+        DashboardAPICaller.setToken(token);
+        DashboardAPICaller.getRooms(
+            ((rooms: Array<APITypes.Room>) => {
+                this.props.setRooms(rooms);
+                this.fetchRoomsConfigs();
+            }).bind(this),
+            ((err: APITypes.ErrorType) => {
+                console.log("ERROR ", err);
+            }).bind(this)
+        );
+    }
+
+    componentWillReceiveProps(newProps: PropsType) {
+        var roomsIds = Object.keys(newProps.rooms);
+        for (var i = 0; i < roomsIds.length; i++) {
+            var room = newProps.rooms[roomsIds[i]];
+            var roomId = room.identifier;
+            RoomConfigManager.addRoom(roomId);
+        }
+    }
 
     componentWillMount() {
-	    /* bind websocket callbacks */
-	    WebSocketCommunication.setOnConnected(this.onConnected.bind(this));
-	    WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
-	    WebSocketCommunication.setOnMessage(this.onMessage.bind(this));
+        RoomConfigManager.initialize(WebSocketCommunication);
 
-        /** Fetch the rooms */
-		DashboardAPICaller.getRooms(
-			((rooms: Array<APITypes.Room>) => {
-	            this.props.setRooms(rooms);
-			}).bind(this),
-			((err: APITypes.ErrorType) => {
-				console.log("ERROR ", err);
-			}).bind(this)
-		);
+        /* bind websocket callbacks */
+        WebSocketCommunication.setOnConnected(this.onConnected.bind(this));
+        WebSocketCommunication.setOnMessage(this.onMessage.bind(this));
 
-		this.connect();
+        /* Request websocket token */
+        DashboardAPICaller.requestToken(((token: APITypes.CreatedToken) => {
+            WebSocketCommunication.setOnDisconnected(this.onDisconnected.bind(this));
+            WebSocketCommunication.connect(this.createWebsocketURL(token.id));
+            this.fetchRooms(token.id);
+        }).bind(this), ((error: APITypes.ErrorType) => {
+            console.error(error);
+        }).bind(this), {
+            'requested_token_type': 'hotel_user'
+        });
+
+        this.componentWillReceiveProps(this.props);
     }
 
     componentWillUnmount() {
     }
 
-	/* websocket connect */
-	connect() : any {
-		const { setConnectionState } = this.props;
+    /* websocket callback on connect event */
+    onConnected() : any {
+        const { setConnectionState, rooms } = this.props;
+        setConnectionState(2);
+    }
 
-		WebSocketCommunication.connect(this._ws_url + this._ws_token + '/');
-		setConnectionState(1);
-	}
+    /* websocket callback on disconnect event */
+    onDisconnected() : any {
+        const { setConnectionState, setConfig } = this.props;
+        setConnectionState(0);
+        setConfig("1", null);
+    }
 
-	/* websocket callback on connect event */
-	onConnected() : any {
-		const { setConnectionState } = this.props;
-		setConnectionState(2);
+    /* websocket callback on message event */
+    onMessage(data: ConnectionTypes.WebSocketDataType) : any {
+        const { setConfig, setThingsStates } = this.props;
 
-		WebSocketCommunication.sendMessage({
-			code: 0,
-			__room_id: "1",
-		});
-	}
+        /* set config if provided */
+        if ('config' in data) {
+            console.log("got config: ", data.config);
+            setConfig("1", data.config);
+            delete data['config'];
+        }
 
-	/* websocket callback on disconnect event */
-	onDisconnected() : any {
-		const { setConnectionState, setConfig } = this.props;
-		setConnectionState(0);
-		setConfig("1", null);
-	}
+        /* set things states if provided */
+        if (Object.keys(data).length > 0) {
+            setThingsStates("1", data);
+        }
+    }
 
-	/* websocket callback on message event */
-	onMessage(data: ConnectionTypes.WebSocketDataType) : any {
-		const { setConfig, setThingsStates } = this.props;
+    render() {
+        const { rooms, selectedRoomId } = this.props;
 
-		/* set config if provided */
-		if ('config' in data) {
-			console.log("got config: ", data.config);
-			setConfig("1", data.config);
-			delete data['config'];
-		}
-
-		/* set things states if provided */
-		if (Object.keys(data).length > 0) {
-			setThingsStates("1", data);
-		}
-	}
-
-	render() {
-		const { rooms, selectedRoomId } = this.props;
-
-		var content = null;
-		if (selectedRoomId && selectedRoomId != "") {
-			var selectedRoom = null;
-			for (var i = 0; i < rooms.length; i++)
-				if (rooms[i].id == selectedRoomId)
-					selectedRoom = rooms[i];
-			content = (
-				<RoomWindow
-					room={selectedRoom}/>
-			);
-		} else {
-			var columns_per_row = 4;
-			var rows = [];
-			var room_views = [];
-			for (var i = 0; i < rooms.length; i++) {
-				room_views.push(
-					<RoomCard
-						key={'room-view-'+i}
-						room={rooms[i]}
-						/>
-				);
-
-				if (room_views.length == columns_per_row || i == rooms.length - 1) {
-					rows.push(
-						<div
-							key={'rooms-row-'+rows.length}
-							style={styles.roomsRow}>
-							{room_views}
-						</div>
-					);
-					room_views = [];
-				}
-			}
-			content = rows;
-		}
-
-		return (
-			<div style={styles.mainContainer}>
-				<div style={styles.fakeTopBar}>
-				</div>
-				<div style={styles.fakeSidebarAndContentContainer}>
-					<div style={styles.fakeSidebar}>
-					</div>
-					<div style={styles.fakeContentContainer}>
-						{content}
-					</div>
-				</div>
-				<div style={styles.fakeBottomBar}>
-				</div>
-			</div>
-		);
-	}
+        return (
+            <div style={styles.mainContainer}>
+                <TopBar />
+                <div className={'row align-self-center'} style={styles.contentContainer}>
+                    <div className={'col-12 col-md-4'} style={styles.ordersContainer}>
+                        <OrdersContent />
+                    </div>
+                    <div className={'col col-md-8'} style={styles.roomsContainer}>
+                        <RoomsContent rooms={rooms} />
+                    </div>
+                </div>
+            </div>
+        );
+    }
 };
 DashboardBase.contextTypes = {
     store: PropTypes.object
 };
 
 const styles = {
-	mainContainer: {
-	    width: '100%',
-	    height: '100%',
-	    display: 'flex',
-	    flex: 1,
-	    flexDirection: 'column',
-	},
-	roomsRow: {
-	    display: 'flex',
-	    flex: 1,
-	    flexDirection: 'row',
-	    maxHeight: 260,
-	    minHeight: 230,
-	},
-	fakeTopBar: {
-	    height: 60,
-	    backgroundColor: 'rgba(150, 150, 150, 255)',
-	},
-	fakeSidebarAndContentContainer: {
-	    flex: 1,
-
-	    display: 'flex',
-	    flexDirection: 'row',
-	},
-	fakeSidebar: {
-	    width: 300,
-	    backgroundColor: 'rgba(240, 240, 240, 255)',
-	},
-	fakeContentContainer: {
-	    flex: 1,
-	    display: 'flex',
-	    flexDirection: 'column',
-	    overflowY: 'scroll',
-	    overflowX: 'hidden',
-	},
-	fakeBottomBar: {
-	    height: 20,
-	}
+    mainContainer: {
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+    },
+    contentContainer: {
+        width: '100%',
+        height: '100%',
+        backgroundImage: 'linear-gradient(124deg, ' + Styles.Gradients.background_dashboard[0] + ',' + Styles.Gradients.background_dashboard[1] + ')'
+    },
+    ordersContainer: {
+        overflowY: 'scroll',
+        padding: 0,
+        margin: 0,
+    },
+    roomsContainer: {
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        backgroundColor: Styles.Colors.background_rooms_container,
+        padding: 0,
+        margin: 0,
+    },
 }
 
 export const Dashboard = AppWrapper(ReduxConnect(mapStateToProps, mapDispatchToProps) (DashboardBase));

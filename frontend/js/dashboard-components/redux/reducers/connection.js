@@ -3,7 +3,9 @@
 import {
     SET_CONNECTION_STATE,
     SET_ROOMS,
+    SET_ROOMS_GROUPS,
     SET_ROOM_CONFIG,
+    SET_ROOM_ORDERS,
     SET_ROOM_THINGS_STATES,
     SET_ROOM_THING_STATE,
     SET_ROOM_THINGS_PARTIAL_STATES,
@@ -12,20 +14,25 @@ import {
 
 import * as APITypes from '../../../js-api-utils/APITypes';
 import * as ConnectionTypes from '../../../js-api-utils/ConnectionTypes';
+import type { GroupType } from '../../../js-api-utils/ConfigManager';
 
 type StateType = {
     connectionState: 0 | 1 | 2,
-    rooms: Array<APITypes.Room>,
+    rooms: {[roomId: string]: APITypes.Room},
+    roomsGroups: {[roomId: string]: Array<GroupType>},
     roomConfigs: {[string]: ConnectionTypes.ConfigType},
     roomStates: {[string]: Object},
+    roomsOrders: {[roomId: string]: Array<OrderType>}
 };
 
 const defaultState: StateType = {
     /* 0 - not connected, 1 - connecting, 2 - connected */
     connectionState: 0,
-    rooms: [],
+    rooms: {},
+    roomsGroups: {},
     roomConfigs: {},
     roomStates: {},
+    roomsOrders: {}
 };
 
 module.exports = (state: StateType = defaultState, action: Object) => {
@@ -37,9 +44,18 @@ module.exports = (state: StateType = defaultState, action: Object) => {
             new_state.connectionState = action.connectionState;
             break;
 
-        /** sets registered rooms */
+        /** sets registered rooms
+        /*  Format: {room1ID: Room, room2ID: Room, ...}
+         */
         case SET_ROOMS:
-            new_state.rooms = action.rooms;
+            for (var i = 0; i < action.rooms.length; i++) {
+                new_state.rooms[action.rooms[i].identifier] = action.rooms[i]
+            }
+            break;
+
+        /** sets groups for rooms  */
+        case SET_ROOMS_GROUPS:
+            new_state.roomsGroups = action.roomsGroups;
             break;
 
         /** sets config for a room */
@@ -75,7 +91,13 @@ module.exports = (state: StateType = defaultState, action: Object) => {
                     ...new_state.roomStates[action.roomId][k],
                     ...action.thingToPartialState[k]
                 };
-        break;
+
+        case SET_ROOM_ORDERS:
+            new_state.roomsOrders[action.roomId] = action.orders;
+            break;
+
+        default:
+            break;
     }
 
     return new_state;

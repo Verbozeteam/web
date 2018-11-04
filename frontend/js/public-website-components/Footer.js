@@ -7,6 +7,8 @@ import css from '../../css/public_website/Footer.css';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
+import { ProductList } from './products/Products';
+
 // Use it just like a RRv4 link (to can be a string or an object, see RRv4 api for details):
 // <HashLink to="/some/path#with-hash-fragment">Link to Hash Fragment</HashLink>
 
@@ -38,38 +40,19 @@ export default class Footer extends Component<PropsType, StateType> {
                             <div className="col-md-2 footer-col-md-2">
                                 <div className="row">
                                     <div className="col footer-col">
-                                        FEATURES
+                                        PRODUCTS
                                     </div>
                                 </div>
                                 <hr style={ styles.hrStyle }/>
-                                <div className="row">
-                                    <div className="col footer-col">
-                                        <Link className="footer-link" to='/modernizing-control'>
-                                            Modernizing Control
-                                        </Link>
+                                {ProductList.map(product =>
+                                    <div className="row" key={'footer-row-'+product.name}>
+                                        <div className="col footer-col">
+                                            <Link className="footer-link" to={product.link}>
+                                                {product.name}
+                                            </Link>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col footer-col">
-                                        <Link className="footer-link" to='/empowering-guests'>
-                                            Empowering Guests
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col footer-col">
-                                        <Link className="footer-link" to='/reimagining-hotels'>
-                                            Reimagining Hotels
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col footer-col">
-                                        <Link className="footer-link" to='/adopting-verboze'>
-                                            Adopting Verboze
-                                        </Link>
-                                    </div>
-                                </div>
+                                )}
                             </div>
                             <div className="col-md-2 footer-col-md-2">
                                 <div className="row">
@@ -166,7 +149,7 @@ const styles = {
     },
 
     contactLinkStyle: {
-        color: '#D04F4C',
+        color: '#BA3737',
     }
 
 };

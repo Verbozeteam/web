@@ -3,12 +3,22 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import * as Styles from '../constants/Styles';
+
 import { connect as ReduxConnect } from 'react-redux';
 import * as UIStateActions from './redux/actions/uistate';
 
 import * as APITypes from '../js-api-utils/APITypes';
 
 import { RoomView } from './RoomView';
+
+import { RoomConfigManager } from '../js-api-utils/RoomsConfigManager';
+import type { GroupType } from '../js-api-utils/ConfigManager'
+
+import type {
+    ThingMetadataType,
+    ThingStateType,
+} from '../js-api-utils/ConfigManager';
 
 function mapStateToProps(state) {
     return {};
@@ -22,31 +32,34 @@ function mapDispatchToProps(dispatch) {
 
 type PropsType = {
     room: APITypes.Room,
-    ...any,
+    roomGroups: Array<GroupType>,
+    setCurrentRoom: (roomId: string) => {},
+    guestName: string,
 };
 
 type StateType = {
 };
 
 class RoomCardBase extends React.Component<PropsType, StateType> {
+    _unsubscribe: () => any = () => null;
+
     onClick() {
         this.props.setCurrentRoom(this.props.room.id);
     }
 
     render() {
-        const { room } = this.props;
+        const { room, roomGroups, guestName } = this.props;
 
         return (
-            <div style={styles.roomContainer}>
-                <div style={styles.roomCard}
-                    onClick={this.onClick.bind(this)}>
-                    <div style={styles.roomCardContent}>
-                        <RoomView room={room} isSummary={true}/>
+            <div className={'col-12 col-sm-6 col-lg-3'} onClick={this.onClick.bind(this)} style={ styles.roomCardContainer }>
+                <div className={'container-fluid'} style={ styles.roomCardContent }>
+                    <div style={ styles.roomName }>
+                        Room #{room.name}
                     </div>
-                    <div style={styles.roomCardTitle}>
-                        <div style={styles.roomCardSeparator}></div>
-                        <h3>{room.name}</h3>
+                    <div style={ styles.guestName }>
+                        { guestName ? guestName : 'Yahya Alhomsi' }
                     </div>
+                    <RoomView room={room} isSummary={true}/>
                 </div>
             </div>
         );
@@ -57,56 +70,32 @@ RoomCardBase.contextTypes = {
 };
 
 const styles = {
-    roomContainer: {
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    roomCard: {
-        width: 200,
-        height: 200,
-        borderRadius: 20,
-        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-        display: 'flex',
-        flexDirection: 'column',
+    roomCardContainer: {
+        paddingTop: '15px',
     },
     roomCardContent: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 3,
-
-        borderRadius: 20,
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
-
-        backgroundColor: 'rgba(250, 250, 250, 255)',
-        padding: 10,
+        height: '100%',
+        minHeight: '175px',
+        paddingTop: '15px',
+        borderRadius: '5px',
+        backgroundColor: Styles.Colors.dark_gray,
+        borderBottom: '4px solid',
+        borderBottomColor: Styles.Colors.red,
+        boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.25)',
     },
-    roomCardTitle: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-
-        borderRadius: 20,
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0,
-
-        alignItems: 'center',
-        justifyContent: 'center',
-
-        background: '-webkit-linear-gradient(rgba(220, 220, 220, 255), rgba(230, 230, 230, 255))', /* For Safari 5.1 to 6.0 */
-        background: '-o-linear-gradient(rgba(220, 220, 220, 255), rgba(230, 230, 230, 255))', /* For Opera 11.1 to 12.0 */
-        background: '-moz-linear-gradient(rgba(220, 220, 220, 255), rgba(230, 230, 230, 255))', /* For Firefox 3.6 to 15 */
-        background: 'linear-gradient(rgba(220, 220, 220, 255), rgba(230, 230, 230, 255))', /* Standard syntax */
+    roomName: {
+        fontSize: '22px',
+        color: Styles.Colors.white,
     },
-    roomCardSeparator: {
-        width: '80%',
+    guestName: {
+        fontSize: '18px',
+        color: Styles.Colors.gray,
+        fontStyle: 'italic'
     },
+    redStrip: {
+        borderRadius: '5px',
+        backgroundColor: Styles.Colors.red,
+    }
 };
-
-
 
 export const RoomCard = ReduxConnect(mapStateToProps, mapDispatchToProps) (RoomCardBase);
